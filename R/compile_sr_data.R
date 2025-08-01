@@ -25,5 +25,6 @@ sr_data |>
   filter(sr_87 < 0.715) |>
   ggplot(aes(x = stream, y = sr_87)) + 
   # geom_boxplot() + 
-  geom_point() + 
-  coord_flip()
+  geom_point(size = 3) + 
+  coord_flip() + 
+  theme_bw(base_size = 20)

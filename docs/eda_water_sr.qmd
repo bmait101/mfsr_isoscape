@@ -103,6 +103,7 @@ flowline <- st_read(here("data/spatial/flowline_pn17_nsi_mfsr.gpkg"), quiet = TR
 
 site_means <- dat |>
   filter(!is.na(sr_87)) |>
+  filter(waterbody_name != "Wilson Creek") |>
   summarise(sr_87 = mean(sr_87), lat_dd = first(lat_dd), long_dd = first(long_dd), .by = site_id) |>
   st_as_sf(coords = c("long_dd", "lat_dd"), crs = 4326) |>
   st_transform(st_crs(flowline))

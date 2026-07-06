@@ -47,8 +47,4 @@ po/*~
 rsconnect/
 
 # Custom
-docs/
-data/
-field/
-img/
 .positai

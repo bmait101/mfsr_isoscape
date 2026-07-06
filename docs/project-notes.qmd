@@ -1,0 +1,13 @@
+---
+title: "Project Notes"
+format: html
+editor: visual
+---
+
+Juvenile movement timing is important to ecologists and managers because recent evidence suggests that the population may be evolving novel migration patterns in response to dams and other anthropogenic affects across their habitat (Waples et al., 2017; Williams et al., 2008)
+
+Ocean life history variation with isotopes? This is something IDFG was interested in
+
+Recovery of carcass samples – BIAS; Check Luciano’s recent publications
+
+"Improved appreciation of the many practical benefits of archival tissue chemistry to fisheries and ecosystem-based management will support their increased implementation into routine monitoring." Reis-Santos et al. 2023.

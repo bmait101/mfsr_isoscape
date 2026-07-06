@@ -16,14 +16,11 @@ library(sf)
 dat <- read_csv(here("results/compiled_sr_data.csv"), show_col_types = FALSE)
 ```
 
-This doc reads the output of `R/01_compile_sr_data.R`
-(`results/compiled_sr_data.csv`). Re-run that script first if you've added new
-samples or a new ICP-MS batch.
+This doc reads the output of `R/01_compile_sr_data.R` (`results/compiled_sr_data.csv`). Re-run that script first if you've added new samples or a new ICP-MS batch.
 
 ## Data-quality checks
 
-Samples with no coordinates (should be empty -- everything should resolve
-through `master_site_lookup.csv`):
+Samples with no coordinates (should be empty -- everything should resolve through `master_site_lookup.csv`):
 
 ```{r}
 #| label: qc-missing-coords
@@ -32,9 +29,7 @@ dat |>
   select(sample_id, site_id, waterbody_name)
 ```
 
-Samples with no Sr result yet (expected for very recent collections still
-waiting on lab turnaround; anything old showing up here is worth chasing
-down):
+Samples with no Sr result yet (expected for very recent collections still waiting on lab turnaround; anything old showing up here is worth chasing down):
 
 ```{r}
 #| label: qc-missing-sr
@@ -43,9 +38,7 @@ dat |>
   select(sample_id, site_id, waterbody_name, collection_date)
 ```
 
-Duplicate `sample_id` values (should be empty -- the compile script already
-collapses analytical re-runs, so any duplicates here indicate a real
-sample-log data-entry problem):
+Duplicate `sample_id` values (should be empty -- the compile script already collapses analytical re-runs, so any duplicates here indicate a real sample-log data-entry problem):
 
 ```{r}
 #| label: qc-dup-ids

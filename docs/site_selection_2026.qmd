@@ -1,0 +1,409 @@
+---
+title: "2026 Tributary Sampling Plan"
+subtitle: "Geology- and GIS-informed site selection for this summer's MFSR spawning tributaries"
+format:
+  html:
+    toc: true
+    code-fold: true
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(sf)
+library(here)
+library(knitr)
+
+fl <- st_read(here("data/spatial/flowline_pn17_nsi_mfsr.gpkg"), quiet = TRUE)
+lith <- st_read(here("data/spatial/geology/idaho_lithology.shp"), quiet = TRUE) |>
+  st_make_valid() |>
+  st_transform(st_crs(fl))
+hu8 <- st_read(here("data/spatial/hu8_mfsr.gpkg"), quiet = TRUE) |> st_transform(st_crs(fl))
+sites <- read_csv(here("data/master_site_lookup.csv"), show_col_types = FALSE)
+hamann <- st_read(here("data/spatial/IsoWorld.gdb"), layer = "Hamaan2012_SR_WaterSamples", quiet = TRUE) |>
+  st_transform(4326)
+```
+
+This doc answers one question per target tributary: **given what we know about
+MFSR bedrock geology, where along this stream should a new site go to best
+capture real Sr variation?** It's the geology/GIS counterpart to
+`docs/review_biogeochem_tracers.qmd` — read that first if the reasoning below
+(igneous vs. metamorphic vs. sedimentary Sr behavior) isn't already familiar.
+
+**Method**: each named tributary's NHD flowline reaches
+(`data/spatial/flowline_pn17_nsi_mfsr.gpkg`) are ordered upstream-to-downstream
+using drainage area (`TotDASqKM`, a standard proxy for position along a single
+named stream absent full network topology) and matched to the nearest bedrock
+polygon in the USGS State Geologic Map Compilation
+(`data/spatial/geology/idaho_lithology.shp`). This gives, for every
+tributary: (a) what fraction of its length drains each rock unit, and (b)
+where along its length it crosses from one unit into another — a **lithologic
+contact**, and the single best predictor of where Sr will shift most sharply.
+Candidate new sites are placed near contacts closest to the 1/3 and 2/3 marks
+of each tributary's length (so 2-3 new sites end up reasonably spread out,
+matching the `-020/-030/...` spacing already used in
+`data/site_id_convention.md`) — not evenly spaced by default, since an evenly
+spaced site could easily land in the middle of one uniform unit and miss the
+contrast entirely.
+
+**Caveat up front**: this identifies the geologically *ideal* spot. It says
+nothing about whether that exact point is reachable on foot, whether it's a
+maintained trail, or what the current stream/trail conditions are — none of
+that data is available locally. Treat every coordinate below as a target to
+aim near, not a GPS waypoint to hit exactly; adjust to the nearest safe,
+accessible point.
+
+```{r}
+#| label: analysis-functions
+#| code-summary: "Show the tributary analysis functions"
+
+drainage_defs <- list(
+  list(drainage = "Sulphur Creek", names = c("Sulphur Creek", "North Fork Sulphur Creek"), code = "SUL"),
+  list(drainage = "Pistol Creek", names = c("Pistol Creek", "Little Pistol Creek"), code = "PIS"),
+  list(drainage = "Rapid River", names = c("Rapid River"), code = "RAP"),
+  list(drainage = "Loon Creek", names = c("Loon Creek"), code = "LOO"),
+  list(drainage = "Warm Spring Creek", names = c("Warm Spring Creek", "South Fork Warm Spring Creek"), code = "WSC"),
+  list(drainage = "Mayfield Creek", names = c("Mayfield Creek", "East Fork Mayfield Creek", "West Fork Mayfield Creek"), code = "MAY"),
+  list(drainage = "Indian Creek", names = c("Indian Creek"), code = "IND"),
+  list(drainage = "Camas Creek", names = c("Camas Creek"), code = "CAM"),
+  list(drainage = "West Fork Camas Creek", names = c("West Fork Camas Creek", "South Fork Camas Creek"), code = "WFC"),
+  list(drainage = "Yellowjacket Creek", names = c("Yellowjacket Creek", "West Fork Yellowjacket Creek"), code = "YJC"),
+  list(drainage = "Wilson Creek", names = c("Wilson Creek"), code = "WIL"),
+  list(drainage = "Big Creek", names = c("Big Creek"), code = "BIG", partner = "Colden Baxter (U Idaho) and students"),
+  list(drainage = "Rush Creek", names = c("Rush Creek"), code = "RSH"),
+  list(drainage = "Beaver Creek (Big Ck drainage)", names = c("Beaver Creek"), code = "BVB", lat_min = 45, partner = "Payette NF (possible)"),
+  list(drainage = "Monumental Creek", names = c("Monumental Creek", "North Fork Monumental Creek", "West Fork Monumental Creek"), code = "MON", partner = "Payette NF (upper reach)"),
+  list(drainage = "Marble Creek", names = c("Marble Creek"), code = "MRB", partner = "Payette NF (possible, if they go in)")
+)
+
+analyze_trib <- function(def) {
+  seg <- fl |> filter(GNIS_NAME %in% def$names)
+  if (!is.null(def$lat_min)) {
+    ll <- st_transform(seg, 4326)
+    keep <- st_coordinates(st_centroid(st_geometry(ll)))[, 2] >= def$lat_min
+    seg <- seg[keep, ]
+  }
+  if (nrow(seg) == 0) return(NULL)
+  seg <- seg |> arrange(TotDASqKM)
+  pts <- suppressWarnings(st_centroid(seg))
+  joined <- st_join(pts, lith["GENERALIZE"], join = st_nearest_feature)
+  seg$GENERALIZE <- joined$GENERALIZE
+  seg$cumlen <- cumsum(seg$LENGTHKM)
+  ll_pts <- st_transform(pts, 4326)
+  seg$lat <- st_coordinates(ll_pts)[, 2]
+  seg$lon <- st_coordinates(ll_pts)[, 1]
+
+  total_len <- sum(seg$LENGTHKM)
+  comp <- st_drop_geometry(seg) |>
+    summarise(len = sum(LENGTHKM), .by = GENERALIZE) |>
+    mutate(pct = round(100 * len / total_len, 1)) |>
+    arrange(desc(pct))
+
+  d <- st_drop_geometry(seg)
+  changes <- which(d$GENERALIZE[-1] != d$GENERALIZE[-nrow(d)])
+  crossings <- tibble()
+  if (length(changes) > 0) {
+    crossings <- map_dfr(changes, function(i) {
+      tibble(
+        from_unit = d$GENERALIZE[i], to_unit = d$GENERALIZE[i + 1],
+        cumlen_km = round((d$cumlen[i] + d$cumlen[i + 1]) / 2, 1),
+        lat = round((d$lat[i] + d$lat[i + 1]) / 2, 5),
+        lon = round((d$lon[i] + d$lon[i + 1]) / 2, 5)
+      )
+    })
+  }
+
+  list(
+    drainage = def$drainage, code = def$code, partner = def$partner,
+    total_len_km = round(total_len, 1), composition = comp, crossings = crossings
+  )
+}
+
+pick_candidates <- function(r, fracs = c(0.33, 0.66)) {
+  if (is.null(r) || nrow(r$crossings) == 0) return(tibble())
+  total_len <- r$total_len_km
+  tol <- max(4, total_len * 0.15)
+  map_dfr(fracs, function(f) {
+    target <- total_len * (1 - f)
+    idx <- which.min(abs(r$crossings$cumlen_km - target))
+    best <- r$crossings[idx, ]
+    if (abs(best$cumlen_km - target) <= tol) {
+      tibble(
+        dist_upstream_km = round(total_len - best$cumlen_km, 1),
+        lat = best$lat, lon = best$lon,
+        rationale = paste0(best$from_unit, " ↔ ", best$to_unit)
+      )
+    } else {
+      tibble(
+        dist_upstream_km = round(total_len * f, 1), lat = NA, lon = NA,
+        rationale = "no major contact nearby — place by even spacing / access"
+      )
+    }
+  }) |> distinct(lat, lon, .keep_all = TRUE)
+}
+
+results <- map(drainage_defs, analyze_trib)
+names(results) <- map_chr(drainage_defs, "drainage")
+
+report_drainage <- function(def) {
+  r <- results[[def$drainage]]
+  if (is.null(r)) {
+    cat("No flowline match found for", def$drainage, "-- check GNIS_NAME spelling.\n\n")
+    return(invisible())
+  }
+  cand <- pick_candidates(r)
+  cat(sprintf("**%s (`%s`)** -- %.1f km of mapped channel.\n\n", def$drainage, def$code, r$total_len_km))
+  print(kable(r$composition |> rename(Lithology = GENERALIZE, `km` = len, `% of length` = pct)))
+  cat("\n")
+  if (nrow(cand) > 0) {
+    cat("Candidate new site positions (distance upstream of the `-010` confluence site):\n\n")
+    print(kable(cand |> rename(`km upstream` = dist_upstream_km, Rationale = rationale)))
+  } else {
+    cat("No lithologic contact detected along the mapped channel -- geologically uniform; ",
+        "space new sites evenly based on access rather than geology.\n", sep = "")
+  }
+  cat("\n")
+}
+```
+
+## Overview map
+
+```{r}
+#| label: fig-overview-map
+#| fig-width: 9
+#| fig-height: 9
+#| message: false
+
+lith_clip <- st_intersection(lith, st_union(hu8))
+existing_sites_sf <- sites |>
+  st_as_sf(coords = c("long_dd", "lat_dd"), crs = 4326) |>
+  st_transform(st_crs(fl))
+
+ggplot() +
+  geom_sf(data = lith_clip, aes(fill = GENERALIZE), color = NA, alpha = 0.6) +
+  geom_sf(data = fl, color = "gray20", linewidth = 0.15) +
+  geom_sf(data = hamann, color = "red", size = 1, shape = 4) +
+  geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
+  scale_fill_brewer(palette = "Set2", name = "Bedrock unit") +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "bottom", legend.text = element_text(size = 7)) +
+  guides(fill = guide_legend(nrow = 4)) +
+  labs(
+    title = "MFSR basin: bedrock lithology and sample sites",
+    caption = "Black dots = existing sample sites (master_site_lookup.csv). Red x's = Hamann & Kennedy (2012) Big Creek water samples."
+  )
+```
+
+Bedrock is dominated by two igneous provinces of very different age (Cretaceous
+Idaho Batholith granite and Eocene Challis Volcanics/intrusives), with a real
+Precambrian metamorphic component in the northeast part of the basin (Yellowjacket,
+Big Creek headwaters area) — see `docs/review_biogeochem_tracers.qmd` for the
+full area-weighted breakdown and why this predicts sharp, mappable Sr contrasts
+in exactly those tributaries that cross from one province into another.
+
+## Partner-covered sites — not part of Bryan's own itinerary
+
+Colden Baxter (University of Idaho) and students will collect Big Creek while
+out with students this summer. Payette National Forest biologists will help
+with upper Monumental Creek, and possibly Marble Creek if they go in. These
+three drainages are analyzed below for completeness (the geology doesn't stop
+mattering just because someone else is collecting), but the actual collection
+logistics/instructions for those collaborators belong in
+`field/partner_sample_collection_guide.qmd`, not here. Rush Creek and (Big
+Creek's) Beaver Creek are **not** currently covered by a partner as far as
+this plan knows — confirm with Baxter's crew whether their Big Creek trip
+extends to those sub-tributaries before assuming they're covered.
+
+## Sulphur, Pistol, Rapid, Loon, Indian corridor
+
+These five drainages sit along the Bear Valley/Marsh-to-Boundary Creek stretch
+of the MFSR and are the ones the Thurow redd-survey memo
+(`docs/memo_thurow_redd_sampling_alternatives.docx`) describes real foot-travel
+logistics for: a documented pattern is to shuttle to Pistol Creek's headwaters,
+survey/hike down Pistol (and Little Pistol) to the mainstem, then hike up
+Indian Creek to a shuttle waiting at *its* headwaters. That same shape (hike
+down one tributary, up the neighboring one, shuttle at both ends) is a natural
+fit for placing new Sr sites along the way, since you're walking the whole
+drainage rather than just visiting the mouth.
+
+```{r}
+#| label: fig-sulphur
+#| results: asis
+report_drainage(drainage_defs[[1]])
+```
+
+```{r}
+#| label: fig-pistol
+#| results: asis
+report_drainage(drainage_defs[[2]])
+```
+
+Pistol Creek's channel alternates repeatedly between granite and valley-fill
+(Quaternary alluvium) rather than crossing a single clean contact — expected
+given it's flowing through a broad batholith-floored valley, not between two
+different bedrock provinces. The two candidate positions above are still
+reasonable anchor points, but don't expect as sharp a contrast here as in a
+drainage that crosses between actual different-age bedrock (e.g. Indian Creek,
+below).
+
+```{r}
+#| label: fig-rapid
+#| results: asis
+report_drainage(drainage_defs[[3]])
+```
+
+Rapid River is 100% Idaho Batholith granite along its entire mapped length —
+geologically uniform. There's no lithologic reason to place a new site at any
+particular spot; if you add one beyond the existing `RAP-010`, place it based
+on access (trail conditions, camp spacing) rather than geology.
+
+```{r}
+#| label: fig-loon
+#| results: asis
+report_drainage(drainage_defs[[4]])
+```
+
+```{r}
+#| label: fig-indian
+#| results: asis
+report_drainage(drainage_defs[[7]])
+```
+
+Indian Creek is the most geologically interesting of this group: it's roughly
+half Challis volcanics, half Idaho Batholith granite, with the contact
+sitting well inside the drainage rather than at either end — a real
+candidate for the single sharpest Sr contrast among all the tributaries
+sampled this way (see also the Warm Spring/Mayfield discussion below, which
+shows the same volcanic/granite juxtaposition even more repeatedly).
+
+## Loon Creek's named sub-tributaries: Warm Spring & Mayfield creeks
+
+```{r}
+#| label: fig-warmspring
+#| results: asis
+report_drainage(drainage_defs[[5]])
+```
+
+```{r}
+#| label: fig-mayfield
+#| results: asis
+report_drainage(drainage_defs[[6]])
+```
+
+Both Warm Spring and Mayfield creeks weave repeatedly between Challis
+volcanics and Idaho Batholith granite — more evidence that this part of the
+basin (northwest of Loon Creek's mouth) sits right at the boundary between the
+two igneous provinces. That's good news for this project (lots of contrast to
+sample) but means the "candidate" positions above are representative anchor
+points along a genuinely patchy contact zone, not a single clean line — small
+adjustments to the nearest accessible spot won't meaningfully change what
+you'd measure.
+
+## Camas Creek and its named sub-tributaries: WF Camas & Yellowjacket creeks
+
+```{r}
+#| label: fig-camas
+#| results: asis
+report_drainage(drainage_defs[[8]])
+```
+
+```{r}
+#| label: fig-wfcamas
+#| results: asis
+report_drainage(drainage_defs[[9]])
+```
+
+```{r}
+#| label: fig-yellowjacket
+#| results: asis
+report_drainage(drainage_defs[[10]])
+```
+
+Yellowjacket Creek stands out here: it's the only drainage in this year's
+target list with a substantial share (~46%) of Precambrian Belt Supergroup
+metamorphic rock alongside Idaho Batholith granite. Per
+`docs/review_biogeochem_tracers.qmd`, ancient metamorphic terrain tends to be
+a highly radiogenic "anchor" — this is likely to be one of the most
+distinctive tributary signatures in the whole project, and worth prioritizing
+if time runs short.
+
+## Wilson Creek
+
+```{r}
+#| label: fig-wilson
+#| results: asis
+report_drainage(drainage_defs[[11]])
+```
+
+Wilson Creek is short but geologically mixed (granite, metamorphic, and
+valley-fill all present) — a compact drainage where 2 well-placed sites
+should still capture most of the real variation.
+
+## Big Creek drainage (partner-covered) and its sub-tributaries
+
+```{r}
+#| label: fig-big
+#| results: asis
+report_drainage(drainage_defs[[12]])
+```
+
+```{r}
+#| label: fig-rush
+#| results: asis
+report_drainage(drainage_defs[[13]])
+```
+
+```{r}
+#| label: fig-beaverbig
+#| results: asis
+report_drainage(drainage_defs[[14]])
+```
+
+```{r}
+#| label: fig-monumental
+#| results: asis
+report_drainage(drainage_defs[[15]])
+```
+
+```{r}
+#| label: fig-marble
+#| results: asis
+report_drainage(drainage_defs[[16]])
+```
+
+Big Creek itself is the most geologically diverse single tributary in this
+whole plan (five different rock categories along its length, including a
+meaningful metamorphic/sedimentary component) — this is exactly the kind of
+drainage where Baxter's crew collecting good spatial coverage along the
+mainstem will be valuable. Rush Creek and Beaver Creek (this Big Creek one,
+`BVB` — not to be confused with Marsh Creek's `BVR`, see
+`data/site_id_convention.md`) both show real igneous/metamorphic contrasts
+too and are worth confirming coverage on with Baxter's team.
+
+## Punch list
+
+```{r}
+#| label: tbl-punchlist
+punchlist <- map_dfr(drainage_defs, function(def) {
+  r <- results[[def$drainage]]
+  tibble(
+    drainage = def$drainage,
+    code = def$code,
+    mapped_km = if (!is.null(r)) r$total_len_km else NA,
+    dominant_unit = if (!is.null(r)) r$composition$GENERALIZE[1] else NA,
+    n_contacts = if (!is.null(r)) nrow(r$crossings) else NA,
+    partner = if (!is.null(def$partner)) def$partner else "Bryan (own itinerary)"
+  )
+})
+kable(punchlist)
+```
+
+Priorities if the season runs short on time: **Yellowjacket Creek** (only
+metamorphic-heavy drainage in Bryan's own list) and **Indian Creek** (cleanest
+single volcanic/granite contact) give the most new isotopic information per
+site visited. **Rapid River** is the lowest-priority stop for a *new* upstream
+site specifically, since it's geologically uniform — the existing `RAP-010`
+already characterizes it well.

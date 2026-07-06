@@ -1,0 +1,116 @@
+---
+title: "MFSR Strontium Isoscape — Partner Water Sample Collection Guide"
+subtitle: "2026 field season"
+format: docx
+editor: visual
+---
+
+## Why we're asking you to collect these samples
+
+We're building a strontium isotope (⁸⁷Sr/⁸⁶Sr) map of the Middle Fork Salmon
+River watershed. Different bedrock types (granite, volcanic rock, ancient
+metamorphic rock) leave a distinct, measurable chemical fingerprint in stream
+water — and Chinook salmon record that same fingerprint in their otoliths (ear
+bones) as they grow, the same way tree rings record a timeline. A water Sr
+sample from your stream gives us a real, ground-truthed data point for the
+map, which lets us later trace where a given fish spent its early life just
+by reading its otolith chemistry. Your samples fill in geography we can't
+reach ourselves this season — thank you for helping with this.
+
+Questions at any point: **Bryan Maitland**, USDA Forest Service Rocky Mountain
+Research Station — bryan.maitland@usda.gov, 917-838-0174.
+
+## Which sites you're covering
+
+| Who | Stream | Notes |
+|---|---|---|
+| Colden Baxter (U Idaho) & students | Big Creek | Existing confluence site `BIG-010` (45.09418, -114.73425, @ MFSR confluence) is already established. Please also collect 1-2 samples upstream if your trip allows — see candidate spots below. |
+| Payette NF biologists | Upper Monumental Creek | See note below — the upper reach you'll likely access sits on uniform bedrock, so one representative sample is enough there. |
+| Payette NF biologists (if you go in) | Marble Creek | Existing confluence site `MRB-010` (44.74471, -115.01748) already established; one additional upstream sample would help (see below). |
+
+**Big Creek candidate upstream spots** (based on mapped bedrock — see
+`docs/site_selection_2026.qmd` for the full analysis): roughly 20.5 km
+upstream of the confluence (~45.130°N, -114.951°W, where volcanic rock meets
+valley-fill deposits) and/or ~48 km upstream (~45.166°N, -115.210°W, a
+metamorphic/sedimentary contact). Treat these as "aim near," not exact GPS
+targets — collect wherever is safe and reachable closest to those points.
+
+**Upper Monumental Creek note**: our bedrock mapping shows the uppermost
+~30+ km of Monumental Creek sits entirely within one volcanic rock unit — no
+internal contact up there for you to specifically target, so wherever you're
+able to access is fine for a single representative sample. If your trip
+happens to reach down to about 15 km upstream of the Big Creek confluence
+(~45.066°N, -115.117°W), that's the one spot where the mapped bedrock shifts
+to a metamorphic/sedimentary unit and a second sample there would be
+valuable — but only if it's on your route already, not worth a special trip.
+
+**Marble Creek candidate spot**: ~11 km upstream of the confluence
+(~44.813°N, -114.981°W), where volcanic rock meets granite.
+
+If plans change and you end up covering different reaches than listed here,
+that's fine — just record the actual GPS coordinates for whatever you
+collect (see datasheet fields below) so we can place it correctly.
+
+## Collection protocol
+
+**Materials** (we can supply a kit if you don't have these already):
+
+-   1 L Nalgene bottle (temporary collection/hold)
+-   125 mL acid-washed sample bottle (labeled)
+-   60 mL syringe, standard tip
+-   0.45 µm syringe filter
+-   Nitrile gloves
+-   Sharpie for labeling
+-   Cooler with ice
+
+**Steps**:
+
+1.  Put on nitrile gloves. Collect \~1 L of stream water in the Nalgene
+    bottle, from mid-current if possible (avoid stagnant edges/backwater).
+2.  Attach the syringe (no filter yet). Draw and expel water from the Nalgene
+    through the syringe 3 times to rinse it.
+3.  Rinse the 125 mL sample bottle: expel \~2-5 mL from the syringe onto the
+    ground first (this clears the filter's storage residue once attached —
+    see step 4), then add \~5-10 mL of sample water to the bottle, cap, shake
+    vigorously, and dump. Repeat 3 times.
+4.  Attach the 0.45 µm syringe filter to the syringe. **Do not let the filter
+    touch anything except the plastic packaging it came in** — no hands, no
+    ground, no bottle threads.
+5.  Draw water from the Nalgene into the syringe and push it through the
+    filter into the 125 mL sample bottle until you have \~125 mL (refill the
+    syringe from the Nalgene as needed).
+6.  Cap the bottle immediately and label it (see below).
+7.  Store on ice as soon as possible and keep cold until hand-off/shipping.
+
+## Labeling and datasheet
+
+Label each bottle with a site code in the format `[STREAM]-[POSITION]`
+(e.g. `BIG-010`, `MON-020`) — use the existing code from the table above if
+you're at an established site, or make up a placeholder like `MON-NEW1` if
+you're at a new spot and let Bryan assign the real code afterward. Do not
+reuse an existing code for a different physical location.
+
+For every sample, record:
+
+| Field | Example |
+|---|---|
+| Site code (or placeholder) | `BIG-020` or `MON-NEW1` |
+| Date | 7/15/2026 |
+| GPS coordinates (decimal degrees) | 45.1302, -115.9512 |
+| Collector name | |
+| Time of day | |
+| Notes (turbidity, flow, anything unusual) | |
+
+A photo of the site (looking upstream and downstream) is a nice bonus but not
+required.
+
+## Getting samples back to us
+
+Keep samples cold (on ice or refrigerated) until you can either hand them off
+in person or ship them. If shipping, pack on ice in a cooler or insulated box
+and contact Bryan first to arrange timing and a shipping address — samples
+sitting in transit too long or warming up can be affected, so we'll coordinate
+the fastest path back.
+
+Thanks again for helping expand this dataset — every tributary sample
+directly improves what we can say about where these fish come from.

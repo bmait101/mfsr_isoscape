@@ -1,0 +1,327 @@
+---
+title: "Biogeochemistry and Fish"
+subtitle: "Sr isotopes, otoliths, and how MFSR geology drives Sr variation"
+format: html
+editor: visual
+bibliography: references.bib
+---
+
+## Biogeochem Overview
+
+Applied goal: use archival tissues (eye lens, otolith, etc.), chemical tracers, and biochronologies to understand fish growth, diet, movement, and habitat needs. So, geochemical analysis (elements, isotopes) of archival biological tissues.
+
+**Geochemistry**: applies chemistry to explain geological systems (Earth crust, oceans, atmosphere)
+
+**Biogeochemistry**: study of how life, chemical processes, and the environment interact. Or, connections between the lithosphere, hydrosphere, and biosphere.
+
+**Geochemical tracers**:
+
+-   Elemental concentrations (Sr:Ca, Sr:Ba, Fe, etc.)
+-   Stable isotope ratios (Sr, O)
+
+**Biological archival structures and tissues**:
+
+-   calcified: otoliths, scales, vertebrae, fin rays, statoliths, shell, operculum
+-   other: eye lenses
+
+------------------------------------------------------------------------
+
+## Strontium isotope ratios (⁸⁷Sr/⁸⁶Sr): the fundamentals
+
+Strontium has four naturally occurring isotopes: ⁸⁴Sr, ⁸⁶Sr, ⁸⁷Sr, and ⁸⁸Sr. Three
+of these (⁸⁴Sr, ⁸⁶Sr, ⁸⁸Sr) are stable and were fixed in their present abundance
+when the Earth formed. The fourth, ⁸⁷Sr, is partly **radiogenic**: it
+accumulates over geologic time as rubidium-87 (⁸⁷Rb) — a naturally occurring,
+slightly radioactive element that substitutes for potassium in rock-forming
+minerals like feldspar and mica — decays to ⁸⁷Sr with a half-life of about
+48.8 billion years. That half-life is longer than the age of the universe, so
+this is a very slow clock, but it's been running since each rock's
+crystallization, and different rocks started with very different amounts of
+Rb relative to Sr.
+
+This is the whole reason ⁸⁷Sr/⁸⁶Sr works as a geologic tracer:
+
+-   **Rock age and original Rb/Sr content set the ratio.** Old, Rb-rich rocks
+    (continental crust, granites, many metamorphic rocks) have had a long time
+    to accumulate extra ⁸⁷Sr and so carry high, "evolved" ⁸⁷Sr/⁸⁶Sr ratios.
+    Young, Rb-poor rocks derived more directly from the mantle (basalts,
+    many volcanic rocks) carry low, closer-to-primordial ratios. This is why
+    the pattern in @sec-geology below (batholith granite = high, Challis
+    volcanics = lower) isn't a rule of thumb — it's a direct consequence of
+    radioactive decay physics.
+-   **Weathering transfers the rock's ratio to water, unchanged.** As water
+    moves through soil and rock, it dissolves Sr along with other ions. The
+    ⁸⁷Sr/⁸⁶Sr ratio of the dissolved Sr matches the weathered rock/sediment,
+    because weathering is a chemical dissolution process, not a nuclear one —
+    it doesn't alter isotope ratios, just liberates the existing atoms into
+    solution. A stream's ⁸⁷Sr/⁸⁶Sr ratio is therefore a flow-weighted average
+    of everything its catchment has washed over: bedrock, soil, and any
+    groundwater contribution.
+-   **Biology can't fractionate it, and that's the key property that makes
+    it useful as a tracer.** Ordinary stable-isotope fractionation (e.g., in
+    oxygen or carbon isotopes) happens because lighter and heavier isotopes of
+    the same element react or diffuse at slightly different rates during
+    biological and physical processes. ⁸⁷Sr and ⁸⁶Sr differ in mass by only
+    about 1.2% (relative to each other), and both are already "made" — the
+    ratio between them was set by radioactive decay in the rock, long before
+    the water or the fish ever encountered it. A fish has no metabolic
+    machinery that can shift that ratio one way or the other. So the
+    ⁸⁷Sr/⁸⁶Sr ratio a fish takes up is a direct, unaltered readout of the water
+    it was living in — not a biologically modified proxy.
+-   **Sr substitutes for Ca in the fish's skeletal chemistry.** Strontium and
+    calcium are chemically similar (same group of the periodic table, similar
+    ionic radius), so as a fish extracts calcium from water to build calcified
+    structures, some strontium is incorporated right alongside it — in
+    proportion to what's available in the water, at a roughly consistent
+    partitioning ratio. That's the physiological doorway that gets the
+    water's ⁸⁷Sr/⁸⁶Sr signature into the otolith (see below) in the first
+    place.
+
+Riverine Sr isotope values vary considerably as a function of bedrock
+lithology (including unconsolidated sediments) and rock age, this variation is
+precisely and sequentially archived in otolith composition, and that record
+enables quantitative reconstructions of natal origins and migratory pathways
+with high fidelity. Beyond fisheries, the same logic underlies Sr-isotope
+applications in geology (rock weathering, sediment provenance, hydrologic flow
+paths) and archaeology (reconstructing human/animal migration from skeletal
+remains).
+
+------------------------------------------------------------------------
+
+## How MFSR geology drives Sr variation {#sec-geology}
+
+Bedrock falls into three families, and each behaves differently as a Sr
+source:
+
+-   **Igneous rocks** (crystallized from magma/lava — granite, basalt,
+    rhyolite) set the foundational crustal chemistry. Their Sr signature
+    reflects mantle vs. crustal origin and, critically, age: slow-cooling,
+    coarse-grained **plutonic/intrusive** rocks (granite) and fast-cooling,
+    fine-grained **volcanic/extrusive** rocks (basalt, rhyolite) can carry
+    very different ⁸⁷Sr/⁸⁶Sr signatures even when geographically close,
+    because they crystallized at different times from different source
+    magmas. Strontium substitutes for calcium in feldspar, so igneous rocks
+    with more feldspar (granites) carry more Sr, and its isotopic signature
+    tracks rock age: young mantle-derived basalts run low (~0.703-0.705),
+    old granitic continental crust runs high (~0.710+), and intermediate
+    volcanics (andesite, rhyolite) land in between.
+-   **Sedimentary rocks** (compressed sediment — sandstone, shale, limestone)
+    are chemically diverse because they inherit Sr from whatever rock they
+    were eroded from. Carbonates (limestone, dolomite) can locally dominate
+    water chemistry and buffer both pH and Sr concentration; shale/sandstone
+    inherit more variable signatures from their parent material. Their
+    ⁸⁷Sr/⁸⁶Sr ratio tends to mirror the age and type of the *source* sediment
+    rather than following a simple young-vs-old rule, and where they're
+    present they can dampen or blend the isotopic signal from surrounding
+    igneous/metamorphic terrain.
+-   **Metamorphic rocks** (existing rock transformed by heat and pressure —
+    schist, gneiss, marble) inherit their parent rock's Sr budget, and
+    metamorphism reshuffles minerals without resetting the radiogenic clock:
+    old sources stay old. Ancient crustal metamorphics are typically very
+    radiogenic (high ⁸⁷Sr/⁸⁶Sr), making them useful isotopic "anchors" —
+    reliably high, distinctive values wherever they crop out.
+
+### The MFSR's actual rock mosaic
+
+The Middle Fork Salmon River cuts through a genuine geologic patchwork, not a
+uniform lithology — confirmed by intersecting the USGS State Geologic Map
+Compilation for Idaho (`data/spatial/geology/idaho_lithology.shp`) against the
+MFSR HUC8 boundary. By area, the basin breaks down as:
+
+| Unit (age-rock) | Share of basin area | What it is |
+|---|---|---|
+| Tcv — Eocene volcanics | ~30% | Challis Volcanics (andesite/rhyolite/tuff), ~45-50 Ma |
+| Tei — Eocene intrusives | ~26% | Challis-age plutons (intrusive equivalent of the same magmatic episode) |
+| Kg + Ktg — Cretaceous granitoids | ~24% | Idaho Batholith granite/tonalite-granodiorite, ~90-100 Ma |
+| Yy/Ym/Yl/Yha — Precambrian metasediments | ~10% | Belt Supergroup metamorphics/metasedimentary rocks, >1.4 Ga |
+| Qg — Quaternary surficial | ~5% | Glacial/alluvial deposits (not bedrock, but they mediate local water chemistry) |
+| CZs/PzYs/DSOs/other sedimentary | <1% | Scattered Cambrian-Paleozoic sedimentary sequences |
+
+So more than half the basin (Tcv + Tei, ~56%) is the Eocene Challis
+magmatic complex, roughly a quarter (Kg + Ktg) is the older Cretaceous Idaho
+Batholith, and Precambrian Belt Supergroup metamorphics make up a real but
+secondary ~10% — with true sedimentary bedrock nearly absent. This matches
+what the ⁸⁷Sr/⁸⁶Sr theory above predicts: two igneous provinces of very
+different age sitting next to a much older metamorphic terrain should produce
+sharp, mappable Sr contrasts at their contacts, and that's exactly the
+structure the site-selection work in `docs/site_selection_2026.qmd` uses to
+place new sampling sites — not evenly along each tributary, but where a stream
+crosses from one unit into another.
+
+**Analogy worth keeping**: batholith granite is a low, simple "youthful" tone;
+old metamorphic terrain is a layered, complex "storyteller" tone; the Challis
+volcanics sit in between. The Middle Fork isn't geologically uniform — it's a
+mosaic, and each tributary's dominant lithology imprints a distinct chemical
+signature that gets carried downstream and archived in fish otoliths.
+
+### It's not just theory here — it's already measured
+
+`data/spatial/IsoWorld.gdb` holds digitized water-sample ⁸⁷Sr/⁸⁶Sr results
+from prior published studies in this exact watershed. The `Hamaan2012_SR_WaterSamples`
+layer (Hamann and Kennedy 2012 — see chronological review below, no `references.bib` entry yet) sampled directly
+in the Big Creek drainage and found real, substantial within-drainage spread:
+mainstem Big Creek sites clustered around 0.7095-0.7097, while Smith Creek (a
+Big Creek tributary) measured 0.7171 and Big Creek upstream of Beaver Creek
+measured 0.7148 — a difference of roughly 0.006-0.008, an order of magnitude
+larger than typical analytical uncertainty (~0.00002 SE on our own ICP-MS
+runs). That's a real tributary picking up a distinct local lithology, not
+noise. Bataille and Bowen (2012, see below) independently estimated the
+broader MFSR area at roughly 0.707-0.709 from a bedrock/weathering model —
+consistent with, and now directly refined by, both the Hamaan/Kennedy field
+data and the area-weighted lithology breakdown above.
+
+------------------------------------------------------------------------
+
+## Otoliths
+
+-   Ear stone (used to detect sound; high density \~2.95 g/cm3)
+-   Combined with lateral line, makes the octavolaateralis system (sound perception)
+-   Slightly analogous to human ear bones
+-   Made of CaCO~3~ (calcium carbonate, \>90%) and other organic matter (\~10%)
+-   Not true bones, closer to stones
+-   Sequentially built, daily and yearly rings
+-   Key Uses:
+    -   age, growth, shape analyses and species/stock identification (morphometrics),
+    -   chemical approaches (microchemistry; lasers)
+
+**Otolith microchemistry:** analyze trace elements and stable isotopes within fish ear bones
+
+-   Combine with growth rate / 'Omics to understand why
+-   Info on percent of pop that migrates to different regions, and which are most successful
+-   Info on marine survival rates
+
+### Why the otolith is a chronological archive
+
+Unlike bone, otoliths are metabolically inert once deposited — material laid
+down is not resorbed or remodeled, so each growth increment is a permanent,
+undisturbed record. Growth proceeds in accretionary layers: fast, wide bands
+in warm/high-growth periods alternate with narrow, dense bands in
+slow-growth/winter periods, producing the annual rings used for aging, with
+finer **daily increments** nested within them (visible under higher
+magnification, validated by known-age fish). Because each increment
+incorporates the water's dissolved-ion chemistry at the moment it formed —
+including ⁸⁷Sr/⁸⁶Sr, which arrives unaltered per the biology above — a single
+otolith is effectively a day-by-day (or at coarser resolution, life-stage-by-
+life-stage) transect through the fish's entire history of water exposure, laid
+out spatially from the primordial core (embryonic/natal signature) to the
+otolith edge (most recent).
+
+**Laser-ablation microchemistry** exploits this directly: a focused laser
+samples material along a chosen transect — usually core-to-edge — vaporizing
+a small, precise spot at a time, and the resulting material stream feeds an
+ICP-MS (or ICP-MS coupled to a multi-collector for isotope ratios) that
+measures elemental and isotopic composition at each point. Stepping the laser
+along the transect turns the otolith into a chemical time series: natal
+origin at the core, subsequent rearing habitat(s) and any migrations
+in between, reconstructed at whatever spatial/temporal resolution the
+increment structure allows. Matching that time series against a Sr isoscape
+built from stream-water samples (like this project's compiled dataset) is
+what allows a natal-origin or migratory-pathway assignment for a fish sampled
+anywhere downstream — including well after the fact, from returning adults or
+even archived/historical specimens.
+
+------------------------------------------------------------------------
+
+## Sr isotope microchemistry lit review
+
+1989: first study using otolith microchemistry (John Kalish, U Tasmania)
+
+Riverine Sr values vary because of bedrock lithology
+
+-   Capo et al. 1998, Palmer and Edmond 1992
+
+First Sr / otolith papers:
+
+-   @kennedy1997, @ingram1999
+
+Reconstructions of their natal origins and migratory pathways:
+
+-   @kennedy2002, @barnett-johnson2008, @Brennan2015, @sturrock2015
+
+Inform conservation strategies:
+
+-   @cordoleani2021, @dunnigan2023, @phillis2018, @zitek2023
+
+Sr isoscapes for Sacramento River basin (discrete approach):
+
+-   @barnett-johnson2007, @chen2025, @cordoleani2021a, @cordoleani2024, @hobson2010, @phillis2018a, @willmes2018, @willmes2021, @willmes2024
+
+Continuous Approach:
+
+-   combined modeling framework that integrates dendritic network models of 87Sr/86Sr variation across the river networks (spatial stream network / "SSN" models)
+
+### Chronological Review
+
+@kennedy1997
+
+-   first demonstrated potential for using Sr isotope ratios to discriminate among juvenile Atlantic salmon populations reared in 10 different tributaries in Vermont
+
+@ingram1999
+
+-   87Sr/86Sr ratios to determine natal origin for salmon in Scaramento-San Joaquin basin
+
+@kennedy2000
+
+-   reconstruct movement patterns and origin of individual juvenile Atlantic salmon in Connecticut River with high fidelity
+-   formal overview of Sr as geochemical marker in fishes
+-   context of isotopic turnover in fish, fish movements, and regional geology
+
+@kennedy2002
+
+-   reconstruct life history of four returning adult Atlantic salmon
+-   natal origins and migratory pathways
+
+@bacon2004
+
+-   Sr and Sr/Ca to reconstruct migration and rearing histories of Chinook salmon
+
+@barnett-johnson2008
+
+-   linking Sr and otoliths with landscape geology in CA Central Valley system
+-   natal origins and migratory pathways
+
+Gibson-Reinemer et al., 2009
+
+-   elemental and isotopic concentrations to detect origin and movement in hatchery rainbow trout in Wyoming and Colorado
+
+Barnett-Johnson et al., 2010
+
+-   multi-locus genotypes (microsats) and otolith 87Sr/86Sr ratios collected on the same individuals were complementary markers when applied in a hierarchy
+-   microsats assigned fish to upper Columbia River Su/F genetic group
+-   Sr provided finer-scale assignment to 5 natal river and hatchery groups
+-   "Stock identification at the scales of individual rivers and hatcheries would help elucidate the abundance, distribution, and the relative contributions of natal sources important for the recovery and spatial management of Chinook salmon"
+
+Miller et al., 2011
+
+-   Chemical and structural composition of modern / archaeological otoliths from Upper Columbia
+-   Found similarly between old and modern summer-fall run Chinook
+-   Possible to maintain pre-developmental life histories with strategic management
+
+Bataille and Bowen, 2012
+
+-   Mapped large-scale 87Sr/86Sr variation in bedrock and water across CONUS that include the combined effects of geology and time
+-   Fit bedrock model to predict rock Sr, then predict water Sr from weathering rates and Sr content
+-   Has MFSR-ish area at 0.707 to 0.709 -- consistent with the area-weighted lithology breakdown and Hamann/Kennedy field data in @sec-geology above
+
+Hamann and Kennedy, (2012)
+
+-   Big Creek, MFSR, juvenile dispersal affects straying in Chinook salmon
+-   Used Sr87/Sr86 to reconstruct migratory/movement behavior of adults
+-   Their water-sample data (digitized in `data/spatial/IsoWorld.gdb`) show real within-drainage Sr spread of ~0.006-0.008, directly demonstrated in @sec-geology above
+
+Brennan et al. (year TBD -- confirm from source; likely mis-transcribed as 2026 in earlier notes)
+
+-   SSN (spatial stream network) Sr isoscape for Sacramento River basin
+-   identifies natal and rearing tributaries missed by discrete approaches
+
+> **Note on citations above:** the entries listed by author/year only (Kalish
+> 1989, Capo et al. 1998, Palmer and Edmond 1992, Bataille and Bowen 2012,
+> Hamann and Kennedy 2012, Gibson-Reinemer et al. 2009, Barnett-Johnson et al.
+> 2010, Miller et al. 2011, Brennan et al.) don't have `references.bib`
+> entries yet. Rather than guess at exact volume/page/DOI details, add them to
+> `references.bib` from the actual source PDFs when you have them on hand, then
+> switch these to proper `@citekey` references like the others in this section.
+
+------------------------------------------------------------------------
+
+## References

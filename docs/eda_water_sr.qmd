@@ -1,0 +1,125 @@
+---
+title: "MFSR Water Sr EDA"
+subtitle: "Exploratory summary of compiled water ⁸⁷Sr/⁸⁶Sr results"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(here)
+library(sf)
+
+dat <- read_csv(here("results/compiled_sr_data.csv"), show_col_types = FALSE)
+```
+
+This doc reads the output of `R/01_compile_sr_data.R`
+(`results/compiled_sr_data.csv`). Re-run that script first if you've added new
+samples or a new ICP-MS batch.
+
+## Data-quality checks
+
+Samples with no coordinates (should be empty -- everything should resolve
+through `master_site_lookup.csv`):
+
+```{r}
+#| label: qc-missing-coords
+dat |>
+  filter(is.na(lat_dd) | is.na(long_dd)) |>
+  select(sample_id, site_id, waterbody_name)
+```
+
+Samples with no Sr result yet (expected for very recent collections still
+waiting on lab turnaround; anything old showing up here is worth chasing
+down):
+
+```{r}
+#| label: qc-missing-sr
+dat |>
+  filter(is.na(sr_87)) |>
+  select(sample_id, site_id, waterbody_name, collection_date)
+```
+
+Duplicate `sample_id` values (should be empty -- the compile script already
+collapses analytical re-runs, so any duplicates here indicate a real
+sample-log data-entry problem):
+
+```{r}
+#| label: qc-dup-ids
+dat |>
+  count(sample_id) |>
+  filter(n > 1)
+```
+
+## Samples per stream and year
+
+```{r}
+#| label: samples-per-stream-year
+dat |>
+  mutate(year = year(collection_date)) |>
+  count(waterbody_name, year) |>
+  pivot_wider(names_from = year, values_from = n, values_fill = 0) |>
+  arrange(waterbody_name)
+```
+
+## Sr summary by stream
+
+```{r}
+#| label: sr-summary-by-stream
+dat |>
+  filter(!is.na(sr_87)) |>
+  summarise(
+    n = n(),
+    sr_min = min(sr_87),
+    sr_mean = mean(sr_87),
+    sr_max = max(sr_87),
+    .by = waterbody_name
+  ) |>
+  arrange(desc(sr_mean))
+```
+
+## Sr by waterbody
+
+```{r}
+#| label: fig-sr-by-waterbody
+#| fig-width: 8
+#| fig-height: 7
+dat |>
+  filter(!is.na(sr_87)) |>
+  ggplot(aes(x = reorder(waterbody_name, sr_87), y = sr_87)) +
+  geom_point(size = 3) +
+  coord_flip() +
+  theme_bw(base_size = 14) +
+  labs(y = expression(''^87*'Sr/'^86*'Sr'), x = "")
+```
+
+## Map of sampled sites
+
+Mean Sr value per site, plotted against the MFSR stream network.
+
+```{r}
+#| label: fig-site-map
+#| message: false
+#| fig-width: 8
+#| fig-height: 8
+
+flowline <- st_read(here("data/spatial/flowline_pn17_nsi_mfsr.gpkg"), quiet = TRUE)
+
+site_means <- dat |>
+  filter(!is.na(sr_87)) |>
+  summarise(sr_87 = mean(sr_87), lat_dd = first(lat_dd), long_dd = first(long_dd), .by = site_id) |>
+  st_as_sf(coords = c("long_dd", "lat_dd"), crs = 4326) |>
+  st_transform(st_crs(flowline))
+
+ggplot() +
+  geom_sf(data = flowline, color = "steelblue", linewidth = 0.3) +
+  geom_sf(data = site_means, aes(color = sr_87), size = 2.5) +
+  scale_color_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
+  theme_minimal(base_size = 12) +
+  labs(title = "Mean site Sr isotope ratio")
+```
+
+For interactive panning/zooming during fieldwork planning, `mapview::mapview(site_means, zcol = "sr_87")` is a quick alternative to the static map above.

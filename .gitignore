@@ -46,5 +46,10 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
+# Quarto render artifacts
+/.quarto/
+*_files/
+*.html
+
 # Custom
 .positai

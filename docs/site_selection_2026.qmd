@@ -460,6 +460,7 @@ ggplot() +
   geom_sf(data = fl, color = "grey20", linewidth = 0.15) +
   geom_sf(data = fl |> filter(GNIS_NAME == "Middle Fork Salmon River"), color = "blue", linewidth = 1) +
   geom_sf(data = target_segs, color = "blue", linewidth = 0.5) +
+  geom_sf(data = hamann, color = "red", size = 1, shape = 4) +
   geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
   scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
   map_furniture() +
@@ -475,7 +476,7 @@ Bedrock is dominated by two igneous provinces of very different age (Cretaceous 
 
 Colden Baxter (University of Idaho) and students will collect Big Creek while out with students this summer. Payette National Forest biologists will help with upper Monumental Creek. Marble Creek is unconfirmed — Payette may cover it if they go in, but Bryan should plan to collect it himself if that doesn't pan out. These drainages are analyzed below for completeness (the geology doesn't stop mattering just because someone else is collecting), and the candidate site coordinates below are exactly what should go into `field/partner_sample_collection_guide.qmd` for Baxter's and Payette's crews. Rush Creek and (Big Creek's) Beaver Creek are **not** currently covered by a partner as far as this plan knows — confirm with Baxter's crew whether their Big Creek trip extends to those sub-tributaries before assuming they're covered.
 
-## Headwaters: Big Hole (Marsh Creek + Bear Valley Creek confluence) to Boundary Creek
+## Headwaters
 
 The Middle Fork Salmon River officially begins at "Big Hole," where Marsh Creek and Bear Valley Creek meet (confirmed in the flowline data: both streams' mouths sit exactly at the same point, 0 m apart, which is also the most-upstream end of the "Middle Fork Salmon River" `GNIS_NAME` reaches). Bryan already has samples from upper Bear Valley Creek (`BVC-010/020/030`) and upper Marsh Creek (`MRS-010/020/030`), but two stretches remain unsampled: the lower ~8 km of Marsh Creek between `MRS-010` and Big Hole itself, and the entire ~18 km of brand-new MFSR channel from Big Hole down to the existing `MFSR-070` site at the Boundary Creek put-in.
 
@@ -509,11 +510,7 @@ report_drainage(drainage_defs[[18]])
 
 Unlike lower Marsh Creek, this reach is almost entirely uniform Idaho Batholith granite start to finish (the only shift is to Quaternary valley-fill in the last ~1 km, right next to `MFSR-070` -- not a useful *new* site since it's basically on top of the existing one). There's no lithologic argument for placing this new site at a particular spot along the 18 km, so the recommendation is driven by the sampling question itself rather than geology: place **`MFSR-080`** close to Big Hole (roughly 44.454, -115.230, ~1.5 km below the confluence) to capture the newly-mixed Marsh Creek + Bear Valley Creek signature right where the two streams combine, rather than partway down a reach that won't change much either way.
 
-## Sulphur, Pistol, Rapid, Loon, Indian corridor
-
-These five drainages sit along the Bear Valley/Marsh-to-Boundary Creek stretch of the MFSR and are the ones the Thurow redd-survey memo (`docs/memo_thurow_redd_sampling_alternatives.docx`) describes real foot-travel logistics for: a documented pattern is to shuttle to Pistol Creek's headwaters, survey/hike down Pistol (and Little Pistol) to the mainstem, then hike up Indian Creek to a shuttle waiting at *its* headwaters. That same shape (hike down one tributary, up the neighboring one, shuttle at both ends) is a natural fit for placing new Sr sites along the way, since you're walking the whole drainage rather than just visiting the mouth.
-
-### Sulphur Creek
+## Sulphur Creek
 
 ```{r}
 #| label: fig-map-sulphur
@@ -526,7 +523,7 @@ map_drainage(drainage_defs[[1]])
 report_drainage(drainage_defs[[1]])
 ```
 
-### Pistol Creek
+## Pistol Creek
 
 ```{r}
 #| label: fig-map-pistol
@@ -541,7 +538,7 @@ report_drainage(drainage_defs[[2]])
 
 Pistol Creek's channel alternates repeatedly between granite and valley-fill (Quaternary alluvium) rather than crossing a single clean contact — expected given it's flowing through a broad batholith-floored valley, not between two different bedrock provinces. The two candidate positions above are still reasonable anchor points, but don't expect as sharp a contrast here as in a drainage that crosses between actual different-age bedrock (e.g. Indian Creek, below).
 
-### Rapid River
+## Rapid River
 
 ```{r}
 #| label: fig-map-rapid
@@ -555,6 +552,36 @@ report_drainage(drainage_defs[[3]])
 ```
 
 Rapid River is 100% Idaho Batholith granite along its entire mapped length — geologically uniform. There's no lithologic reason to place a new site at any particular spot; if you add one beyond the existing `RAP-010`, place it based on access (trail conditions, camp spacing) rather than geology.
+
+## Indian Creek
+
+```{r}
+#| label: fig-map-indian
+map_drainage(drainage_defs[[7]])
+```
+
+```{r}
+#| label: fig-indian
+#| results: asis
+report_drainage(drainage_defs[[7]])
+```
+
+Indian Creek is the most geologically interesting of this group: it's roughly half Challis volcanics, half Idaho Batholith granite, with the contact sitting well inside the drainage rather than at either end — a real candidate for the single sharpest Sr contrast among all the tributaries sampled this way (see also the Warm Spring/Mayfield discussion below, which shows the same volcanic/granite juxtaposition even more repeatedly).
+
+### Marble Creek
+
+```{r}
+#| label: fig-map-marble
+map_drainage(drainage_defs[[16]])
+```
+
+```{r}
+#| label: fig-marble
+#| results: asis
+report_drainage(drainage_defs[[16]])
+```
+
+## Loon Creek and sub-tributaries:Warm Spring and Mayfield creeks
 
 ### Loon Creek
 
@@ -571,22 +598,6 @@ report_drainage(drainage_defs[[4]])
 
 Loon Creek's mapped extent grew from 31.4 km to 54.6 km once the missing lower-third reaches were restored (see the QA/QC callout at the top) — the composition and candidate positions above reflect the corrected, full-length channel.
 
-### Indian Creek
-
-```{r}
-#| label: fig-map-indian
-map_drainage(drainage_defs[[7]])
-```
-
-```{r}
-#| label: fig-indian
-#| results: asis
-report_drainage(drainage_defs[[7]])
-```
-
-Indian Creek is the most geologically interesting of this group: it's roughly half Challis volcanics, half Idaho Batholith granite, with the contact sitting well inside the drainage rather than at either end — a real candidate for the single sharpest Sr contrast among all the tributaries sampled this way (see also the Warm Spring/Mayfield discussion below, which shows the same volcanic/granite juxtaposition even more repeatedly).
-
-## Loon Creek's named sub-tributaries: Warm Spring & Mayfield creeks
 
 Note: there are two entirely separate streams named "Warm Spring Creek" in this part of the basin — one flows directly into the MFSR mainstem, the other into Loon Creek. Only the Loon Creek one (`GNIS_ID` 400163) is analyzed here; see the QA/QC callout at the top.
 
@@ -620,7 +631,7 @@ Warm Spring Creek's named trunk crosses a small granite inlier surrounded by Cha
 
 Mayfield Creek turned out differently once the fork-merging bug (see the fork-handling note above) was fixed: the actual named "Mayfield Creek" trunk is short (~5 km, from where its forks join down to Loon Creek) and 100% Idaho Batholith granite -- no internal contact, so no new site is recommended on the trunk itself. The volcanic/granite complexity visible on the map is happening on **East Fork Mayfield Creek and West Fork Mayfield Creek** (the grey context lines), which do cross repeatedly between the two units. If that contrast is worth sampling, it means walking one of the forks rather than the short main-stem trunk -- worth a look next pass if you want candidate sites computed for the forks specifically rather than just shown for context.
 
-## Camas Creek and its named sub-tributaries: WF Camas & Yellowjacket creeks
+## Camas Creek and sub-tributaries: WF Camas & Yellowjacket creeks
 
 ### Camas Creek
 
@@ -680,7 +691,7 @@ report_drainage(drainage_defs[[11]])
 
 Wilson Creek is short but geologically mixed (granite, metamorphic, and valley-fill all present) — a compact drainage where 2 well-placed sites should still capture most of the real variation.
 
-## Big Creek drainage (partner-covered) and its sub-tributaries
+## Big Creek drainage (partner-covered) and sub-tributaries
 
 Note: "Rush Creek" and "Beaver Creek" both had name-collision issues resolved here too (see the QA/QC callout) — the Big Creek versions used below are `GNIS_ID` 389731 and 377253 respectively, not the unrelated same-named streams elsewhere in the basin.
 
@@ -734,19 +745,6 @@ map_drainage(drainage_defs[[15]])
 #| label: fig-monumental
 #| results: asis
 report_drainage(drainage_defs[[15]])
-```
-
-### Marble Creek
-
-```{r}
-#| label: fig-map-marble
-map_drainage(drainage_defs[[16]])
-```
-
-```{r}
-#| label: fig-marble
-#| results: asis
-report_drainage(drainage_defs[[16]])
 ```
 
 Big Creek itself is the most geologically diverse single tributary in this whole plan (five different rock categories along its length, including a meaningful metamorphic/sedimentary component) — this is exactly the kind of drainage where Baxter's crew collecting good spatial coverage along the mainstem will be valuable. Rush Creek and Beaver Creek (this Big Creek one, `BVB` — not to be confused with Marsh Creek's `BVR`, see `data/site_id_convention.md`) both show real igneous/metamorphic contrasts too and are worth confirming coverage on with Baxter's team.

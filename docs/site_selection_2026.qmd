@@ -262,9 +262,12 @@ map_drainage <- function(def, override_cand = NULL) {
 
   # coord_sf's xlim/ylim only set the *view*; when the bbox's aspect ratio
   # doesn't match the figure device, ggplot expands one axis to preserve true
-  # geographic aspect, and points well outside the intended zoom (e.g. other
-  # sites clear across the basin) can end up inside that expanded view. Crop
-  # explicitly so only sites actually near this stretch ever get plotted.
+  # geographic aspect, and anything well outside the intended zoom (other
+  # sites, the whole basin's stream network) can end up inside that expanded
+  # view. Crop every layer to the bbox explicitly -- with nothing left
+  # outside the zoom to leak in, and expand = FALSE below to stop coord_sf
+  # padding the view further, the map is a true zoom regardless of aspect.
+  fl_zoom <- suppressWarnings(st_crop(fl, bbox))
   existing <- sites |>
     filter(stream_code == r$code) |>
     st_as_sf(coords = c("long_dd", "lat_dd"), crs = 4326) |>
@@ -273,10 +276,10 @@ map_drainage <- function(def, override_cand = NULL) {
 
   p <- ggplot() +
     geom_sf(data = lith_zoom, aes(fill = lith_group), color = NA, alpha = 0.75) +
-    geom_sf(data = fl, color = "grey50", linewidth = 0.15) +
+    geom_sf(data = fl_zoom, color = "grey50", linewidth = 0.15) +
     geom_sf(data = seg, color = "steelblue4", linewidth = 1.1) +
     scale_fill_manual(values = litho_colors, name = "Bedrock unit", drop = TRUE) +
-    coord_sf(xlim = bbox[c("xmin", "xmax")], ylim = bbox[c("ymin", "ymax")]) +
+    coord_sf(xlim = bbox[c("xmin", "xmax")], ylim = bbox[c("ymin", "ymax")], expand = FALSE) +
     theme_minimal(base_size = 10) +
     theme(legend.position = "right", legend.text = element_text(size = 7), legend.title = element_text(size = 8)) +
     labs(title = paste0(def$drainage, " (`", def$code, "`)"))

@@ -1,11 +1,26 @@
 ---
 title: "2026 Tributary Sampling Plan"
-subtitle: "Geology- and GIS-informed site selection for this summer's MFSR spawning tributaries"
+subtitle: "Geology- and GIS-informed site selection for this 2026 MFSR spawning tributaries"
+date: today
+date-format: "MMMM D, YYYY"
 format:
   html:
     toc: true
+    toc-depth: 3
+    toc-location: left
+    toc-title: "Contents"
+    number-sections: true
+    theme: cosmo
     code-fold: true
-editor: visual
+    code-tools: true
+    embed-resources: true
+    fig-width: 8
+    fig-height: 5
+    fig-dpi: 150
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ```{r}
@@ -31,45 +46,112 @@ litho_colors <- c(
 )
 
 
-fl <- st_read(here("data/spatial/flowline_pn17_nsi_mfsr.gpkg"), quiet = TRUE)
-lith <- st_read(here("data/spatial/geology/idaho_lithology.shp"), quiet = TRUE) |>
+fl <- st_read(here("data/spatial/flowline_pn17_nsi_mfsr.gpkg"),
+  quiet = TRUE
+)
+lith <- st_read(here("data/spatial/geology/idaho_lithology.shp"),
+  quiet = TRUE
+) |>
   st_make_valid() |>
   st_transform(st_crs(fl))
-hu8 <- st_read(here("data/spatial/hu8_mfsr.gpkg"), quiet = TRUE) |> st_transform(st_crs(fl))
-sites <- read_csv(here("data/master_site_lookup.csv"), show_col_types = FALSE)
-hamann <- st_read(here("data/spatial/IsoWorld.gdb"), layer = "Hamaan2012_SR_WaterSamples", quiet = TRUE) |>
+hu8 <- st_read(here("data/spatial/hu8_mfsr.gpkg"),
+  quiet = TRUE
+) |>
+  st_transform(st_crs(fl))
+sites <- read_csv(here("data/master_site_lookup.csv"),
+  show_col_types = FALSE
+)
+hamann <- st_read(here("data/spatial/IsoWorld.gdb"),
+  layer = "Hamaan2012_SR_WaterSamples",
+  quiet = TRUE
+) |>
   st_transform(4326)
 ```
 
-This doc answers one question per target tributary: **given what we know about MFSR bedrock geology, where along this stream should a new site go to best capture real Sr variation?** It's the geology/GIS counterpart to `docs/review_biogeochem_tracers.qmd` — read that first if the reasoning below (igneous vs. metamorphic vs. sedimentary Sr behavior) isn't already familiar.
+This doc answers one question per target tributary: **given what we know about MFSR bedrock geology, where along this stream should a new site go to best capture real Sr variation?**
 
-**Method**: each named tributary's NHD flowline reaches (`data/spatial/flowline_pn17_nsi_mfsr.gpkg`) are ordered upstream-to-downstream using drainage area (`TotDASqKM`, a standard proxy for position along a single named stream absent full network topology) and matched to the nearest bedrock polygon in the USGS State Geologic Map Compilation (`data/spatial/geology/idaho_lithology.shp`). This gives, for every tributary: (a) what fraction of its length drains each rock unit, and (b) where along its length it crosses from one unit into another — a **lithologic contact**, and the single best predictor of where Sr will shift most sharply. Candidate new sites are placed near contacts closest to the 1/3 and 2/3 marks of each tributary's length (so 2-3 new sites end up reasonably spread out, matching the `-020/-030/...` spacing already used in `data/site_id_convention.md`) — not evenly spaced by default, since an evenly spaced site could easily land in the middle of one uniform unit and miss the contrast entirely.
+**Method**: each named tributary's NHD flowline reaches (`data/spatial/flowline_pn17_nsi_mfsr.gpkg`) are ordered upstream-to-downstream using drainage area (`TotDASqKM`, a standard proxy for position along a single named stream absent full network topology) and matched to the nearest bedrock polygon in the USGS State Geologic Map Compilation (`data/spatial/geology/idaho_lithology.shp`). This gives, for every tributary: (a) what fraction of its length drains each rock unit, and (b) where along its length it crosses from one unit into another — a **lithologic contact**, and the single best predictor of where Sr will shift most sharply. Candidate new sites are placed near contacts closest to the 1/3 and 2/3 marks of each tributary's length (so 2-3 new sites end up reasonably spread out — not evenly spaced by default, since an evenly spaced site could easily land in the middle of one uniform unit and miss the contrast entirely.
 
-**Caveat up front**: this identifies the geologically *ideal* spot. It says nothing about whether that exact point is reachable on foot, whether it's a maintained trail, or what the current stream/trail conditions are — none of that data is available locally. Treat every coordinate below as a target to aim near, not a GPS waypoint to hit exactly; adjust to the nearest safe, accessible point.
+**Caveat up front**: this identifies the geologically *ideal* spot. It says nothing about whether that exact point is reachable on foot, whether it's a maintained trail, or what the current stream/trail conditions are. Treat every coordinate below as a target to aim near, not a GPS waypoint to hit exactly; adjust to the nearest safe, accessible point.
 
 ```{r}
 #| label: analysis-functions
 #| code-summary: "Show the tributary analysis functions"
 
+# define drainage names and codes -----
 drainage_defs <- list(
-  list(drainage = "Sulphur Creek", names = c("Sulphur Creek", "North Fork Sulphur Creek"), code = "SUL"),
-  list(drainage = "Pistol Creek", names = c("Pistol Creek", "Little Pistol Creek"), code = "PIS"),
-  list(drainage = "Rapid River", names = c("Rapid River"), code = "RAP"),
-  list(drainage = "Loon Creek", names = c("Loon Creek"), code = "LOO"),
-  list(drainage = "Warm Spring Creek", names = c("Warm Spring Creek", "South Fork Warm Spring Creek"), code = "WSC"),
-  list(drainage = "Mayfield Creek", names = c("Mayfield Creek", "East Fork Mayfield Creek", "West Fork Mayfield Creek"), code = "MAY"),
-  list(drainage = "Indian Creek", names = c("Indian Creek"), code = "IND"),
-  list(drainage = "Camas Creek", names = c("Camas Creek"), code = "CAM"),
-  list(drainage = "West Fork Camas Creek", names = c("West Fork Camas Creek", "South Fork Camas Creek"), code = "WFC"),
-  list(drainage = "Yellowjacket Creek", names = c("Yellowjacket Creek", "West Fork Yellowjacket Creek"), code = "YJC"),
-  list(drainage = "Wilson Creek", names = c("Wilson Creek"), code = "WIL"),
-  list(drainage = "Big Creek", names = c("Big Creek"), code = "BIG", partner = "Colden Baxter (U Idaho) and students"),
-  list(drainage = "Rush Creek", names = c("Rush Creek"), code = "RSH"),
-  list(drainage = "Beaver Creek (Big Ck drainage)", names = c("Beaver Creek"), code = "BVB", lat_min = 45, partner = "Payette NF (possible)"),
-  list(drainage = "Monumental Creek", names = c("Monumental Creek", "North Fork Monumental Creek", "West Fork Monumental Creek"), code = "MON", partner = "Payette NF (upper reach)"),
-  list(drainage = "Marble Creek", names = c("Marble Creek"), code = "MRB", partner = "Payette NF (possible, if they go in)")
+  list(
+    drainage = "Sulphur Creek",
+    names = c("Sulphur Creek", "North Fork Sulphur Creek"), 
+    code = "SUL"),
+  list(
+    drainage = "Pistol Creek", 
+    names = c("Pistol Creek", "Little Pistol Creek"),
+    code = "PIS"),
+  list(
+    drainage = "Rapid River",
+    names = c("Rapid River"), 
+    code = "RAP"),
+  list(
+    drainage = "Loon Creek",
+    names = c("Loon Creek"),
+    code = "LOO"),
+  list(
+    drainage = "Warm Spring Creek", 
+    names = c("Warm Spring Creek", "South Fork Warm Spring Creek"), 
+    code = "WSC"),
+  list(
+    drainage = "Mayfield Creek", 
+    names = c("Mayfield Creek", "East Fork Mayfield Creek", "West Fork Mayfield Creek"), 
+    code = "MAY"),
+  list(
+    drainage = "Indian Creek",
+    names = c("Indian Creek"),
+    code = "IND"),
+  list(
+    drainage = "Camas Creek", 
+    names = c("Camas Creek"),
+    code = "CAM"),
+  list(
+    drainage = "West Fork Camas Creek",
+    names = c("West Fork Camas Creek", "South Fork Camas Creek"),
+    code = "WFC"),
+  list(
+    drainage = "Yellowjacket Creek", 
+    names = c("Yellowjacket Creek", "West Fork Yellowjacket Creek"),
+    code = "YJC"),
+  list(
+    drainage = "Wilson Creek",
+    names = c("Wilson Creek"),
+    code = "WIL"),
+  list(
+    drainage = "Big Creek",
+    names = c("Big Creek"),
+    code = "BIG",
+    partner = "Colden Baxter (U Idaho) and students"),
+  list(
+    drainage = "Rush Creek",
+    names = c("Rush Creek"),
+    code = "RSH"),
+  list(
+    drainage = "Beaver Creek (Big Ck drainage)",
+    names = c("Beaver Creek"), 
+    code = "BVB",
+    lat_min = 45, 
+    partner = "Payette NF (possible)"),
+  list(
+    drainage = "Monumental Creek",
+    names = c("Monumental Creek", "North Fork Monumental Creek", "West Fork Monumental Creek"), 
+    code = "MON",
+    partner = "Payette NF (upper reach)"),
+  list(
+    drainage = "Marble Creek",
+    names = c("Marble Creek"), 
+    code = "MRB", 
+    partner = "Payette NF (possible, if they go in)")
 )
 
+# analysis functions ----
 analyze_trib <- function(def) {
   seg <- fl |> filter(GNIS_NAME %in% def$names)
   if (!is.null(def$lat_min)) {
@@ -175,17 +257,64 @@ existing_sites_sf <- sites |>
 
 ggplot() +
   geom_sf(data = lith_clip, aes(fill = GENERALIZE), color = NA, alpha = 0.6) +
-  geom_sf(data = fl, color = "gray20", linewidth = 0.15) +
+  geom_sf(data = fl, color = "grey20", linewidth = 0.15) +
   geom_sf(data = hamann, color = "red", size = 1, shape = 4) +
   geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
   scale_fill_manual(values = litho_colors, name = "Bedrock unit") + 
   theme_minimal(base_size = 11) +
-  theme(legend.position = "bottom", legend.text = element_text(size = 7)) +
+  theme(legend.position = "none", legend.text = element_text(size = 7)) +
   guides(fill = guide_legend(nrow = 4)) +
   labs(
     title = "MFSR basin: bedrock lithology and sample sites",
     caption = "Black dots = existing sample sites (master_site_lookup.csv). Red x's = Hamann & Kennedy (2012) Big Creek water samples."
   )
+```
+
+```{r}
+#| label: fig-map-tribs
+#| fig-width: 9
+#| fig-height: 9
+#| message: false
+
+ggplot() +
+  geom_sf(data = lith_clip, aes(fill = GENERALIZE), color = NA, alpha = 0.6) +
+  geom_sf(data = fl, color = "grey20", linewidth = 0.15) +
+  geom_sf(data = fl |> filter(GNIS_NAME=="Middle Fork Salmon River"), 
+          color = "blue", linewidth = 1) +
+  geom_sf(
+    data = fl |> filter(GNIS_NAME %in% c(
+      "Sulphur Creek", 
+      "Rapid River", 
+      "Pistol Creek", 
+      "Indian Creek", 
+      "Marble Creek", 
+      "Loon Creek", 
+      "Warm Spring Creek",
+      "Mayfield Creek",
+      "East Fork Mayfield Creek",
+      "West Fork Mayfield Creek",
+      "Camas Creek", 
+      "Yellowjacket Creek",
+      "West Fork Camas Creek",
+      "Bear Valley Creek", 
+      "Elk Creek",
+      "Bearskin Creek",
+      "Marsh Creek", 
+      "Knapp Creek",
+      "Cape Horn Creek",
+      "Wilson Creek",
+      "Big Creek", 
+      "Monumental Creek", 
+      "Rush Creek", 
+      "Beaver Creek", 
+      )), 
+    color = "blue", linewidth = 0.4) +
+  geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
+  scale_fill_manual(values = litho_colors, name = "Bedrock unit") + 
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "none", legend.text = element_text(size = 7)) +
+  guides(fill = guide_legend(nrow = 4)) +
+  labs(title = "MFSR basin: bedrock lithology, sample sites, and major tribs")
 ```
 
 Bedrock is dominated by two igneous provinces of very different age (Cretaceous Idaho Batholith granite and Eocene Challis Volcanics/intrusives), with a real Precambrian metamorphic component in the northeast part of the basin (Yellowjacket, Big Creek headwaters area) — see `docs/review_biogeochem_tracers.qmd` for the full area-weighted breakdown and why this predicts sharp, mappable Sr contrasts in exactly those tributaries that cross from one province into another.

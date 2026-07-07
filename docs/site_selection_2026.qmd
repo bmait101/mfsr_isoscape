@@ -31,6 +31,15 @@ library(tidyverse)
 library(sf)
 library(here)
 library(knitr)
+library(ggspatial)
+
+# scale bar + north arrow, added to every map on this doc
+map_furniture <- function() {
+  list(
+    annotation_scale(location = "bl", width_hint = 0.25, text_cex = 0.7),
+    annotation_north_arrow(location = "tr", which_north = "true", height = unit(0.9, "cm"), width = unit(0.9, "cm"))
+  )
+}
 
 ## Colors match John's manuscript rock-type scheme (5 categories). Our raw
 ## USGS SGMC `GENERALIZE` field has 9 categories plus "Water" (river-channel
@@ -101,24 +110,33 @@ The MFSR-area NHD flowlines have two data-quality issues that silently break nai
 #| code-summary: "Show the tributary analysis functions"
 
 # define drainages by verified GNIS_ID (see QA/QC callout above for how these
-# were resolved) -----
+# were resolved). The FIRST gnis_id listed is the "trunk" used for lithology
+# composition/contact-crossing/candidate-site analysis; any additional ids
+# are named side-forks (e.g. Little Pistol Creek, East/West Fork Mayfield)
+# that join the trunk as separate parallel channels -- shown on the map for
+# context only, never merged into the trunk's up-to-down sequence (see the
+# QA/QC callout on forks below for why that merge silently breaks). Where a
+# tributary here is itself a named sub-tributary of ANOTHER stream in this
+# list, parent_gnis_id/parent_name draws that parent stream on the zoomed map
+# too, per Bryan's request to see e.g. Mayfield/Warm Spring alongside Loon.
 drainage_defs <- list(
   list(drainage = "Sulphur Creek", gnis_ids = c("391601", "387799"), code = "SUL"),
   list(drainage = "Pistol Creek", gnis_ids = c("388566", "384918"), code = "PIS"),
   list(drainage = "Rapid River", gnis_ids = c("389107"), code = "RAP"),
-  list(drainage = "Loon Creek", gnis_ids = c("399100"), code = "LOO"),
-  list(drainage = "Warm Spring Creek", gnis_ids = c("400163", "394337"), code = "WSC"),
-  list(drainage = "Mayfield Creek", gnis_ids = c("386556", "381130", "393142"), code = "MAY"),
+  list(drainage = "Loon Creek", gnis_ids = c("399100"), code = "LOO", fill_gap = TRUE),
+  list(drainage = "Warm Spring Creek", gnis_ids = c("400163", "394337"), code = "WSC", parent_gnis_id = "399100", parent_name = "Loon Creek"),
+  list(drainage = "Mayfield Creek", gnis_ids = c("386556", "381130", "393142"), code = "MAY", parent_gnis_id = "399100", parent_name = "Loon Creek"),
   list(drainage = "Indian Creek", gnis_ids = c("383652"), code = "IND"),
   list(drainage = "Camas Creek", gnis_ids = c("378735"), code = "CAM"),
-  list(drainage = "West Fork Camas Creek", gnis_ids = c("393066", "390896"), code = "WFC"),
-  list(drainage = "Yellowjacket Creek", gnis_ids = c("393757", "393228"), code = "YJC"),
+  # South Fork Camas Creek dropped entirely (no salmon spawning there per Bryan)
+  list(drainage = "West Fork Camas Creek", gnis_ids = c("393066"), code = "WFC", parent_gnis_id = "378735", parent_name = "Camas Creek"),
+  list(drainage = "Yellowjacket Creek", gnis_ids = c("393757", "393228"), code = "YJC", parent_gnis_id = "378735", parent_name = "Camas Creek"),
   list(drainage = "Wilson Creek", gnis_ids = c("393547"), code = "WIL"),
   list(drainage = "Big Creek", gnis_ids = c("377483"), code = "BIG", partner = "Colden Baxter (U Idaho) and students"),
-  list(drainage = "Rush Creek", gnis_ids = c("389731"), code = "RSH"),
-  list(drainage = "Beaver Creek (Big Ck drainage)", gnis_ids = c("377253"), code = "BVB", partner = "Payette NF (possible)"),
-  list(drainage = "Monumental Creek", gnis_ids = c("387122", "387739", "393151"), code = "MON", partner = "Payette NF (upper reach)"),
-  list(drainage = "Marble Creek", gnis_ids = c("386455"), code = "MRB", partner = "Payette NF (unconfirmed -- Bryan likely collects if they don't go in)"),
+  list(drainage = "Rush Creek", gnis_ids = c("389731"), code = "RSH", parent_gnis_id = "377483", parent_name = "Big Creek"),
+  list(drainage = "Beaver Creek (Big Ck drainage)", gnis_ids = c("377253"), code = "BVB", partner = "Payette NF (possible)", parent_gnis_id = "377483", parent_name = "Big Creek"),
+  list(drainage = "Monumental Creek", gnis_ids = c("387122", "387739", "393151"), code = "MON", partner = "Payette NF (upper reach)", parent_gnis_id = "377483", parent_name = "Big Creek"),
+  list(drainage = "Marble Creek", gnis_ids = c("386455"), code = "MRB", partner = "Payette NF (unconfirmed -- Bryan likely collects if they don't go in)", parent_gnis_id = "377483", parent_name = "Big Creek"),
   # headwaters reach: Big Hole (Marsh Ck + Bear Valley Ck confluence, the
   # official start of the MFSR) down to the Boundary Creek put-in -- Bryan
   # already has upper Marsh/Bear Valley samples but nothing in these two
@@ -132,7 +150,14 @@ drainage_defs <- list(
 # missing lower third) without wandering onto side tributaries: at each step,
 # only the touching reach with the LARGEST TotDASqKM is the true trunk
 # continuation, and we stop as soon as that reach turns out to be a real,
-# differently-named waterbody (the actual confluence) -----
+# differently-named waterbody (the actual confluence). IMPORTANT: only
+# Loon Creek actually has a confirmed attribute gap -- applying this to every
+# tributary is itself a bug we hit (Warm Spring Creek's downstream walk from
+# its own mouth immediately entered Loon Creek's unnamed gap and kept
+# absorbing Loon Creek's own reaches, since fill_downstream_gap has no way to
+# know it had already crossed into a different stream's territory once both
+# are unnamed). So this is now opt-in per drainage (`fill_gap = TRUE`), set
+# only where a real gap was confirmed against a known `-010` site -----
 fill_downstream_gap <- function(seed_ids, fl, max_iter = 60) {
   named <- fl |> filter(GNIS_ID %in% seed_ids)
   current <- named[which.max(named$TotDASqKM), ]
@@ -152,24 +177,54 @@ fill_downstream_gap <- function(seed_ids, fl, max_iter = 60) {
 }
 
 # analysis functions ----
-analyze_trib <- function(def) {
+
+# fetch reaches for a set of GNIS_IDs, honoring totda_range/fill_gap the same
+# way regardless of whether it's the trunk or a fork
+fetch_reaches <- function(ids, def) {
+  if (length(ids) == 0) return(fl[0, ])
   if (!is.null(def$totda_range)) {
-    # a restricted stretch of an already GNIS_ID-resolved stream (e.g. the
-    # headwaters reach below) rather than a full tributary -- no gap-fill
-    # needed since we're deliberately bounding by drainage area already.
-    seg <- fl |> filter(GNIS_ID %in% def$gnis_ids, TotDASqKM >= def$totda_range[1], TotDASqKM <= def$totda_range[2])
+    fl |> filter(GNIS_ID %in% ids, TotDASqKM >= def$totda_range[1], TotDASqKM <= def$totda_range[2])
+  } else if (isTRUE(def$fill_gap)) {
+    fill_downstream_gap(ids, fl)
   } else {
-    seg <- fill_downstream_gap(def$gnis_ids, fl)
+    fl |> filter(GNIS_ID %in% ids)
   }
+}
+
+# order by TotDASqKM, join lithology, compute cumulative distance -- using
+# st_point_on_surface (guaranteed to sit ON the line) rather than st_centroid
+# (which for a bent/curvy reach can land off the line entirely -- the direct
+# cause of candidate markers not landing on the stream line)
+add_lith_and_order <- function(x) {
+  if (nrow(x) == 0) return(x)
+  x <- x |> arrange(TotDASqKM)
+  pts <- suppressWarnings(st_point_on_surface(x))
+  x$lith_group <- st_join(pts, lith["lith_group"], join = st_nearest_feature)$lith_group
+  x$cumlen <- cumsum(x$LENGTHKM)
+  ll <- st_transform(pts, 4326)
+  x$lat <- st_coordinates(ll)[, 2]
+  x$lon <- st_coordinates(ll)[, 1]
+  x
+}
+
+analyze_trib <- function(def) {
+  primary_id <- def$gnis_ids[1]
+  fork_ids <- setdiff(def$gnis_ids, primary_id)
+
+  # trunk only: composition, contact-crossings, and candidate sites all come
+  # from this single ordered line. Named side-forks (fork_ids) are fetched
+  # separately and never merged into the trunk's TotDASqKM sequence -- doing
+  # that was the bug behind off-line candidates on Pistol Creek (vs. Little
+  # Pistol Creek) and Mayfield Creek (vs. its East/West Forks): forks are
+  # parallel channels whose drainage areas interleave with the trunk's rather
+  # than continuing it, so sorting them together produces "contacts" between
+  # geometrically unrelated points on two different lines.
+  seg <- fetch_reaches(primary_id, def)
+  seg_forks <- fetch_reaches(fork_ids, def)
   if (nrow(seg) == 0) return(NULL)
-  seg <- seg |> arrange(TotDASqKM)
-  pts <- suppressWarnings(st_centroid(seg))
-  joined <- st_join(pts, lith["lith_group"], join = st_nearest_feature)
-  seg$lith_group <- joined$lith_group
-  seg$cumlen <- cumsum(seg$LENGTHKM)
-  ll_pts <- st_transform(pts, 4326)
-  seg$lat <- st_coordinates(ll_pts)[, 2]
-  seg$lon <- st_coordinates(ll_pts)[, 1]
+
+  seg <- add_lith_and_order(seg)
+  seg_forks <- add_lith_and_order(seg_forks)
 
   total_len <- sum(seg$LENGTHKM)
   comp <- st_drop_geometry(seg) |>
@@ -194,7 +249,8 @@ analyze_trib <- function(def) {
   list(
     drainage = def$drainage, code = def$code, partner = def$partner,
     total_len_km = round(total_len, 1), composition = comp, crossings = crossings,
-    seg = seg
+    seg = seg, seg_forks = seg_forks, fork_ids = fork_ids,
+    parent_gnis_id = def$parent_gnis_id, parent_name = def$parent_name
   )
 }
 
@@ -210,7 +266,7 @@ pick_candidates <- function(r, fracs = c(0.33, 0.66)) {
       tibble(
         dist_upstream_km = round(total_len - best$cumlen_km, 1),
         lat = best$lat, lon = best$lon,
-        rationale = paste0(best$from_unit, " ↔ ", best$to_unit)
+        rationale = paste0(best$from_unit, " <-> ", best$to_unit)
       )
     } else {
       tibble(
@@ -224,13 +280,34 @@ pick_candidates <- function(r, fracs = c(0.33, 0.66)) {
 results <- map(drainage_defs, analyze_trib)
 names(results) <- map_chr(drainage_defs, "drainage")
 
+# manual overrides for cases where the generic 1/3-2/3-contact heuristic
+# isn't the right call (see the headwaters section) -- keyed by drainage name
+# so both report_drainage() and map_drainage() (and the final summary map)
+# all read the same recommended site rather than the map showing one thing
+# and the table showing another
+manual_overrides <- list(
+  "Lower Marsh Creek (MRS-010 to Big Hole)" = tibble(
+    dist_upstream_km = 4.5, lat = 44.427, lon = -115.194,
+    rationale = "Metasedimentary <-> Plutonic (Bryan's proposed 'halfway' point lands almost exactly on this contact)"
+  ),
+  "MFSR headwaters (Big Hole to Boundary Creek)" = tibble(
+    dist_upstream_km = 16.2, lat = 44.454, lon = -115.230,
+    rationale = "just below Big Hole -- captures the immediate post-confluence mixed signature"
+  )
+)
+
+get_candidates <- function(def) {
+  if (!is.null(manual_overrides[[def$drainage]])) return(manual_overrides[[def$drainage]])
+  pick_candidates(results[[def$drainage]])
+}
+
 report_drainage <- function(def) {
   r <- results[[def$drainage]]
   if (is.null(r)) {
     cat("No flowline match found for", def$drainage, "-- check GNIS_ID.\n\n")
     return(invisible())
   }
-  cand <- pick_candidates(r)
+  cand <- get_candidates(def)
   cat(sprintf("**%s (`%s`)** -- %.1f km of mapped channel.\n\n", def$drainage, def$code, r$total_len_km))
   print(kable(r$composition |> rename(Lithology = lith_group, `km` = len, `% of length` = pct)))
   cat("\n")
@@ -241,22 +318,34 @@ report_drainage <- function(def) {
     cat("No lithologic contact detected along the mapped channel -- geologically uniform; ",
         "space new sites evenly based on access rather than geology.\n", sep = "")
   }
+  if (length(r$fork_ids) > 0 && nrow(r$seg_forks) > 0) {
+    cat("\nNamed side-fork(s) also shown on the map below (blue-grey lines) but *not* included",
+        " in the composition/candidate analysis above, since they're separate parallel channels",
+        " joining the trunk rather than a continuation of it: ",
+        paste(unique(r$seg_forks$GNIS_NAME), collapse = ", "), ".\n", sep = "")
+  }
   cat("\n")
 }
 
 # zoomed per-tributary map: bedrock context + the (corrected, gap-filled)
-# tributary line + existing site(s) + candidate new site(s) -- pass
-# override_cand (a tibble with lat/lon) to plot manually-chosen candidates
-# instead of the automatic 1/3-2/3-contact picker, for cases (like the
-# headwaters reach below) where Bryan's ask is more specific than the
-# generic heuristic -----
-map_drainage <- function(def, override_cand = NULL) {
+# tributary line + existing site(s) + candidate new site(s). Candidates come
+# from get_candidates(), which reads manual_overrides where set (e.g. the
+# headwaters reach) so the map always matches what report_drainage() prints
+# -----
+map_drainage <- function(def) {
   r <- results[[def$drainage]]
   if (is.null(r)) return(invisible(NULL))
   seg <- r$seg
-  cand <- if (!is.null(override_cand)) override_cand else pick_candidates(r)
+  cand <- get_candidates(def)
 
-  bbox <- st_bbox(st_buffer(st_union(seg), 3000))
+  # zoom extent covers the trunk AND any named forks, so the confluence with
+  # a fork (e.g. Little Pistol Creek, East/West Fork Mayfield) is visible
+  zoom_geom <- if (nrow(r$seg_forks) > 0) {
+    st_union(st_union(seg), st_union(r$seg_forks))
+  } else {
+    st_union(seg)
+  }
+  bbox <- st_bbox(st_buffer(zoom_geom, 3000))
   bbox_poly <- st_as_sfc(bbox)
   lith_zoom <- suppressWarnings(st_crop(lith, bbox))
 
@@ -276,16 +365,36 @@ map_drainage <- function(def, override_cand = NULL) {
 
   p <- ggplot() +
     geom_sf(data = lith_zoom, aes(fill = lith_group), color = NA, alpha = 0.75) +
-    geom_sf(data = fl_zoom, color = "grey50", linewidth = 0.15) +
+    geom_sf(data = fl_zoom, color = "grey50", linewidth = 0.15)
+
+  # parent stream (e.g. Loon Creek behind Warm Spring/Mayfield), cropped to
+  # this same zoom -- typically shows just the confluence-adjacent stretch
+  title_suffix <- ""
+  if (!is.null(r$parent_gnis_id)) {
+    parent_zoom <- suppressWarnings(st_crop(fl |> filter(GNIS_ID == r$parent_gnis_id), bbox))
+    if (nrow(parent_zoom) > 0) {
+      p <- p + geom_sf(data = parent_zoom, color = "black", linewidth = 1, linetype = "22", alpha = 0.7)
+      title_suffix <- paste0(" -- tributary of ", r$parent_name)
+    }
+  }
+  # named side-forks (e.g. Little Pistol Creek), shown but not analyzed
+  if (nrow(r$seg_forks) > 0) {
+    p <- p + geom_sf(data = r$seg_forks, color = "grey35", linewidth = 0.6)
+  }
+
+  p <- p +
     geom_sf(data = seg, color = "steelblue4", linewidth = 1.1) +
     scale_fill_manual(values = litho_colors, name = "Bedrock unit", drop = TRUE) +
+    map_furniture() +
     coord_sf(xlim = bbox[c("xmin", "xmax")], ylim = bbox[c("ymin", "ymax")], expand = FALSE) +
     theme_minimal(base_size = 10) +
     theme(legend.position = "right", legend.text = element_text(size = 7), legend.title = element_text(size = 8)) +
-    labs(title = paste0(def$drainage, " (`", def$code, "`)"))
+    labs(title = paste0(def$drainage, " (`", def$code, "`)", title_suffix), x = NULL, y = NULL)
 
   if (nrow(existing) > 0) {
-    p <- p + geom_sf(data = existing, color = "black", size = 2.5, shape = 17)
+    p <- p +
+      geom_sf(data = existing, color = "black", size = 2.5, shape = 17) +
+      geom_sf_text(data = existing, aes(label = site_id), size = 2.6, fontface = "bold", nudge_y = 400, check_overlap = TRUE)
   }
   if (nrow(cand) > 0 && any(!is.na(cand$lat))) {
     cand_sf <- cand |>
@@ -295,7 +404,11 @@ map_drainage <- function(def, override_cand = NULL) {
     p <- p + geom_sf(data = cand_sf, color = "red", size = 3, shape = 4, stroke = 1.5)
   }
   p +
-    labs(caption = "Black triangle = existing site. Red x = candidate new site (lithologic contact).")
+    labs(caption = paste0(
+      "Black triangle = existing site (labeled). Red x = candidate new site (lithologic contact).",
+      if (nrow(r$seg_forks) > 0) " Grey line = named side-fork (context only)." else "",
+      if (title_suffix != "") " Black dashed line = parent stream." else ""
+    ))
 }
 ```
 
@@ -318,6 +431,7 @@ ggplot() +
   geom_sf(data = hamann, color = "red", size = 1, shape = 4) +
   geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
   scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
+  map_furniture() +
   theme_minimal(base_size = 11) +
   theme(legend.position = "right", legend.text = element_text(size = 7)) +
   guides(fill = guide_legend(nrow = 5)) +
@@ -336,7 +450,10 @@ ggplot() +
 # uses the corrected, GNIS_ID-verified + gap-filled tributary geometries
 # (results[[...]]$seg), not a raw GNIS_NAME filter -- avoids re-introducing
 # the name-collision/gap bugs described in the QA/QC callout above
-target_segs <- bind_rows(map(results, ~ if (!is.null(.x)) .x$seg else NULL))
+target_segs <- bind_rows(map(results, function(x) {
+  if (is.null(x)) return(NULL)
+  bind_rows(x$seg, x$seg_forks)
+}))
 
 ggplot() +
   geom_sf(data = lith_clip, aes(fill = lith_group), color = NA, alpha = 0.6) +
@@ -345,6 +462,7 @@ ggplot() +
   geom_sf(data = target_segs, color = "blue", linewidth = 0.5) +
   geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
   scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
+  map_furniture() +
   theme_minimal(base_size = 11) +
   theme(legend.position = "right", legend.text = element_text(size = 7)) +
   guides(fill = guide_legend(nrow = 5)) +
@@ -361,9 +479,11 @@ Colden Baxter (University of Idaho) and students will collect Big Creek while ou
 
 The Middle Fork Salmon River officially begins at "Big Hole," where Marsh Creek and Bear Valley Creek meet (confirmed in the flowline data: both streams' mouths sit exactly at the same point, 0 m apart, which is also the most-upstream end of the "Middle Fork Salmon River" `GNIS_NAME` reaches). Bryan already has samples from upper Bear Valley Creek (`BVC-010/020/030`) and upper Marsh Creek (`MRS-010/020/030`), but two stretches remain unsampled: the lower ~8 km of Marsh Creek between `MRS-010` and Big Hole itself, and the entire ~18 km of brand-new MFSR channel from Big Hole down to the existing `MFSR-070` site at the Boundary Creek put-in.
 
+### Lower Marsh Creek
+
 ```{r}
 #| label: fig-map-lowermarsh
-map_drainage(drainage_defs[[17]], override_cand = tibble(dist_upstream_km = 4.5, lat = 44.427, lon = -115.194, rationale = "Metasedimentary ↔ Plutonic (Bryan's proposed 'halfway' point lands almost exactly on this contact)"))
+map_drainage(drainage_defs[[17]])
 ```
 
 ```{r}
@@ -374,9 +494,11 @@ report_drainage(drainage_defs[[17]])
 
 This matches what you'd expect from the review doc's geology section, and it's a clean confirmation of your own instinct: Marsh Creek runs through Precambrian metasedimentary rock below Beaver Creek/Cape Horn Creek, then crosses into Idaho Batholith granite about 3.5 km downstream of `MRS-010` (roughly 4.5 km upstream of Big Hole) -- almost exactly the "halfway" point you proposed, just refined to the actual contact. Recommend **`MRS-005`** at approximately 44.427, -115.194.
 
+### MFSR headwaters (below Big Hole)
+
 ```{r}
 #| label: fig-map-mfsrheadwaters
-map_drainage(drainage_defs[[18]], override_cand = tibble(dist_upstream_km = 16.2, lat = 44.454, lon = -115.230, rationale = "just below Big Hole -- captures the immediate post-confluence mixed signature"))
+map_drainage(drainage_defs[[18]])
 ```
 
 ```{r}
@@ -391,6 +513,8 @@ Unlike lower Marsh Creek, this reach is almost entirely uniform Idaho Batholith 
 
 These five drainages sit along the Bear Valley/Marsh-to-Boundary Creek stretch of the MFSR and are the ones the Thurow redd-survey memo (`docs/memo_thurow_redd_sampling_alternatives.docx`) describes real foot-travel logistics for: a documented pattern is to shuttle to Pistol Creek's headwaters, survey/hike down Pistol (and Little Pistol) to the mainstem, then hike up Indian Creek to a shuttle waiting at *its* headwaters. That same shape (hike down one tributary, up the neighboring one, shuttle at both ends) is a natural fit for placing new Sr sites along the way, since you're walking the whole drainage rather than just visiting the mouth.
 
+### Sulphur Creek
+
 ```{r}
 #| label: fig-map-sulphur
 map_drainage(drainage_defs[[1]])
@@ -401,6 +525,8 @@ map_drainage(drainage_defs[[1]])
 #| results: asis
 report_drainage(drainage_defs[[1]])
 ```
+
+### Pistol Creek
 
 ```{r}
 #| label: fig-map-pistol
@@ -415,6 +541,8 @@ report_drainage(drainage_defs[[2]])
 
 Pistol Creek's channel alternates repeatedly between granite and valley-fill (Quaternary alluvium) rather than crossing a single clean contact — expected given it's flowing through a broad batholith-floored valley, not between two different bedrock provinces. The two candidate positions above are still reasonable anchor points, but don't expect as sharp a contrast here as in a drainage that crosses between actual different-age bedrock (e.g. Indian Creek, below).
 
+### Rapid River
+
 ```{r}
 #| label: fig-map-rapid
 map_drainage(drainage_defs[[3]])
@@ -428,6 +556,8 @@ report_drainage(drainage_defs[[3]])
 
 Rapid River is 100% Idaho Batholith granite along its entire mapped length — geologically uniform. There's no lithologic reason to place a new site at any particular spot; if you add one beyond the existing `RAP-010`, place it based on access (trail conditions, camp spacing) rather than geology.
 
+### Loon Creek
+
 ```{r}
 #| label: fig-map-loon
 map_drainage(drainage_defs[[4]])
@@ -440,6 +570,8 @@ report_drainage(drainage_defs[[4]])
 ```
 
 Loon Creek's mapped extent grew from 31.4 km to 54.6 km once the missing lower-third reaches were restored (see the QA/QC callout at the top) — the composition and candidate positions above reflect the corrected, full-length channel.
+
+### Indian Creek
 
 ```{r}
 #| label: fig-map-indian
@@ -458,6 +590,8 @@ Indian Creek is the most geologically interesting of this group: it's roughly ha
 
 Note: there are two entirely separate streams named "Warm Spring Creek" in this part of the basin — one flows directly into the MFSR mainstem, the other into Loon Creek. Only the Loon Creek one (`GNIS_ID` 400163) is analyzed here; see the QA/QC callout at the top.
 
+### Warm Spring Creek
+
 ```{r}
 #| label: fig-map-warmspring
 map_drainage(drainage_defs[[5]])
@@ -468,6 +602,8 @@ map_drainage(drainage_defs[[5]])
 #| results: asis
 report_drainage(drainage_defs[[5]])
 ```
+
+### Mayfield Creek
 
 ```{r}
 #| label: fig-map-mayfield
@@ -480,9 +616,13 @@ map_drainage(drainage_defs[[6]])
 report_drainage(drainage_defs[[6]])
 ```
 
-Both Warm Spring and Mayfield creeks weave repeatedly between Challis volcanics and Idaho Batholith granite — more evidence that this part of the basin (northwest of Loon Creek's mouth) sits right at the boundary between the two igneous provinces. That's good news for this project (lots of contrast to sample) but means the "candidate" positions above are representative anchor points along a genuinely patchy contact zone, not a single clean line — small adjustments to the nearest accessible spot won't meaningfully change what you'd measure.
+Warm Spring Creek's named trunk crosses a small granite inlier surrounded by Challis volcanics -- a real, if compact, contact zone (both candidates above bracket that same small inlier, so treat them as two ways to sample the same feature rather than two independent stops).
+
+Mayfield Creek turned out differently once the fork-merging bug (see the fork-handling note above) was fixed: the actual named "Mayfield Creek" trunk is short (~5 km, from where its forks join down to Loon Creek) and 100% Idaho Batholith granite -- no internal contact, so no new site is recommended on the trunk itself. The volcanic/granite complexity visible on the map is happening on **East Fork Mayfield Creek and West Fork Mayfield Creek** (the grey context lines), which do cross repeatedly between the two units. If that contrast is worth sampling, it means walking one of the forks rather than the short main-stem trunk -- worth a look next pass if you want candidate sites computed for the forks specifically rather than just shown for context.
 
 ## Camas Creek and its named sub-tributaries: WF Camas & Yellowjacket creeks
+
+### Camas Creek
 
 ```{r}
 #| label: fig-map-camas
@@ -495,6 +635,8 @@ map_drainage(drainage_defs[[8]])
 report_drainage(drainage_defs[[8]])
 ```
 
+### West Fork Camas Creek
+
 ```{r}
 #| label: fig-map-wfcamas
 map_drainage(drainage_defs[[9]])
@@ -506,6 +648,8 @@ map_drainage(drainage_defs[[9]])
 report_drainage(drainage_defs[[9]])
 ```
 
+### Yellowjacket Creek
+
 ```{r}
 #| label: fig-map-yellowjacket
 map_drainage(drainage_defs[[10]])
@@ -516,6 +660,8 @@ map_drainage(drainage_defs[[10]])
 #| results: asis
 report_drainage(drainage_defs[[10]])
 ```
+
+West Fork Camas Creek's mapped trunk is 100% Challis volcanic rock -- geologically uniform like Rapid River, so no new site is recommended on lithologic grounds; place one by access if you want a point out there at all. (South Fork Camas Creek, which shares the "Camas Creek fork" naming pattern, was dropped from this plan entirely -- no salmon spawning there.)
 
 Yellowjacket Creek stands out here: it's the only drainage in this year's target list with a substantial share (\~46%) of Precambrian Belt Supergroup metamorphic rock alongside Idaho Batholith granite. Per `docs/review_biogeochem_tracers.qmd`, ancient metamorphic terrain tends to be a highly radiogenic "anchor" — this is likely to be one of the most distinctive tributary signatures in the whole project, and worth prioritizing if time runs short.
 
@@ -538,6 +684,8 @@ Wilson Creek is short but geologically mixed (granite, metamorphic, and valley-f
 
 Note: "Rush Creek" and "Beaver Creek" both had name-collision issues resolved here too (see the QA/QC callout) — the Big Creek versions used below are `GNIS_ID` 389731 and 377253 respectively, not the unrelated same-named streams elsewhere in the basin.
 
+### Big Creek
+
 ```{r}
 #| label: fig-map-big
 map_drainage(drainage_defs[[12]])
@@ -548,6 +696,8 @@ map_drainage(drainage_defs[[12]])
 #| results: asis
 report_drainage(drainage_defs[[12]])
 ```
+
+### Rush Creek
 
 ```{r}
 #| label: fig-map-rush
@@ -560,6 +710,8 @@ map_drainage(drainage_defs[[13]])
 report_drainage(drainage_defs[[13]])
 ```
 
+### Beaver Creek (Big Ck drainage)
+
 ```{r}
 #| label: fig-map-beaverbig
 map_drainage(drainage_defs[[14]])
@@ -571,6 +723,8 @@ map_drainage(drainage_defs[[14]])
 report_drainage(drainage_defs[[14]])
 ```
 
+### Monumental Creek
+
 ```{r}
 #| label: fig-map-monumental
 map_drainage(drainage_defs[[15]])
@@ -581,6 +735,8 @@ map_drainage(drainage_defs[[15]])
 #| results: asis
 report_drainage(drainage_defs[[15]])
 ```
+
+### Marble Creek
 
 ```{r}
 #| label: fig-map-marble
@@ -614,3 +770,40 @@ kable(punchlist)
 ```
 
 Priorities if the season runs short on time: **Yellowjacket Creek** (only metamorphic-heavy drainage in Bryan's own list) and **Indian Creek** (cleanest single volcanic/granite contact) give the most new isotopic information per site visited. **Rapid River** is the lowest-priority stop for a *new* upstream site specifically, since it's geologically uniform — the existing `RAP-010` already characterizes it well.
+
+## All candidate sites at a glance
+
+Same view as the overview map above, with every candidate new site from every section overlaid -- a single quick-reference for the whole season rather than paging through each drainage individually.
+
+```{r}
+#| label: fig-map-all-candidates
+#| fig-width: 9
+#| fig-height: 9
+#| message: false
+
+all_candidates <- map_dfr(drainage_defs, function(def) {
+  cand <- get_candidates(def)
+  if (nrow(cand) == 0) return(NULL)
+  cand |> filter(!is.na(lat)) |> mutate(drainage = def$drainage, code = def$code)
+})
+all_candidates_sf <- all_candidates |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+  st_transform(st_crs(fl))
+
+ggplot() +
+  geom_sf(data = lith_clip, aes(fill = lith_group), color = NA, alpha = 0.6) +
+  geom_sf(data = fl, color = "grey20", linewidth = 0.15) +
+  geom_sf(data = fl |> filter(GNIS_NAME == "Middle Fork Salmon River"), color = "blue", linewidth = 1) +
+  geom_sf(data = target_segs, color = "blue", linewidth = 0.5) +
+  geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
+  geom_sf(data = all_candidates_sf, color = "red", size = 2, shape = 4, stroke = 1.3) +
+  scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
+  map_furniture() +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "right", legend.text = element_text(size = 7)) +
+  guides(fill = guide_legend(nrow = 5)) +
+  labs(
+    title = "MFSR basin: all candidate new sites, 2026 season",
+    caption = "Black dots = existing sites. Red x's = candidate new sites (this doc). Blue lines = target tributaries + named forks."
+  )
+```

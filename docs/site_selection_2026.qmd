@@ -37,22 +37,22 @@ library(knitr)
 ## digitizing artifact -- no lakes in the MFSR, so it's dropped entirely).
 ## Everything below groups to these 5 for both maps and tables.
 litho_colors <- c(
-  "Plutonic"            = "#F2A6CB",
-  "Volcanic"             = "#AC8347",
-  "Metasedimentary"      = "#8A8A4C",
-  "Sedimentary"          = "#A6DCE0",
-  "Quaternary sediments" = "#F5E642"
+  "Plutonic"            = "hotpink",
+  "Volcanic"             = "saddlebrown",
+  "Metasedimentary"      = "darkolivegreen4",
+  "Sedimentary"          = "steelblue1",
+  "Quaternary sediments" = "yellow"
 )
 
 lith_group_map <- c(
-  "Igneous, intrusive"                            = "Plutonic",
-  "Igneous, volcanic"                             = "Volcanic",
-  "Igneous and Metamorphic, undifferentiated"     = "Metasedimentary",
-  "Metamorphic, undifferentiated"                 = "Metasedimentary",
+  "Igneous, intrusive"                             = "Plutonic",
+  "Igneous, volcanic"                              = "Volcanic",
+  "Igneous and Metamorphic, undifferentiated"      = "Metasedimentary",
+  "Metamorphic, undifferentiated"                  = "Metasedimentary",
   "Metamorphic, sedimentary clastic"               = "Metasedimentary",
-  "Metamorphic and Sedimentary, undifferentiated" = "Metasedimentary",
-  "Sedimentary, clastic"                          = "Sedimentary",
-  "Sedimentary, undifferentiated"                 = "Sedimentary",
+  "Metamorphic and Sedimentary, undifferentiated"  = "Metasedimentary",
+  "Sedimentary, clastic"                           = "Sedimentary",
+  "Sedimentary, undifferentiated"                  = "Sedimentary",
   "Unconsolidated, undifferentiated"               = "Quaternary sediments"
 )
 
@@ -68,7 +68,7 @@ hamann <- st_read(here("data/spatial/IsoWorld.gdb"), layer = "Hamaan2012_SR_Wate
   st_transform(4326)
 ```
 
-Colors follow the same rock-family scheme John uses in his manuscript figures (Plutonic/Volcanic/Metasedimentary/Sedimentary/Quaternary sediments) — exact hex values are a visual approximation from a screenshot, so nudge them in the `litho_colors` vector above if you have his actual codes.
+Colors follow the same rock-family scheme John uses in his manuscript figures (Plutonic/Volcanic/Metasedimentary/Sedimentary/Quaternary sediments). 
 
 This doc answers one question per target tributary: **given what we know about MFSR bedrock geology, where along this stream should a new site go to best capture real Sr variation?**
 
@@ -316,8 +316,8 @@ ggplot() +
   geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
   scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
   theme_minimal(base_size = 11) +
-  theme(legend.position = "bottom", legend.text = element_text(size = 7)) +
-  guides(fill = guide_legend(nrow = 2)) +
+  theme(legend.position = "right", legend.text = element_text(size = 7)) +
+  guides(fill = guide_legend(nrow = 5)) +
   labs(
     title = "MFSR basin: bedrock lithology and sample sites",
     caption = "Black dots = existing sample sites (master_site_lookup.csv). Red x's = Hamann & Kennedy (2012) Big Creek water samples."
@@ -343,9 +343,9 @@ ggplot() +
   geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
   scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
   theme_minimal(base_size = 11) +
-  theme(legend.position = "bottom", legend.text = element_text(size = 7)) +
-  guides(fill = guide_legend(nrow = 2)) +
-  labs(title = "MFSR basin: bedrock lithology, sample sites, and target tributaries (corrected extents)")
+  theme(legend.position = "right", legend.text = element_text(size = 7)) +
+  guides(fill = guide_legend(nrow = 5)) +
+  labs(title = "MFSR basin: bedrock lithology, sample sites, and target tributaries")
 ```
 
 Bedrock is dominated by two igneous provinces of very different age (Cretaceous Idaho Batholith granite and Eocene Challis Volcanics/intrusives), with a real Precambrian metamorphic component in the northeast part of the basin (Yellowjacket, Big Creek headwaters area) — see `docs/review_biogeochem_tracers.qmd` for the full area-weighted breakdown and why this predicts sharp, mappable Sr contrasts in exactly those tributaries that cross from one province into another.

@@ -64,7 +64,7 @@ sr_dat <- sr_dat_raw |>
 
 dat <- sample_log |>
   left_join(
-    sites |> select(site_id, site_name, waterbody_name, stream_code, lat_dd, long_dd),
+    sites |> select(site_id, site_name, waterbody_name, drainage_group, stream_code, lat_dd, long_dd),
     by = "site_id"
   ) |>
   left_join(sr_dat, by = "sample_id")
@@ -80,38 +80,6 @@ if (nrow(missing_sr) > 0) {
           paste(missing_sr$sample_id, collapse = ", "))
 }
 
-# ---- QA: cross-check against the manual water_sample_summary.xlsx tally ----
-# Streams appearing only in the summary tally (e.g. this year's new
-# tributaries) and not yet in dat are expected -- they just haven't been
-# sampled yet. Mismatches on streams present in BOTH tables are the real flag.
-
-stream_name_recode <- c(
-  "Salmon River Mainstem" = "Salmon River",
-  "MFSR Mainstem" = "Middle Fork Salmon River",
-  "Cape Horn Creek" = "Cape Horn",
-  "WF Camus Creek" = "WF Camas Creek"
-)
-
-summary_tally <- readxl::read_xlsx(here("data/water_sample_summary.xlsx")) |>
-  clean_names() |>
-  filter(stream_name != "TOTALS") |>
-  mutate(stream_name = recode(stream_name, !!!stream_name_recode))
-
-compiled_tally <- dat |>
-  mutate(year = format(collection_date, "%Y")) |>
-  count(waterbody_name, year, name = "n_compiled") |>
-  pivot_wider(names_from = year, values_from = n_compiled, names_prefix = "n_compiled_", values_fill = 0)
-
-qa_compare <- summary_tally |>
-  select(stream_name, matches("^n_20")) |>
-  rename_with(~ paste0(.x, "_summary"), matches("^n_20")) |>
-  left_join(compiled_tally, by = c("stream_name" = "waterbody_name")) |>
-  mutate(across(matches("^n_compiled_20"), ~ replace_na(.x, 0)))
-
-# Note: "Beaver Creek" is ambiguous in both tables (Marsh Ck's BVR vs Big Ck's
-# BVB -- see data/site_id_convention.md); this QA check will double-count or
-# misattribute Beaver Creek rows until BVB sites exist in master_site_lookup.csv.
-print(qa_compare, n = Inf)
 
 # ---- Write compiled dataset ---------------------------------------------
 

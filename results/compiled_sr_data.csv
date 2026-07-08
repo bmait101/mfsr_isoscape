@@ -1,49 +1,49 @@
-sample_id,site_id,collection_date,collection_notes,site_name,waterbody_name,stream_code,lat_dd,long_dd,sr_87,sr_87_se,n_analytical_runs,icpms_batch
-MF-24-001,MFSR-070,2024-09-11,NA,MFSR @ Boundary Creek,Middle Fork Salmon River,MFSR,44.5321,-115.29453,0.7085336460715421,1.392e-5,1,sr_water_2024_rjohnson
-MF-24-002,SUL-010,2024-09-11,NA,Sulphur Creek @ MFSR confluence,Sulphur Creek,SUL,44.55447,-115.29925,0.7084066258437615,1.688e-5,1,sr_water_2024_rjohnson
-MF-24-003,RAP-010,2024-09-12,NA,Rapid River @ MFSR confluence,Rapid River,RAP,44.67982,-115.15186,0.7089530839396342,1.34e-5,1,sr_water_2024_rjohnson
-MF-24-004,PIS-010,2024-09-12,NA,Pistol Creek @ MFSR confluence,Pistol Creek,PIS,44.72313,-115.15084,0.7089886347484144,1.0361100327667906e-5,2,sr_water_2024_rjohnson
-MF-24-005,IND-010,2024-09-12,NA,Indian Creek @ MFSR confluence,Indian Creek,IND,44.76937,-115.09184,0.708936695328442,1.414e-5,1,sr_water_2024_rjohnson
-MF-24-006,MRB-010,2024-09-12,NA,Marble Creek @ MFSR confluence,Marble Creek,MRB,44.74471,-115.01748,0.7088513104771413,1.784e-5,1,sr_water_2024_rjohnson
-MF-24-007,MFSR-050,2024-09-13,NA,MFSR @ Mahoney camp,Middle Fork Salmon River,MFSR,44.7502,-114.91739,0.7087353400168981,1.826e-5,1,sr_water_2024_rjohnson
-MF-24-008,LOO-010,2024-09-13,NA,Loon Creek @ MFSR confluence,Loon Creek,LOO,44.80714,-114.81135,0.7090322847990485,1.426e-5,1,sr_water_2024_rjohnson
-MF-24-009,MFSR-040,2024-09-14,NA,MFSR @ Upper Grouse camp,Middle Fork Salmon River,MFSR,44.86873,-114.76819,0.708832437063841,1.176e-5,1,sr_water_2024_rjohnson
-MF-24-010,CAM-010,2024-09-14,NA,Camas Creek @ MFSR confluence,Camas Creek,CAM,44.89184,-114.72192,0.7123143893312727,1.978e-5,1,sr_water_2024_rjohnson
-MF-24-011,SHP-010,2024-09-14,NA,Sheep Creek @ MFSR confluence,Sheep Creek,SHP,44.94284,-114.72865,0.7084513753363416,1.448e-5,1,sr_water_2024_rjohnson
-MF-24-012,MFSR-030,2024-09-15,NA,MFSR @ Cold Springs,Middle Fork Salmon River,MFSR,45.00377,-114.72847,0.7091304580638298,1.054e-5,1,sr_water_2024_rjohnson
-MF-24-013,WIL-010,2024-09-15,NA,Wilson Creek @ MFSR confluence,Wilson Creek,WIL,45.03366,-114.72323,0.727387907249639,2.86e-5,1,sr_water_2024_rjohnson
-MF-24-014,BIG-010,2024-09-15,NA,Big Creek @ MFSR confluence,Big Creek,BIG,45.09418,-114.73425,0.7143486168927431,1.674e-5,1,sr_water_2024_rjohnson
-MF-24-015,MFSR-020,2024-09-16,NA,MFSR @ Ship Island camp,Middle Fork Salmon River,MFSR,45.17903,-114.7224,0.7101104812084604,1.436e-5,1,sr_water_2024_rjohnson
-MF-24-016,MFSR-010,2024-09-16,NA,MFSR @ Clamshell Rock,Middle Fork Salmon River,MFSR,45.26355,-114.63625,0.7101058474278087,1.248e-5,1,sr_water_2024_rjohnson
-MF-24-017,SR-020,2024-09-16,NA,SR @ MFSR confluence (Stoddard),Salmon River,SR,45.29811,-114.59403,0.7144306766469006,1.26e-5,1,sr_water_2024_rjohnson
-MF-24-018,SR-010,2024-09-16,SAMPLE LOST,SR above Cashe Bar,Salmon River,SR,45.30087,-114.61268,NA,NA,NA,NA
-MF-24-019,KNP-010,2024-10-30,NA,Knapp Creek,Knapp Creek,KNP,44.36848,-115.12468,0.7087744345970116,1.46e-5,1,sr_water_2024_rjohnson
-MF-24-020,MRS-030,2024-10-30,NA,Marsh Creek (upper),Marsh Creek,MRS,44.37435,-115.142,0.7082516166372306,1.43e-5,1,sr_water_2024_rjohnson
-MF-24-021,BVR-010,2024-10-30,NA,Beaver Creek,Beaver Creek,BVR,44.4134,-115.14974,0.7087391182939575,1.5e-5,1,sr_water_2024_rjohnson
-MF-24-022,MRS-020,2024-10-30,NA,Marsh Creek below Cape Horn Creek,Marsh Creek,MRS,44.39776,-115.1701,0.7081753986116901,1.522e-5,1,sr_water_2024_rjohnson
-MF-24-023,MRS-010,2024-10-30,NA,Marsh Creek below Beaver Creek,Marsh Creek,MRS,44.41183,-115.18398,0.708391391730804,7.481203111799599e-6,2,sr_water_2024_rjohnson
-MF-24-024,CPH-010,2024-10-30,NA,Cape Horn Creek,Cape Horn,CPH,44.36305,-115.20078,0.707793097104464,1.2428117315184951e-5,2,sr_water_2024_rjohnson
-MF-24-025,BSK-010,2024-10-30,NA,Bearskin Creek lower,Bearskin Creek,BSK,44.40678,-115.493,0.7084500092652382,1.362e-5,1,sr_water_2024_rjohnson
-MF-24-026,ELK-020,2024-10-30,NA,Elk Creek upper,Elk Creek,ELK,44.41699,-115.47122,0.7083793358173168,1.776e-5,1,sr_water_2024_rjohnson
-MF-24-027,ELK-010,2024-10-30,NA,Elk Creek lower,Elk Creek,ELK,44.41664,-115.39053,0.7082489377555143,1.696e-5,1,sr_water_2024_rjohnson
-MF-24-028,BVC-030,2024-10-30,NA,Bear Valley Creek (upper) below Cashe Creek,Bear Valley Creek,BVC,44.34712,-115.41619,0.7083004,1.588e-5,1,sr_water_2024_rjohnson
-MF-24-029,BVC-020,2024-10-30,NA,Bear Valley Creek (lower) below Pole Creek,Bear Valley Creek,BVC,44.39233,-115.37263,0.7081894435592044,1.708e-5,1,sr_water_2024_rjohnson
-MF-24-030,BVC-010,2024-10-30,NA,Bear Valley Creek @ Bruce Meadows camp,Bear Valley Creek,BVC,44.42786,-115.3307,0.70831285747,1.67e-5,1,sr_water_2024_rjohnson
-MF-25-001,MFSR-070,2025-09-10,NA,MFSR @ Boundary Creek,Middle Fork Salmon River,MFSR,44.5321,-115.29453,0.7085918,1.204e-5,1,sr_water_2025_bmaitland
-MF-25-002,SUL-010,2025-09-10,NA,Sulphur Creek @ MFSR confluence,Sulphur Creek,SUL,44.55447,-115.29925,0.7085665125071684,1.524e-5,1,sr_water_2025_bmaitland
-MF-25-003,MFSR-060,2025-09-10,NA,MFSR @ Sheepeater Camp,Middle Fork Salmon River,MFSR,44.62813,-115.19611,0.7085895597908005,1.418e-5,1,sr_water_2025_bmaitland
-MF-25-004,RAP-010,2025-09-11,NA,Rapid River @ MFSR confluence,Rapid River,RAP,44.67982,-115.15186,0.7090134649770774,9.58e-6,1,sr_water_2025_bmaitland
-MF-25-005,PIS-010,2025-09-11,NA,Pistol Creek @ MFSR confluence,Pistol Creek,PIS,44.72313,-115.15084,0.7090228660805656,1.242e-5,1,sr_water_2025_bmaitland
-MF-25-006,IND-010,2025-09-11,NA,Indian Creek @ MFSR confluence,Indian Creek,IND,44.76937,-115.09184,0.7089800137786857,1.396e-5,1,sr_water_2025_bmaitland
-MF-25-007,MRB-010,2025-09-12,"Blown out from rain; 2 sterile filters, then 3 unsteril filters",Marble Creek @ MFSR confluence,Marble Creek,MRB,44.74471,-115.01748,0.7089458029667548,1.31e-5,1,sr_water_2025_bmaitland
-MF-25-008,MFSR-050,2025-09-12,NA,MFSR @ Mahoney camp,Middle Fork Salmon River,MFSR,44.7502,-114.91739,0.7088680412028912,1.49e-5,1,sr_water_2025_bmaitland
-MF-25-009,LOO-010,2025-09-13,NA,Loon Creek @ MFSR confluence,Loon Creek,LOO,44.80714,-114.81135,0.7091313346691466,1.484e-5,1,sr_water_2025_bmaitland
-MF-25-010,MFSR-040,2025-09-13,NA,MFSR @ Upper Grouse camp,Middle Fork Salmon River,MFSR,44.86873,-114.76819,0.7088438936728001,1.286e-5,1,sr_water_2025_bmaitland
-MF-25-011,CAM-010,2025-09-13,NA,Camas Creek @ MFSR confluence,Camas Creek,CAM,44.89184,-114.72192,0.7128487517683632,1.254e-5,1,sr_water_2025_bmaitland
-MF-25-012,SHP-010,2025-09-14,Potentially non-acid washed bottle,Sheep Creek @ MFSR confluence,Sheep Creek,SHP,44.94284,-114.72865,0.7085024838964008,1.4e-5,1,sr_water_2025_bmaitland
-MF-25-013,MFSR-030,2025-09-14,Potentially non-acid washed bottle,MFSR @ Cold Springs,Middle Fork Salmon River,MFSR,45.00377,-114.72847,0.7091829923663328,1.132e-5,1,sr_water_2025_bmaitland
-MF-25-014,WIL-010,2025-09-14,Potentially non-acid washed bottle,Wilson Creek @ MFSR confluence,Wilson Creek,WIL,45.03366,-114.72323,0.7274801791925687,1.62e-5,1,sr_water_2025_bmaitland
-MF-25-015,BIG-010,2025-09-14,Potentially non-acid washed bottle,Big Creek @ MFSR confluence,Big Creek,BIG,45.09418,-114.73425,0.7143743159364213,1.308e-5,1,sr_water_2025_bmaitland
-MF-25-016,MFSR-020,2025-09-15,Potentially non-acid washed bottle,MFSR @ Ship Island camp,Middle Fork Salmon River,MFSR,45.17903,-114.7224,0.71007829381,1.712e-5,1,sr_water_2025_bmaitland
-MF-25-017,MFSR-010,2025-09-15,Potentially non-acid washed bottle,MFSR @ Clamshell Rock,Middle Fork Salmon River,MFSR,45.26355,-114.63625,0.71020023814,8.602325267042626e-6,2,sr_water_2025_bmaitland
-MF-25-018,SR-020,2025-09-16,Potentially non-acid washed bottle,SR @ MFSR confluence (Stoddard),Salmon River,SR,45.29811,-114.59403,0.71411087889,1.342e-5,1,sr_water_2025_bmaitland
+sample_id,site_id,collection_date,collection_notes,site_name,waterbody_name,drainage_group,stream_code,lat_dd,long_dd,sr_87,sr_87_se,n_analytical_runs,icpms_batch
+MF-24-001,MFSR-070,2024-09-11,NA,MFSR @ Boundary Creek,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,44.5321,-115.29453,0.7085336460715421,1.392e-5,1,sr_water_2024_rjohnson
+MF-24-002,SUL-010,2024-09-11,NA,Sulphur Creek @ MFSR confluence,Sulphur Creek,Sulphur Creek,SUL,44.55447,-115.29925,0.7084066258437615,1.688e-5,1,sr_water_2024_rjohnson
+MF-24-003,RAP-010,2024-09-12,NA,Rapid River @ MFSR confluence,Rapid River,Rapid River,RAP,44.67982,-115.15186,0.7089530839396342,1.34e-5,1,sr_water_2024_rjohnson
+MF-24-004,PIS-010,2024-09-12,NA,Pistol Creek @ MFSR confluence,Pistol Creek,Pistol Creek,PIS,44.72313,-115.15084,0.7089886347484144,1.0361100327667906e-5,2,sr_water_2024_rjohnson
+MF-24-005,IND-010,2024-09-12,NA,Indian Creek @ MFSR confluence,Indian Creek,Indian Creek,IND,44.76937,-115.09184,0.708936695328442,1.414e-5,1,sr_water_2024_rjohnson
+MF-24-006,MRB-010,2024-09-12,NA,Marble Creek @ MFSR confluence,Marble Creek,Marble Creek,MRB,44.74471,-115.01748,0.7088513104771413,1.784e-5,1,sr_water_2024_rjohnson
+MF-24-007,MFSR-050,2024-09-13,NA,MFSR @ Mahoney camp,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,44.7502,-114.91739,0.7087353400168981,1.826e-5,1,sr_water_2024_rjohnson
+MF-24-008,LOO-010,2024-09-13,NA,Loon Creek @ MFSR confluence,Loon Creek,Loon Creek,LOO,44.80714,-114.81135,0.7090322847990485,1.426e-5,1,sr_water_2024_rjohnson
+MF-24-009,MFSR-040,2024-09-14,NA,MFSR @ Upper Grouse camp,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,44.86873,-114.76819,0.708832437063841,1.176e-5,1,sr_water_2024_rjohnson
+MF-24-010,CAM-010,2024-09-14,NA,Camas Creek @ MFSR confluence,Camas Creek,Camas Creek,CAM,44.89184,-114.72192,0.7123143893312727,1.978e-5,1,sr_water_2024_rjohnson
+MF-24-011,SHP-010,2024-09-14,NA,Sheep Creek @ MFSR confluence,Sheep Creek,Sheep Creek,SHP,44.94284,-114.72865,0.7084513753363416,1.448e-5,1,sr_water_2024_rjohnson
+MF-24-012,MFSR-030,2024-09-15,NA,MFSR @ Cold Springs,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,45.00377,-114.72847,0.7091304580638298,1.054e-5,1,sr_water_2024_rjohnson
+MF-24-013,WIL-010,2024-09-15,NA,Wilson Creek @ MFSR confluence,Wilson Creek,Wilson Creek,WIL,45.03366,-114.72323,0.727387907249639,2.86e-5,1,sr_water_2024_rjohnson
+MF-24-014,BIG-010,2024-09-15,NA,Big Creek @ MFSR confluence,Big Creek,Big Creek,BIG,45.09418,-114.73425,0.7143486168927431,1.674e-5,1,sr_water_2024_rjohnson
+MF-24-015,MFSR-020,2024-09-16,NA,MFSR @ Ship Island camp,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,45.17903,-114.7224,0.7101104812084604,1.436e-5,1,sr_water_2024_rjohnson
+MF-24-016,MFSR-010,2024-09-16,NA,MFSR @ Clamshell Rock,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,45.26355,-114.63625,0.7101058474278087,1.248e-5,1,sr_water_2024_rjohnson
+MF-24-017,SR-020,2024-09-16,NA,SR @ MFSR confluence (Stoddard),Salmon River,Salmon River,SR,45.29811,-114.59403,0.7144306766469006,1.26e-5,1,sr_water_2024_rjohnson
+MF-24-018,SR-010,2024-09-16,SAMPLE LOST,SR above Cashe Bar,Salmon River,Salmon River,SR,45.30087,-114.61268,NA,NA,NA,NA
+MF-24-019,KNP-010,2024-10-30,NA,Knapp Creek,Knapp Creek,Marsh Creek,KNP,44.36848,-115.12468,0.7087744345970116,1.46e-5,1,sr_water_2024_rjohnson
+MF-24-020,MRS-030,2024-10-30,NA,Marsh Creek (upper),Marsh Creek,Marsh Creek,MRS,44.37435,-115.142,0.7082516166372306,1.43e-5,1,sr_water_2024_rjohnson
+MF-24-021,BVR-010,2024-10-30,NA,Beaver Creek,Beaver Creek,Marsh Creek,BVR,44.4134,-115.14974,0.7087391182939575,1.5e-5,1,sr_water_2024_rjohnson
+MF-24-022,MRS-020,2024-10-30,NA,Marsh Creek below Cape Horn Creek,Marsh Creek,Marsh Creek,MRS,44.39776,-115.1701,0.7081753986116901,1.522e-5,1,sr_water_2024_rjohnson
+MF-24-023,MRS-010,2024-10-30,NA,Marsh Creek below Beaver Creek,Marsh Creek,Marsh Creek,MRS,44.41183,-115.18398,0.708391391730804,7.481203111799599e-6,2,sr_water_2024_rjohnson
+MF-24-024,CPH-010,2024-10-30,NA,Cape Horn Creek,Cape Horn,Marsh Creek,CPH,44.36305,-115.20078,0.707793097104464,1.2428117315184951e-5,2,sr_water_2024_rjohnson
+MF-24-025,BSK-010,2024-10-30,NA,Bearskin Creek lower,Bearskin Creek,Bear Valley Creek,BSK,44.40678,-115.493,0.7084500092652382,1.362e-5,1,sr_water_2024_rjohnson
+MF-24-026,ELK-020,2024-10-30,NA,Elk Creek upper,Elk Creek,Bear Valley Creek,ELK,44.41699,-115.47122,0.7083793358173168,1.776e-5,1,sr_water_2024_rjohnson
+MF-24-027,ELK-010,2024-10-30,NA,Elk Creek lower,Elk Creek,Bear Valley Creek,ELK,44.41664,-115.39053,0.7082489377555143,1.696e-5,1,sr_water_2024_rjohnson
+MF-24-028,BVC-030,2024-10-30,NA,Bear Valley Creek (upper) below Cashe Creek,Bear Valley Creek,Bear Valley Creek,BVC,44.34712,-115.41619,0.7083004,1.588e-5,1,sr_water_2024_rjohnson
+MF-24-029,BVC-020,2024-10-30,NA,Bear Valley Creek (lower) below Pole Creek,Bear Valley Creek,Bear Valley Creek,BVC,44.39233,-115.37263,0.7081894435592044,1.708e-5,1,sr_water_2024_rjohnson
+MF-24-030,BVC-010,2024-10-30,NA,Bear Valley Creek @ Bruce Meadows camp,Bear Valley Creek,Bear Valley Creek,BVC,44.42786,-115.3307,0.70831285747,1.67e-5,1,sr_water_2024_rjohnson
+MF-25-001,MFSR-070,2025-09-10,NA,MFSR @ Boundary Creek,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,44.5321,-115.29453,0.7085918,1.204e-5,1,sr_water_2025_bmaitland
+MF-25-002,SUL-010,2025-09-10,NA,Sulphur Creek @ MFSR confluence,Sulphur Creek,Sulphur Creek,SUL,44.55447,-115.29925,0.7085665125071684,1.524e-5,1,sr_water_2025_bmaitland
+MF-25-003,MFSR-060,2025-09-10,NA,MFSR @ Sheepeater Camp,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,44.62813,-115.19611,0.7085895597908005,1.418e-5,1,sr_water_2025_bmaitland
+MF-25-004,RAP-010,2025-09-11,NA,Rapid River @ MFSR confluence,Rapid River,Rapid River,RAP,44.67982,-115.15186,0.7090134649770774,9.58e-6,1,sr_water_2025_bmaitland
+MF-25-005,PIS-010,2025-09-11,NA,Pistol Creek @ MFSR confluence,Pistol Creek,Pistol Creek,PIS,44.72313,-115.15084,0.7090228660805656,1.242e-5,1,sr_water_2025_bmaitland
+MF-25-006,IND-010,2025-09-11,NA,Indian Creek @ MFSR confluence,Indian Creek,Indian Creek,IND,44.76937,-115.09184,0.7089800137786857,1.396e-5,1,sr_water_2025_bmaitland
+MF-25-007,MRB-010,2025-09-12,"Blown out from rain; 2 sterile filters, then 3 unsteril filters",Marble Creek @ MFSR confluence,Marble Creek,Marble Creek,MRB,44.74471,-115.01748,0.7089458029667548,1.31e-5,1,sr_water_2025_bmaitland
+MF-25-008,MFSR-050,2025-09-12,NA,MFSR @ Mahoney camp,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,44.7502,-114.91739,0.7088680412028912,1.49e-5,1,sr_water_2025_bmaitland
+MF-25-009,LOO-010,2025-09-13,NA,Loon Creek @ MFSR confluence,Loon Creek,Loon Creek,LOO,44.80714,-114.81135,0.7091313346691466,1.484e-5,1,sr_water_2025_bmaitland
+MF-25-010,MFSR-040,2025-09-13,NA,MFSR @ Upper Grouse camp,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,44.86873,-114.76819,0.7088438936728001,1.286e-5,1,sr_water_2025_bmaitland
+MF-25-011,CAM-010,2025-09-13,NA,Camas Creek @ MFSR confluence,Camas Creek,Camas Creek,CAM,44.89184,-114.72192,0.7128487517683632,1.254e-5,1,sr_water_2025_bmaitland
+MF-25-012,SHP-010,2025-09-14,Potentially non-acid washed bottle,Sheep Creek @ MFSR confluence,Sheep Creek,Sheep Creek,SHP,44.94284,-114.72865,0.7085024838964008,1.4e-5,1,sr_water_2025_bmaitland
+MF-25-013,MFSR-030,2025-09-14,Potentially non-acid washed bottle,MFSR @ Cold Springs,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,45.00377,-114.72847,0.7091829923663328,1.132e-5,1,sr_water_2025_bmaitland
+MF-25-014,WIL-010,2025-09-14,Potentially non-acid washed bottle,Wilson Creek @ MFSR confluence,Wilson Creek,Wilson Creek,WIL,45.03366,-114.72323,0.7274801791925687,1.62e-5,1,sr_water_2025_bmaitland
+MF-25-015,BIG-010,2025-09-14,Potentially non-acid washed bottle,Big Creek @ MFSR confluence,Big Creek,Big Creek,BIG,45.09418,-114.73425,0.7143743159364213,1.308e-5,1,sr_water_2025_bmaitland
+MF-25-016,MFSR-020,2025-09-15,Potentially non-acid washed bottle,MFSR @ Ship Island camp,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,45.17903,-114.7224,0.71007829381,1.712e-5,1,sr_water_2025_bmaitland
+MF-25-017,MFSR-010,2025-09-15,Potentially non-acid washed bottle,MFSR @ Clamshell Rock,Middle Fork Salmon River,Middle Fork Salmon River,MFSR,45.26355,-114.63625,0.71020023814,8.602325267042626e-6,2,sr_water_2025_bmaitland
+MF-25-018,SR-020,2025-09-16,Potentially non-acid washed bottle,SR @ MFSR confluence (Stoddard),Salmon River,Salmon River,SR,45.29811,-114.59403,0.71411087889,1.342e-5,1,sr_water_2025_bmaitland

@@ -340,7 +340,8 @@ manual_overrides <- list(
   ),
   "Pistol Creek" = bind_rows(
     pick_candidates(results[["Pistol Creek"]]),
-    manual_site(4, 44.72139, -115.1921, "just below the Little Pistol Creek confluence -- Little Pistol Creek supports spawning; both sides here are Plutonic so this is for spatial/biological coverage, not lithologic contrast")
+    manual_site(4, 44.72139, -115.1921, "just below the Little Pistol Creek confluence -- Little Pistol Creek supports spawning; both sides here are Plutonic so this is for spatial/biological coverage, not lithologic contrast"),
+    manual_site(NA, 44.76363, -115.31684, "on Little Pistol Creek itself, ~11 km upstream of the Pistol Creek confluence (measured along Little Pistol's own line, not the trunk), at Little Pistol's own Quaternary sediments/Plutonic contact -- per Russ, worth a stop while he's up there")
   ),
   "Rapid River" = manual_site(20.3, 44.57045, -115.07117, "trailhead with road access near the drainage headwaters -- low priority (geologically uniform) but easy to reach"),
   "Indian Creek" = bind_rows(
@@ -354,7 +355,7 @@ manual_overrides <- list(
   ),
   "Loon Creek" = bind_rows(
     pick_candidates(results[["Loon Creek"]]),
-    manual_site(39.2, 44.55352, -114.8499, "other edge of the same small sedimentary patch as the existing 36.1 km candidate")
+    manual_site(39.8, 44.54617, -114.85635, "other edge of the same small sedimentary patch as the existing 36.1 km candidate -- moved slightly upstream per Russ")
   ),
   # replaces (not adds to) the two auto-picked candidates, which bracketed the
   # same small granite inlier only ~1.6 km apart -- consolidated to one
@@ -365,7 +366,8 @@ manual_overrides <- list(
   ),
   "Mayfield Creek" = bind_rows(
     manual_site(4.6, 44.54007, -114.8015, "just below the East/West Fork confluence, on the short main-stem trunk"),
-    manual_site(NA, 44.50567, -114.74811, "on West Fork Mayfield Creek, at its volcanic/granite contact -- unlike the East Fork candidate (~5 km from any road) this sits ~80 m from a road, so it replaces the East Fork site for accessibility")
+    manual_site(NA, 44.50463, -114.7439, "on West Fork Mayfield Creek, just upstream of its volcanic/granite contact -- moved a bit further upstream (from the contact itself) per Russ, to sit solidly in the volcanic unit rather than right on the boundary; the trunk and East Fork sites already cover the plutonic side"),
+    manual_site(NA, 44.55133, -114.74546, "on East Fork Mayfield Creek -- Russ wants to hike up the East Fork a bit, so worth a stop while he's up there")
   ),
   "Monumental Creek" = bind_rows(
     pick_candidates(results[["Monumental Creek"]]),
@@ -380,7 +382,16 @@ manual_overrides <- list(
     pick_candidates(results[["Big Creek"]]),
     manual_site(8.7, 45.10261, -114.84607, "Hamann & Kennedy (2012) 'Lower Big Cr.' (site E)"),
     manual_site(60.9, 45.10630, -115.32839, "Hamann & Kennedy (2012) 'Upper Big Cr.' (site A)"),
-    manual_site(58.2, 45.12779, -115.31390, "Hamann & Kennedy (2012) 'Big Cr. downstream of Logan Cr.' (site B)")
+    manual_site(58.2, 45.12779, -115.31390, "Hamann & Kennedy (2012) 'Big Cr. downstream of Logan Cr.' (site B)"),
+    manual_site(30.9, 45.14177, -115.05557, "mid-drainage spatial coverage within the volcanic stretch between the 20.5 km and 45 km contact-based candidates")
+  ),
+  # Camas Creek's two auto-picked candidates (15, 38 km) sit well upstream of
+  # the Yellowjacket confluence (~6.4 km) -- the whole stretch below that is
+  # uniform Plutonic, so this manual site is for spatial coverage ahead of
+  # the confluence, not a lithologic contact
+  "Camas Creek" = bind_rows(
+    pick_candidates(results[["Camas Creek"]]),
+    manual_site(3.5, 44.89030, -114.6783, "between CAM-010 and the Yellowjacket Creek confluence (~6.4 km) -- lithologically uniform here (Plutonic), so this is for spatial coverage; per Russ, worth grabbing given how much variation Camas and Yellowjacket show overall")
   ),
   "Rush Creek" = bind_rows(
     pick_candidates(results[["Rush Creek"]]),
@@ -580,9 +591,23 @@ ggplot() +
 
 Bedrock is dominated by two igneous provinces of very different age (Cretaceous Idaho Batholith granite and Eocene Challis Volcanics/intrusives), with a real Precambrian metamorphic component in the northeast part of the basin (Yellowjacket, Big Creek headwaters area) — see `docs/review_biogeochem_tracers.qmd` for the full area-weighted breakdown and why this predicts sharp, mappable Sr contrasts in exactly those tributaries that cross from one province into another.
 
-## Partner-covered sites — not part of Bryan's own itinerary
+## Who's covering what — 2026 season plan
 
-Colden Baxter (University of Idaho) and students will collect Big Creek while out with students this summer. Payette National Forest biologists will help with upper Monumental Creek. Marble Creek is unconfirmed — Payette may cover it if they go in, but Bryan should plan to collect it himself if that doesn't pan out. These drainages are analyzed below for completeness (the geology doesn't stop mattering just because someone else is collecting), and the candidate site coordinates below are exactly what should go into `field/partner_sample_collection_guide.qmd` for Baxter's and Payette's crews. Rush Creek and (Big Creek's) Beaver Creek are **not** currently covered by a partner as far as this plan knows — confirm with Baxter's crew whether their Big Creek trip extends to those sub-tributaries before assuming they're covered.
+Every drainage in this plan is analyzed the same way regardless of who ends up collecting it (the geology doesn't stop mattering just because someone else is out there) — but it's worth laying out who's doing what and when, both to keep partner coordination straight and to sequence Bryan's own remaining trips sensibly.
+
+**Colden Baxter (University of Idaho) and students** will collect Big Creek this summer, plus the near-confluence sites on Beaver Creek, Monumental Creek, and Rush Creek where those sub-tributaries meet Big Creek (see each drainage's section below for exact coordinates). Rush Creek beyond that near-confluence spot is remote and difficult, so realistically just the one sample there. The candidate site coordinates below are exactly what should go into `field/partner_sample_collection_guide.qmd` for their crew.
+
+**Payette National Forest biologists** will help with upper Monumental Creek, and may also be able to cover upper Beaver Creek (otherwise Bryan). Upper Marble Creek is hopefully also Payette — if that pans out, Bryan may fly into lower Marble Creek to pick up the two lower-drainage sites there instead of hiking the whole thing.
+
+**Russ** will collect Loon Creek, Warm Spring Creek, and Mayfield Creek next week — see the new manual sites added to those three drainages below, all requested directly by Russ ahead of that trip. He'll likely do Camas Creek in September, hiking down the drainage to the river and floating out, which is also why a manual site was added between `CAM-010` and the Yellowjacket confluence — worth grabbing given how much Sr variation both Camas and Yellowjacket show.
+
+**Bryan's own remaining itinerary**: Sulphur Creek, Rapid River, (possibly additional sites on Marsh Creek/Bear Valley Creek beyond the 2024 sites and this doc's headwaters review), Pistol Creek, Indian Creek, lower Marble Creek, and Yellowjacket Creek. Rough trip logistics:
+
+- **Rapid River** is an easy drive-in, grab-and-leave stop, and could be combined with the Sulphur Creek trip (and possibly extra Marsh/Bear Valley sites) in one outing.
+- **Sulphur Creek** is road-accessible but far enough to be a long day trip or a short overnight based out of Boundary Creek campground.
+- **Pistol Creek and Indian Creek** call for a 4-5 day trip — in through Pistol, out through Indian, with a shuttle needed.
+- **Lower Marble Creek** is a likely fly-in, especially if Payette covers upper Marble.
+- **Yellowjacket Creek** should be doable via road access.
 
 ## Headwaters
 
@@ -680,6 +705,8 @@ Pistol Creek's channel alternates repeatedly between granite and valley-fill (Qu
 
 On the manual site just below the Little Pistol Creek confluence: this makes sense to add. There's no lithologic reason for it (both sides are Plutonic), but Little Pistol Creek supports spawning and there's no clean contact anywhere else on Pistol Creek to prioritize instead, so a site here trades geologic contrast for biologically relevant spatial coverage right where a significant spawning tributary joins -- a reasonable trade given the alternative is no extra site at all.
 
+A second site now goes on Little Pistol Creek itself, ~11 km up its own line (not the Pistol Creek trunk), right at a real Quaternary sediments/Plutonic contact and close to a trail -- unlike the confluence site above, this one does have a lithologic reason, and per Russ it's worth the stop while he's up that far anyway.
+
 ## Rapid River
 
 ```{r}
@@ -725,7 +752,7 @@ map_drainage(drainage_defs[[4]])
 report_drainage(drainage_defs[[4]])
 ```
 
-Loon Creek is mostly granite (Plutonic, ~74%) with a real volcanic contact near its lower third and a small sedimentary patch further upstream. The added manual site (39.2 km upstream) sits at the other edge of that same sedimentary patch from the existing 36.1 km candidate, so together they bracket the whole patch rather than just clipping one edge of it.
+Loon Creek is mostly granite (Plutonic, ~74%) with a real volcanic contact near its lower third and a small sedimentary patch further upstream. The added manual site (now 39.8 km upstream, nudged slightly further upstream from the original 39.2 km per Russ) sits at the other edge of that same sedimentary patch from the existing 36.1 km candidate, so together they bracket the whole patch rather than just clipping one edge of it.
 
 Note: there are two entirely separate streams named "Warm Spring Creek" in this part of the basin — one flows directly into the MFSR mainstem, the other into Loon Creek. Only the Loon Creek one (`GNIS_ID` 400163) is analyzed here.
 
@@ -757,7 +784,9 @@ report_drainage(drainage_defs[[6]])
 
 Warm Spring Creek's named trunk crosses a small granite inlier surrounded by Challis volcanics. The original two auto-picked candidates (13.8 and 15.4 km upstream) both bracketed that same small inlier only ~1.6 km apart -- redundant for a feature that small, so per Bryan's call they're consolidated into one site at the midpoint (14.5 km upstream) plus a second site just upstream of the confluence with Loon Creek, to also anchor the downstream end of the drainage.
 
-Mayfield Creek's actual named trunk is short (~5 km, from where its forks join down to Loon Creek) and 100% Idaho Batholith granite -- no internal contact, so the automatic analysis doesn't recommend a trunk site. But the volcanic/granite complexity visible on the map is real and is happening on **East Fork Mayfield Creek and West Fork Mayfield Creek** (the grey context lines), each of which crosses once between the two units -- and both forks support spawning, so that variation is worth capturing rather than skipping. Two manual sites cover it: one just below the fork confluence (on the short main-stem trunk), and one on **West Fork Mayfield Creek**, right at its volcanic/granite contact. An equivalent contact exists on East Fork Mayfield Creek too, but it sits ~5 km from any road, versus ~80 m for the West Fork contact -- so the West Fork site was chosen for accessibility while still capturing the same volcanic/granite transition.
+Mayfield Creek's actual named trunk is short (~5 km, from where its forks join down to Loon Creek) and 100% Idaho Batholith granite -- no internal contact, so the automatic analysis doesn't recommend a trunk site. But the volcanic/granite complexity visible on the map is real and is happening on **East Fork Mayfield Creek and West Fork Mayfield Creek** (the grey context lines), each of which crosses once between the two units -- and both forks support spawning, so that variation is worth capturing rather than skipping.
+
+Three manual sites now cover this drainage: one just below the fork confluence (on the short main-stem trunk), one on **West Fork Mayfield Creek**, and one on **East Fork Mayfield Creek**. The West Fork site sits a bit upstream of the volcanic/granite contact itself -- nudged there per Russ, to sit solidly inside the volcanic unit rather than right on the boundary, since the trunk and East Fork sites already characterize the plutonic side. It's still close to a road (the road-access reasoning that originally favored West Fork over East Fork here hasn't changed). The East Fork site is a new addition since Russ plans to hike up that fork a ways regardless -- worth a stop while he's up there even without it being tied to a specific contact.
 
 ## Camas Creek and sub-tributaries: WF Camas & Yellowjacket creeks
 
@@ -773,6 +802,8 @@ map_drainage(drainage_defs[[8]])
 #| results: asis
 report_drainage(drainage_defs[[8]])
 ```
+
+The two auto-picked contacts (15, 38 km upstream) sit well above the Yellowjacket Creek confluence (~6.4 km) -- everything below that confluence is uniform Plutonic, so the added manual site there is for spatial coverage, not a lithologic contact. Russ may hike the whole drainage down to the river this September, and given how much variation both Camas and Yellowjacket show overall, it's worth grabbing a sample from the lower reach while he's passing through rather than leaving a several-km gap below the confluence unsampled.
 
 ### West Fork Camas Creek
 
@@ -838,7 +869,7 @@ report_drainage(drainage_defs[[12]])
 
 Big Creek itself is the most geologically diverse single tributary in this whole plan (five different rock categories along its length, including a meaningful metamorphic/sedimentary component) — this is exactly the kind of drainage where Baxter's crew collecting good spatial coverage along the mainstem will be valuable.
 
-The blue triangles on the map are Hamann & Kennedy's (2012) own Big Creek water samples, added for reference against our candidates: our own 20.5 km candidate (45.13023, -114.9512) lines up reasonably well with their **Big Cr. upstream of Rush Cr. (site D)** (45.10520, -114.86843), and our 45 km candidate (45.1664, -115.2100) is a similarly good match to their **Big Creek upstream of Big Ramey (site C)** (45.17432, -115.18269) — good agreement between independently-derived candidate spots and a decade-old published dataset, and a useful cross-check on the whole approach. Since D and C are effectively already covered, they aren't added as separate sites; instead, three of Hamann & Kennedy's other sites that land in gaps our own contact analysis didn't fill are added directly to the candidate list: **Lower Big Cr. (site E)** (45.10261, -114.84607, 8.7 km upstream), **Upper Big Cr. (site A)** (45.10630, -115.32839, 60.9 km upstream), and **site B**, downstream of Logan Cr. (45.12779, -115.31390, 58.2 km upstream). That brings Big Creek to 5 candidate sites total (2 auto-picked contacts + 3 from Hamann & Kennedy), alongside the existing `BIG-010` confluence site — good spatial coverage for Baxter's crew across the full length of the mainstem.
+The blue triangles on the map are Hamann & Kennedy's (2012) own Big Creek water samples, added for reference against our candidates: our own 20.5 km candidate (45.13023, -114.9512) lines up reasonably well with their **Big Cr. upstream of Rush Cr. (site D)** (45.10520, -114.86843), and our 45 km candidate (45.1664, -115.2100) is a similarly good match to their **Big Creek upstream of Big Ramey (site C)** (45.17432, -115.18269) — good agreement between independently-derived candidate spots and a decade-old published dataset, and a useful cross-check on the whole approach. Since D and C are effectively already covered, they aren't added as separate sites; instead, three of Hamann & Kennedy's other sites that land in gaps our own contact analysis didn't fill are added directly to the candidate list: **Lower Big Cr. (site E)** (45.10261, -114.84607, 8.7 km upstream), **Upper Big Cr. (site A)** (45.10630, -115.32839, 60.9 km upstream), and **site B**, downstream of Logan Cr. (45.12779, -115.31390, 58.2 km upstream). A sixth site, ~30.9 km upstream (45.14177, -115.05557), fills the largest remaining gap -- it sits within the volcanic stretch between the 20.5 km and 45 km contact-based candidates, so it's spatial coverage rather than a new contact. That brings Big Creek to 6 candidate sites total (3 auto-picked/spatial + 3 from Hamann & Kennedy), alongside the existing `BIG-010` confluence site — good spatial coverage for Baxter's crew across the full length of the mainstem.
 
 ### Rush Creek
 
@@ -962,3 +993,54 @@ ggplot() +
     caption = str_wrap("Black dots = existing sites. Red x's = candidate new sites (this doc). Blue lines = target tributaries + named forks.", width = 100)
   )
 ```
+
+## 2026 site locations: table and KML
+
+Every existing established site plus every candidate new site from this doc, in one place -- a single reference table for planning, and a KML file below that loads directly into OnX, Google Earth, or similar field mapping software.
+
+```{r}
+#| label: tbl-all-sites-2026
+#| message: false
+
+existing_table <- sites |>
+  transmute(
+    Type = "Existing",
+    Drainage = drainage_group,
+    `Site ID` = site_id,
+    lat = lat_dd, lon = long_dd,
+    Notes = paste0(waterbody_name, " -- established ", date_established)
+  )
+
+candidate_table <- all_candidates |>
+  arrange(drainage, dist_upstream_km) |>
+  mutate(seq = row_number(), .by = code) |>
+  transmute(
+    Type = "Candidate (2026)",
+    Drainage = drainage,
+    `Site ID` = paste0(code, "-NEW", seq),
+    lat, lon,
+    Notes = rationale
+  )
+
+all_sites_table <- bind_rows(existing_table, candidate_table) |> arrange(Drainage, Type)
+
+all_sites_table |>
+  select(Type, Drainage, `Site ID`, lat, lon, Notes) |>
+  kable(digits = 5)
+```
+
+```{r}
+#| label: export-kml
+#| message: false
+#| results: hide
+
+kml_sites <- all_sites_table |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+  transmute(Name = `Site ID`, Description = paste0(Drainage, " (", Type, "): ", Notes))
+
+kml_path <- here("data/spatial/mfsr_2026_sites.kml")
+if (file.exists(kml_path)) file.remove(kml_path)
+st_write(kml_sites, kml_path, driver = "KML", quiet = TRUE)
+```
+
+Download: [`data/spatial/mfsr_2026_sites.kml`](../data/spatial/mfsr_2026_sites.kml) -- regenerated automatically every time this doc renders, so it always matches the table and maps above. Existing sites use their real `site_id`; candidate sites use a placeholder ID (`[CODE]-NEW1`, `[CODE]-NEW2`, ...) following the same convention as `field/partner_sample_collection_guide.qmd` -- replace with the real assigned ID once a site is actually sampled.

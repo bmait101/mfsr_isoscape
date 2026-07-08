@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Folder><name>mfsr_2026_sites</name>
+  <Placemark>
+	<name>BSK-010</name>
+	<description>Bear Valley Creek (Existing): Bearskin Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.493,44.40678</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BVC-010</name>
+	<description>Bear Valley Creek (Existing): Bear Valley Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.3307,44.42786</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BVC-020</name>
+	<description>Bear Valley Creek (Existing): Bear Valley Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.37263,44.39233</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BVC-030</name>
+	<description>Bear Valley Creek (Existing): Bear Valley Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.41619,44.34712</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>ELK-010</name>
+	<description>Bear Valley Creek (Existing): Elk Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.39053,44.41664</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>ELK-020</name>
+	<description>Bear Valley Creek (Existing): Elk Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.47122,44.41699</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BVB-NEW1</name>
+	<description>Beaver Creek (Big Ck drainage) (Candidate (2026)): Hamann &amp; Kennedy (2012) 'Beaver Cr.' reference site -- near the Big Creek confluence; priority stop, same access logic as Rush Creek</description>
+      <Point><coordinates>-115.24476,45.1734</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BVB-NEW2</name>
+	<description>Beaver Creek (Big Ck drainage) (Candidate (2026)): Quaternary sediments &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-115.29876,45.22152</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BVB-NEW3</name>
+	<description>Beaver Creek (Big Ck drainage) (Candidate (2026)): Plutonic &lt;-&gt; Quaternary sediments</description>
+      <Point><coordinates>-115.33893,45.24932</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BIG-NEW1</name>
+	<description>Big Creek (Candidate (2026)): Hamann &amp; Kennedy (2012) 'Lower Big Cr.' (site E)</description>
+      <Point><coordinates>-114.84607,45.10261</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BIG-NEW2</name>
+	<description>Big Creek (Candidate (2026)): Volcanic &lt;-&gt; Quaternary sediments</description>
+      <Point><coordinates>-114.95068,45.13074</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BIG-NEW3</name>
+	<description>Big Creek (Candidate (2026)): mid-drainage spatial coverage within the volcanic stretch between the 20.5 km and 45 km contact-based candidates</description>
+      <Point><coordinates>-115.05557,45.14177</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BIG-NEW4</name>
+	<description>Big Creek (Candidate (2026)): Metasedimentary &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-115.17949,45.17375</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BIG-NEW5</name>
+	<description>Big Creek (Candidate (2026)): Hamann &amp; Kennedy (2012) 'Big Cr. downstream of Logan Cr.' (site B)</description>
+      <Point><coordinates>-115.3139,45.12779</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BIG-NEW6</name>
+	<description>Big Creek (Candidate (2026)): Hamann &amp; Kennedy (2012) 'Upper Big Cr.' (site A)</description>
+      <Point><coordinates>-115.32839,45.1063</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BIG-010</name>
+	<description>Big Creek (Existing): Big Creek -- established 9/15/2024</description>
+      <Point><coordinates>-114.73425,45.09418</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CAM-NEW1</name>
+	<description>Camas Creek (Candidate (2026)): between CAM-010 and the Yellowjacket Creek confluence (~6.4 km) -- lithologically uniform here (Plutonic), so this is for spatial coverage; per Russ, worth grabbing given how much variation Camas and Yellowjacket show overall</description>
+      <Point><coordinates>-114.6783,44.8903</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CAM-NEW2</name>
+	<description>Camas Creek (Candidate (2026)): Volcanic &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-114.56551,44.87377</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CAM-NEW3</name>
+	<description>Camas Creek (Candidate (2026)): Plutonic &lt;-&gt; Volcanic</description>
+      <Point><coordinates>-114.49496,44.72862</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CAM-010</name>
+	<description>Camas Creek (Existing): Camas Creek -- established 9/14/2024</description>
+      <Point><coordinates>-114.72192,44.89184</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>IND-NEW1</name>
+	<description>Indian Creek (Candidate (2026)): narrow metasedimentary inlier between the two granite/volcanic contacts already picked</description>
+      <Point><coordinates>-115.1325,44.79394</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>IND-NEW2</name>
+	<description>Indian Creek (Candidate (2026)): Volcanic &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-115.20347,44.82727</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>IND-NEW3</name>
+	<description>Indian Creek (Candidate (2026)): Plutonic &lt;-&gt; Volcanic</description>
+      <Point><coordinates>-115.32457,44.81531</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>IND-010</name>
+	<description>Indian Creek (Existing): Indian Creek -- established 9/12/2024</description>
+      <Point><coordinates>-115.09184,44.76937</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>LOO-NEW1</name>
+	<description>Loon Creek (Candidate (2026)): Volcanic &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-114.76069,44.69653</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>LOO-NEW2</name>
+	<description>Loon Creek (Candidate (2026)): Sedimentary &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-114.84345,44.57045</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>LOO-NEW3</name>
+	<description>Loon Creek (Candidate (2026)): other edge of the same small sedimentary patch as the existing 36.1 km candidate -- moved slightly upstream per Russ</description>
+      <Point><coordinates>-114.85635,44.54617</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>LOO-010</name>
+	<description>Loon Creek (Existing): Loon Creek -- established 9/13/2024</description>
+      <Point><coordinates>-114.81135,44.80714</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MRS-NEW1</name>
+	<description>Lower Marsh Creek (MRS-010 to Big Hole) (Candidate (2026)): Metasedimentary &lt;-&gt; Plutonic (Bryan's proposed 'halfway' point lands almost exactly on this contact)</description>
+      <Point><coordinates>-115.194,44.427</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MFSR-NEW1</name>
+	<description>MFSR headwaters (Big Hole to Boundary Creek) (Candidate (2026)): just below Big Hole -- captures the immediate post-confluence mixed signature</description>
+      <Point><coordinates>-115.23,44.454</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MRB-NEW1</name>
+	<description>Marble Creek (Candidate (2026)): second volcanic/granite contact downstream of the existing 10.9 km candidate</description>
+      <Point><coordinates>-114.9775,44.77893</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MRB-NEW2</name>
+	<description>Marble Creek (Candidate (2026)): Volcanic &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-114.98005,44.81401</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MRB-NEW3</name>
+	<description>Marble Creek (Candidate (2026)): top of drainage, just downhill from the Marble Creek trailhead -- reachable if Payette NF is up there for Monumental Creek</description>
+      <Point><coordinates>-115.09996,44.95702</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MRB-010</name>
+	<description>Marble Creek (Existing): Marble Creek -- established 9/12/2024</description>
+      <Point><coordinates>-115.01748,44.74471</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>BVR-010</name>
+	<description>Marsh Creek (Existing): Beaver Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.14974,44.4134</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>CPH-010</name>
+	<description>Marsh Creek (Existing): Cape Horn -- established 10/30/2024</description>
+      <Point><coordinates>-115.20078,44.36305</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>KNP-010</name>
+	<description>Marsh Creek (Existing): Knapp Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.12468,44.36848</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MRS-010</name>
+	<description>Marsh Creek (Existing): Marsh Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.18398,44.41183</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MRS-020</name>
+	<description>Marsh Creek (Existing): Marsh Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.1701,44.39776</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MRS-030</name>
+	<description>Marsh Creek (Existing): Marsh Creek -- established 10/30/2024</description>
+      <Point><coordinates>-115.142,44.37435</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MAY-NEW1</name>
+	<description>Mayfield Creek (Candidate (2026)): just below the East/West Fork confluence, on the short main-stem trunk</description>
+      <Point><coordinates>-114.8015,44.54007</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MAY-NEW2</name>
+	<description>Mayfield Creek (Candidate (2026)): on West Fork Mayfield Creek, just upstream of its volcanic/granite contact -- moved a bit further upstream (from the contact itself) per Russ, to sit solidly in the volcanic unit rather than right on the boundary; the trunk and East Fork sites already cover the plutonic side</description>
+      <Point><coordinates>-114.7439,44.50463</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MAY-NEW3</name>
+	<description>Mayfield Creek (Candidate (2026)): on East Fork Mayfield Creek -- Russ wants to hike up the East Fork a bit, so worth a stop while he's up there</description>
+      <Point><coordinates>-114.74546,44.55133</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MFSR-010</name>
+	<description>Middle Fork Salmon River (Existing): Middle Fork Salmon River -- established 9/16/2024</description>
+      <Point><coordinates>-114.63625,45.26355</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MFSR-020</name>
+	<description>Middle Fork Salmon River (Existing): Middle Fork Salmon River -- established 9/16/2024</description>
+      <Point><coordinates>-114.7224,45.17903</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MFSR-030</name>
+	<description>Middle Fork Salmon River (Existing): Middle Fork Salmon River -- established 9/15/2024</description>
+      <Point><coordinates>-114.72847,45.00377</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MFSR-040</name>
+	<description>Middle Fork Salmon River (Existing): Middle Fork Salmon River -- established 9/14/2024</description>
+      <Point><coordinates>-114.76819,44.86873</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MFSR-050</name>
+	<description>Middle Fork Salmon River (Existing): Middle Fork Salmon River -- established 9/13/2024</description>
+      <Point><coordinates>-114.91739,44.7502</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MFSR-060</name>
+	<description>Middle Fork Salmon River (Existing): Middle Fork Salmon River -- established 9/10/2025</description>
+      <Point><coordinates>-115.19611,44.62813</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MFSR-070</name>
+	<description>Middle Fork Salmon River (Existing): Middle Fork Salmon River -- established 9/11/2024</description>
+      <Point><coordinates>-115.29453,44.5321</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MON-NEW1</name>
+	<description>Monumental Creek (Candidate (2026)): Hamann &amp; Kennedy (2012) 'Monumental Cr. (site F)' -- lower-drainage, reachable from the Big Creek side; complements the upper trailhead site above, since the analysis-picked mid-drainage contact (14.9 km) is the least accessible of the three</description>
+      <Point><coordinates>-115.15733,45.09937</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MON-NEW2</name>
+	<description>Monumental Creek (Candidate (2026)): Volcanic &lt;-&gt; Metasedimentary</description>
+      <Point><coordinates>-115.11595,45.06593</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>MON-NEW3</name>
+	<description>Monumental Creek (Candidate (2026)): near the Monumental/Marble trailhead, upper drainage</description>
+      <Point><coordinates>-115.16526,44.98076</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>PIS-NEW1</name>
+	<description>Pistol Creek (Candidate (2026)): just below the Little Pistol Creek confluence -- Little Pistol Creek supports spawning; both sides here are Plutonic so this is for spatial/biological coverage, not lithologic contrast</description>
+      <Point><coordinates>-115.1921,44.72139</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>PIS-NEW2</name>
+	<description>Pistol Creek (Candidate (2026)): Quaternary sediments &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-115.28792,44.70828</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>PIS-NEW3</name>
+	<description>Pistol Creek (Candidate (2026)): Plutonic &lt;-&gt; Quaternary sediments</description>
+      <Point><coordinates>-115.37583,44.68149</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>PIS-NEW4</name>
+	<description>Pistol Creek (Candidate (2026)): on Little Pistol Creek itself, ~11 km upstream of the Pistol Creek confluence (measured along Little Pistol's own line, not the trunk), at Little Pistol's own Quaternary sediments/Plutonic contact -- per Russ, worth a stop while he's up there</description>
+      <Point><coordinates>-115.31684,44.76363</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>PIS-010</name>
+	<description>Pistol Creek (Existing): Pistol Creek -- established 9/12/2024</description>
+      <Point><coordinates>-115.15084,44.72313</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>RAP-NEW1</name>
+	<description>Rapid River (Candidate (2026)): trailhead with road access near the drainage headwaters -- low priority (geologically uniform) but easy to reach</description>
+      <Point><coordinates>-115.07117,44.57045</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>RAP-010</name>
+	<description>Rapid River (Existing): Rapid River -- established 9/12/2024</description>
+      <Point><coordinates>-115.15186,44.67982</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>RSH-NEW1</name>
+	<description>Rush Creek (Candidate (2026)): Hamann &amp; Kennedy (2012) 'Rush Cr.' reference site -- near the Big Creek confluence and reachable via the ranch/trail network; priority stop since everything upstream is remote with no road</description>
+      <Point><coordinates>-114.88196,45.08826</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>RSH-NEW2</name>
+	<description>Rush Creek (Candidate (2026)): Metasedimentary &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-114.92368,45.07706</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>RSH-NEW3</name>
+	<description>Rush Creek (Candidate (2026)): Volcanic &lt;-&gt; Metasedimentary</description>
+      <Point><coordinates>-114.98151,45.03663</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>SR-010</name>
+	<description>Salmon River (Existing): Salmon River -- established 9/16/2024</description>
+      <Point><coordinates>-114.61268,45.30087</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>SR-020</name>
+	<description>Salmon River (Existing): Salmon River -- established 9/16/2024</description>
+      <Point><coordinates>-114.59403,45.29811</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>SHP-010</name>
+	<description>Sheep Creek (Existing): Sheep Creek -- established 9/14/2024</description>
+      <Point><coordinates>-114.72865,44.94284</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>SUL-NEW1</name>
+	<description>Sulphur Creek (Candidate (2026)): Quaternary sediments &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-115.36926,44.53403</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>SUL-NEW2</name>
+	<description>Sulphur Creek (Candidate (2026)): ~5 km downstream of the North Fork Sulphur Creek confluence, still upstream of the granite/Quaternary contact</description>
+      <Point><coordinates>-115.4029,44.54938</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>SUL-010</name>
+	<description>Sulphur Creek (Existing): Sulphur Creek -- established 9/11/2024</description>
+      <Point><coordinates>-115.29925,44.55447</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>WSC-NEW1</name>
+	<description>Warm Spring Creek (Candidate (2026)): just upstream of the confluence with Loon Creek</description>
+      <Point><coordinates>-114.7171,44.65062</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>WSC-NEW2</name>
+	<description>Warm Spring Creek (Candidate (2026)): midpoint of the granite inlier (averages the two closely-spaced auto picks)</description>
+      <Point><coordinates>-114.5958,44.61547</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>WIL-NEW1</name>
+	<description>Wilson Creek (Candidate (2026)): Quaternary sediments &lt;-&gt; Metasedimentary</description>
+      <Point><coordinates>-114.60951,45.0475</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>WIL-NEW2</name>
+	<description>Wilson Creek (Candidate (2026)): Plutonic &lt;-&gt; Quaternary sediments</description>
+      <Point><coordinates>-114.57521,45.09105</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>WIL-010</name>
+	<description>Wilson Creek (Existing): Wilson Creek -- established 9/15/2024</description>
+      <Point><coordinates>-114.72323,45.03366</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>YJC-NEW1</name>
+	<description>Yellowjacket Creek (Candidate (2026)): Metasedimentary &lt;-&gt; Plutonic</description>
+      <Point><coordinates>-114.53185,44.9721</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>YJC-NEW2</name>
+	<description>Yellowjacket Creek (Candidate (2026)): Plutonic &lt;-&gt; Metasedimentary</description>
+      <Point><coordinates>-114.49384,45.05779</coordinates></Point>
+  </Placemark>
+</Folder>
+</Document></kml>

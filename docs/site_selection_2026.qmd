@@ -487,29 +487,6 @@ existing_sites_sf <- sites |>
   st_as_sf(coords = c("long_dd", "lat_dd"), crs = 4326) |>
   st_transform(st_crs(fl))
 
-ggplot() +
-  geom_sf(data = lith_clip, aes(fill = lith_group), color = NA, alpha = 0.6) +
-  geom_sf(data = hu8, fill = NA, color = "grey30", linewidth = 0.5, linetype = "dashed") +
-  geom_sf(data = fl, color = "grey20", linewidth = 0.15) +
-  geom_sf(data = hamann, color = "red", size = 1, shape = 4) +
-  geom_sf(data = existing_sites_sf, color = "black", size = 1.5) +
-  scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
-  map_furniture() +
-  theme_minimal(base_size = 11) +
-  theme(legend.position = "right", legend.text = element_text(size = 7)) +
-  guides(fill = guide_legend(nrow = 5)) +
-  labs(
-    title = "MFSR basin: bedrock lithology and sample sites",
-    caption = "Black dots = existing sample sites (master_site_lookup.csv). Red x's = Hamann & Kennedy (2012) Big Creek water samples."
-  )
-```
-
-```{r}
-#| label: fig-map-tribs
-#| fig-width: 9
-#| fig-height: 9
-#| message: false
-
 # uses the corrected, GNIS_ID-verified + gap-filled tributary geometries
 # (results[[...]]$seg), not a raw GNIS_NAME filter -- avoids re-introducing
 # the name-collision/gap bugs described in the QA/QC callout above
@@ -531,7 +508,10 @@ ggplot() +
   theme_minimal(base_size = 11) +
   theme(legend.position = "right", legend.text = element_text(size = 7)) +
   guides(fill = guide_legend(nrow = 5)) +
-  labs(title = "MFSR basin: bedrock lithology, sample sites, and target tributaries")
+  labs(
+    title = "MFSR basin: bedrock lithology and sample sites",
+    caption = "Black dots = existing sample sites (master_site_lookup.csv). Red x's = Hamann & Kennedy (2012) Big Creek water samples."
+  )
 ```
 
 Bedrock is dominated by two igneous provinces of very different age (Cretaceous Idaho Batholith granite and Eocene Challis Volcanics/intrusives), with a real Precambrian metamorphic component in the northeast part of the basin (Yellowjacket, Big Creek headwaters area) — see `docs/review_biogeochem_tracers.qmd` for the full area-weighted breakdown and why this predicts sharp, mappable Sr contrasts in exactly those tributaries that cross from one province into another.

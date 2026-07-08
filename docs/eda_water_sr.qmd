@@ -1,16 +1,33 @@
 ---
 title: "MFSR Water Sr EDA"
 subtitle: "Exploratory summary of compiled water ⁸⁷Sr/⁸⁶Sr results"
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    toc-title: "Contents"
+    number-sections: true
+    theme: cosmo
+    code-fold: true
+    code-tools: true
+    embed-resources: true
+    fig-width: 8
+    fig-height: 5
+    fig-dpi: 150
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ```{r}
 #| label: setup
-#| message: false
 
 library(tidyverse)
 library(here)
 library(sf)
+library(knitr)
 
 dat <- read_csv(here("results/compiled_sr_data.csv"), show_col_types = FALSE)
 ```
@@ -25,7 +42,8 @@ Samples with no coordinates (should be empty -- everything should resolve throug
 #| label: qc-missing-coords
 dat |>
   filter(is.na(lat_dd) | is.na(long_dd)) |>
-  select(sample_id, site_id, waterbody_name)
+  select(sample_id, site_id, waterbody_name) |>
+  kable()
 ```
 
 Samples with no Sr result yet (expected for very recent collections still waiting on lab turnaround; anything old showing up here is worth chasing down):
@@ -34,7 +52,8 @@ Samples with no Sr result yet (expected for very recent collections still waitin
 #| label: qc-missing-sr
 dat |>
   filter(is.na(sr_87)) |>
-  select(sample_id, site_id, waterbody_name, collection_date)
+  select(sample_id, site_id, waterbody_name, collection_date) |>
+  kable()
 ```
 
 Duplicate `sample_id` values (should be empty -- the compile script already collapses analytical re-runs, so any duplicates here indicate a real sample-log data-entry problem):
@@ -43,7 +62,8 @@ Duplicate `sample_id` values (should be empty -- the compile script already coll
 #| label: qc-dup-ids
 dat |>
   count(sample_id) |>
-  filter(n > 1)
+  filter(n > 1) |>
+  kable()
 ```
 
 ## Samples per stream and year
@@ -54,7 +74,8 @@ dat |>
   mutate(year = year(collection_date)) |>
   count(waterbody_name, year) |>
   pivot_wider(names_from = year, values_from = n, values_fill = 0) |>
-  arrange(waterbody_name)
+  arrange(waterbody_name) |>
+  kable()
 ```
 
 ## Sr summary by stream
@@ -70,8 +91,11 @@ dat |>
     sr_max = max(sr_87),
     .by = waterbody_name
   ) |>
-  arrange(desc(sr_mean))
+  arrange(desc(sr_mean)) |>
+  kable(digits = 5)
 ```
+
+Wilson Creek is the clear outlier here (mean 0.72729, n = 2) — well above everything else in the dataset. Big Creek, Salmon River, and Camas Creek form a second tier around 0.712-0.714. Every other drainage sits in a tight band between about 0.708 and 0.710, a spread barely larger than analytical uncertainty on individual runs (~0.00002 SE) -- real signal there will be subtle and will depend on hitting lithologic contacts precisely, not just sampling more broadly (see [Implications for 2026 site selection](#implications-for-2026-site-selection) below).
 
 ## Sr by waterbody
 
@@ -79,6 +103,9 @@ dat |>
 #| label: fig-sr-by-waterbody
 #| fig-width: 8
 #| fig-height: 7
+#| fig-cap:
+#|   - "All sites with an Sr result, colored by drainage group."
+#|   - "Same data excluding Salmon River, Big Creek, Wilson Creek, and Camas Creek, which otherwise compress the axis for every other drainage."
 
 dat |>
   filter(!is.na(sr_87)) |>
@@ -101,6 +128,8 @@ dat |>
   labs(y = expression(''^87*'Sr/'^86*'Sr'), x = "")
 ```
 
+@fig-sr-by-waterbody-1 shows why the filtering matters: Wilson Creek, Big Creek, Salmon River, and Camas Creek sit far enough to the right that they compress every other drainage into a narrow sliver of the x-axis. @fig-sr-by-waterbody-2 drops those four and rescales, and the within- and between-drainage spread among the remaining, tightly-clustered streams becomes visible for the first time -- this is the view worth using when comparing sites in the 0.708-0.710 range.
+
 ## Map of sampled sites
 
 Mean Sr value per site, plotted against the MFSR stream network.
@@ -110,23 +139,27 @@ Mean Sr value per site, plotted against the MFSR stream network.
 #| message: false
 #| fig-width: 8
 #| fig-height: 8
+#| fig-cap:
+#|   - "Mean site Sr isotope ratio, all sites."
+#|   - "Same data excluding Salmon River, Big Creek, Wilson Creek, and Camas Creek."
+#|   - "Marsh Creek and Bear Valley Creek headwaters complex only."
 
 flowline <- st_read(here("data/spatial/flowline_pn17_nsi_mfsr.gpkg"), quiet = TRUE)
 
 site_means <- dat |>
   filter(!is.na(sr_87)) |>
   summarise(
-    sr_87 = mean(sr_87), 
+    sr_87 = mean(sr_87),
     lat_dd = first(lat_dd),
-    long_dd = first(long_dd), 
+    long_dd = first(long_dd),
     .by = c(drainage_group, site_id)
     ) |>
   st_as_sf(coords = c("long_dd", "lat_dd"), crs = 4326) |>
-  st_transform(st_crs(flowline)) 
+  st_transform(st_crs(flowline))
 
 ggplot() +
   geom_sf(data = flowline, color = "steelblue", linewidth = 0.3) +
-  geom_sf(data = site_means, aes(fill = sr_87), 
+  geom_sf(data = site_means, aes(fill = sr_87),
           size = 2.5, shape = 21, color = "black") +
   scale_fill_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
   theme_minimal(base_size = 12) +
@@ -137,7 +170,7 @@ ggplot() +
   geom_sf(
     data = site_means |> filter(!drainage_group %in% c(
       "Salmon River", "Big Creek", "Wilson Creek", "Camas Creek"
-      )), 
+      )),
     aes(fill = sr_87), size = 2.5, shape = 21, color = "black") +
   scale_fill_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
   theme_minimal(base_size = 12) +
@@ -148,11 +181,124 @@ ggplot() +
   geom_sf(
     data = site_means |> filter(drainage_group %in% c(
       "Bear Valley Creek", "Marsh Creek"
-      )), 
+      )),
     aes(fill = sr_87), size = 2.5, shape = 21, color = "black") +
   scale_fill_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
   theme_minimal(base_size = 12) +
   labs(title = "Marsh and Bear Valley Complex")
 ```
+
+Spatially, the same pattern holds: @fig-site-map-1 is dominated visually by the four high-value drainages, and @fig-site-map-2 (with those excluded) is where the finer-scale geographic pattern among the remaining sites actually reads. @fig-site-map-3 zooms further into the Marsh Creek/Bear Valley Creek headwaters complex specifically, since those two streams together account for most of the samples in the tightly-clustered group and are a useful test case for whether within-complex variation is detectable at all with the current site density.
+
+## Sr vs. bedrock lithology
+
+The map above shows *where* Sr varies; this one shows *why*. Bedrock is classified using the same 5-category scheme as `site_selection_2026.qmd` (kept in sync manually -- see that doc if this grouping changes) applied to the USGS State Geologic Map Compilation.
+
+```{r}
+#| label: fig-lithology-sr
+#| message: false
+#| fig-width: 9
+#| fig-height: 9
+#| fig-cap: "Site mean Sr isotope ratio (points) overlaid on generalized bedrock lithology."
+
+litho_colors <- c(
+  "Plutonic"             = "hotpink",
+  "Volcanic"             = "saddlebrown",
+  "Metasedimentary"      = "darkolivegreen4",
+  "Sedimentary"          = "steelblue1",
+  "Quaternary sediments" = "yellow"
+)
+
+lith_group_map <- c(
+  "Igneous, intrusive"                             = "Plutonic",
+  "Igneous, volcanic"                              = "Volcanic",
+  "Igneous and Metamorphic, undifferentiated"      = "Metasedimentary",
+  "Metamorphic, undifferentiated"                  = "Metasedimentary",
+  "Metamorphic, sedimentary clastic"               = "Metasedimentary",
+  "Metamorphic and Sedimentary, undifferentiated"  = "Metasedimentary",
+  "Sedimentary, clastic"                           = "Sedimentary",
+  "Sedimentary, undifferentiated"                  = "Sedimentary",
+  "Unconsolidated, undifferentiated"               = "Quaternary sediments"
+)
+
+hu8 <- st_read(here("data/spatial/hu8_mfsr_dissolved.gpkg"), quiet = TRUE) |> st_transform(st_crs(flowline))
+
+lith <- st_read(here("data/spatial/geology/idaho_lithology.shp"), quiet = TRUE) |>
+  st_make_valid() |>
+  st_transform(st_crs(flowline)) |>
+  filter(GENERALIZE != "Water") |>
+  mutate(lith_group = recode(GENERALIZE, !!!lith_group_map)) |>
+  st_intersection(st_union(hu8))
+
+bbox <- st_bbox(flowline)
+
+ggplot() +
+  geom_sf(data = lith, aes(fill = lith_group), color = NA, alpha = 0.7) +
+  geom_sf(data = flowline, color = "grey30", linewidth = 0.15) +
+  geom_sf(data = site_means, aes(color = sr_87), size = 3) +
+  scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
+  scale_color_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
+  coord_sf(xlim = bbox[c("xmin", "xmax")], ylim = bbox[c("ymin", "ymax")]) +
+  theme_minimal(base_size = 12) +
+  labs(title = "Site Sr values against bedrock lithology")
+
+ggplot() +
+  geom_sf(data = lith, aes(fill = lith_group), color = NA, alpha = 0.7) +
+  geom_sf(data = flowline, color = "grey30", linewidth = 0.15) +
+  geom_sf(data = site_means |> filter(!drainage_group %in% c("Wilson Creek", "Salmon River")),
+          aes(color = sr_87), size = 3) +
+  scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
+  scale_color_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
+  coord_sf(xlim = bbox[c("xmin", "xmax")], ylim = bbox[c("ymin", "ymax")]) +
+  theme_minimal(base_size = 12) +
+  labs(title = "Excluding Wilson Creek and Salmon River")
+```
+
+The highest-value points (Wilson Creek, and to a lesser extent Big Creek) sit on or immediately adjacent to metasedimentary bedrock, consistent with the expectation from `review_biogeochem_tracers.qmd` that old metamorphic terrain is a highly radiogenic Sr "anchor." The tightly-clustered 0.708-0.710 sites sit mostly on Plutonic (Idaho Batholith granite) and Volcanic (Challis) units, which is also expected -- those two provinces overlap enough in age/composition that they don't produce as sharp a Sr contrast as the older metamorphic rock does. @fig-lithology-sr-2 drops the two most extreme points (Wilson Creek and Salmon River) and rescales the color bar, which makes the color-vs-bedrock relationship among the rest of the sites easier to read on its own terms.
+
+## Headwaters complex: Bear Valley Creek, Marsh Creek, and tributaries
+
+Bear Valley Creek and Marsh Creek together account for 12 of the sites in this dataset -- Bear Valley Creek proper plus Bearskin and Elk creeks, and Marsh Creek proper plus Beaver Creek, Cape Horn, and Knapp Creek. Sr values here are all tightly clustered (0.708) with lower variability than the basin as a whole, but a zoomed-in view against bedrock still shows real internal structure worth a closer look -- and it's directly relevant to whether the 2024 site placement on Bear Valley/Marsh landed on the geology that matters (see the retrospective review in `site_selection_2026.qmd`'s Headwaters section).
+
+```{r}
+#| label: fig-headwaters-zoom
+#| message: false
+#| fig-width: 8
+#| fig-height: 8
+#| fig-cap: "Headwaters complex (Bear Valley Creek, Marsh Creek, and named sub-tributaries), zoomed, against bedrock lithology."
+
+headwaters_sites <- site_means |> filter(drainage_group %in% c("Bear Valley Creek", "Marsh Creek"))
+hw_bbox <- st_bbox(st_buffer(st_union(headwaters_sites), 3000))
+lith_hw <- suppressWarnings(st_crop(lith, hw_bbox))
+flowline_hw <- suppressWarnings(st_crop(flowline, hw_bbox))
+
+ggplot() +
+  geom_sf(data = lith_hw, aes(fill = lith_group), color = NA, alpha = 0.7) +
+  geom_sf(data = flowline_hw, color = "grey30", linewidth = 0.2) +
+  geom_sf(data = headwaters_sites, aes(color = sr_87), size = 4) +
+  geom_sf_text(data = headwaters_sites, aes(label = site_id), size = 2.8, fontface = "bold", nudge_y = 500, check_overlap = TRUE) +
+  scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
+  scale_color_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
+  coord_sf(xlim = hw_bbox[c("xmin", "xmax")], ylim = hw_bbox[c("ymin", "ymax")], expand = FALSE) +
+  theme_minimal(base_size = 12) +
+  labs(title = "Headwaters complex")
+```
+
+The variation here is real but small -- the full range across all 12 sites is only 0.70779 to 0.70877, a spread of about 0.001, roughly 50x the analytical SE but nowhere near Wilson Creek's contrast. Unlike Wilson, it doesn't map cleanly onto the coarse 5-category bedrock classification: nearly every site here (`KNP-010`, `BVR-010`, and the two highest values, included) nearest-snaps to Quaternary valley-fill regardless of where it ranks, since the mainstems of both Bear Valley and Marsh Creek run through the same broad glaciated valley bottom. That's a real limit of this classification at fine scale -- the polygon a point happens to sit nearest to isn't always what's actually controlling a small tributary's water chemistry upstream of the sample. The small residual variation that is there (`KNP-010` and `BVR-010` highest, `CPH-010` lowest) more likely reflects something this map can't resolve -- local groundwater contribution, upstream catchment geology not captured right at the point, or just normal hydrologic variability -- rather than a clean bedrock story like Wilson's.
+
+## Wilson Creek: a closer look
+
+Wilson Creek's mean (0.72729, n = 2) is the strongest outlier in the whole dataset, roughly 0.017-0.019 above the basin-wide range for every other drainage. This isn't a data-quality artifact -- `site_selection_2026.qmd`'s Wilson Creek section independently documents the drainage as short but geologically mixed, with a real metasedimentary component alongside granite and valley-fill, packed into an unusually short reach. That's exactly the kind of setting `review_biogeochem_tracers.qmd` predicts should produce an elevated, distinctive signature: old, Rb-rich metamorphic rock has had far longer to accumulate radiogenic ⁸⁷Sr than the surrounding Cretaceous/Eocene igneous provinces.
+
+Practically, this means Wilson Creek -- despite being the lowest sampling priority on the 2026 list given how few spawners use it (per `site_selection_2026.qmd`) -- is disproportionately informative per sample: two sites already produced the single most distinctive signature in the project. A third site near the metasedimentary contact would help pin down whether the outlier value reflects the whole unit or a very local effect.
+
+## Implications for 2026 site selection
+
+This EDA and `site_selection_2026.qmd`'s contact-driven site-placement logic reinforce each other. A few takeaways for the coming season:
+
+- **The contact-crossing approach is validated by the data in hand.** The clearest outlier (Wilson Creek) and the next tier of elevated values (Big Creek, Camas Creek) all correspond to drainages with real lithologic heterogeneity, not to sampling noise -- exactly what the site-selection doc's logic predicts and prioritizes.
+- **Yellowjacket Creek and Indian Creek are the best tests still pending.** Neither has been sampled yet, and both are flagged in `site_selection_2026.qmd` as carrying real metasedimentary/multi-province contrast (Yellowjacket) or the cleanest single volcanic/granite contact (Indian Creek) in this year's target list. Results there should either confirm or complicate the pattern seen in Wilson/Big/Camas.
+- **For the 0.708-0.710 cluster, precision of placement matters more than site count.** Because the spread within that group is only a few times larger than analytical SE, new sites need to land close to an actual lithologic contact (per the site-selection doc's candidate coordinates) to have a real chance of resolving a signal -- an arbitrarily-placed extra site in the middle of a uniform unit is unlikely to add information.
+- **Big Creek's new candidate sites (5 total, up from 2) give it the spatial density to test the "most geologically diverse tributary" claim directly** once Baxter's crew collects them -- worth revisiting this EDA once those results come in.
 
 For interactive panning/zooming during fieldwork planning, `mapview::mapview(site_means, zcol = "sr_87")` is a quick alternative to the static map above.

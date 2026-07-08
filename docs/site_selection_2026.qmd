@@ -283,6 +283,21 @@ pick_candidates <- function(r, fracs = c(0.33, 0.66)) {
   }) |> distinct(lat, lon, .keep_all = TRUE)
 }
 
+# unlike pick_candidates() (which selects 2-3 well-spaced NEW site spots),
+# this surfaces EVERY detected contact -- used for the Bear Valley/Marsh
+# Creek retrospective review below, where the question is "how do existing
+# sites compare to all real contacts," not "where should new sites go"
+all_crossings <- function(r) {
+  if (is.null(r) || nrow(r$crossings) == 0) return(tibble())
+  r$crossings |>
+    transmute(
+      dist_upstream_km = round(r$total_len_km - cumlen_km, 1),
+      lat, lon,
+      rationale = paste0(from_unit, " <-> ", to_unit),
+      source = "Analysis"
+    )
+}
+
 # combine the automatic contact-based picks with any hand-picked sites Bryan
 # adds as the season firms up -- both kept side by side (tagged by `source`)
 # rather than one replacing the other, unless noted otherwise for a specific
@@ -294,6 +309,16 @@ manual_site <- function(dist_upstream_km, lat, lon, rationale) {
 
 results <- map(drainage_defs, analyze_trib)
 names(results) <- map_chr(drainage_defs, "drainage")
+
+# Bear Valley Creek and upper Marsh Creek (above MRS-010) are a retrospective
+# check on 2024 site placement, not 2026 targets -- kept OUT of drainage_defs
+# on purpose so they don't show up in the punch list or the "all candidate
+# sites this season" map, but still get the same analyze_trib()/report_
+# drainage()/map_drainage() treatment by appending directly into `results`
+bvc_def <- list(drainage = "Bear Valley Creek", gnis_ids = c("377200"), code = "BVC")
+mrs_upper_def <- list(drainage = "Marsh Creek (upper, above MRS-010)", gnis_ids = c("386480"), code = "MRS", totda_range = c(0, 360))
+results[[bvc_def$drainage]] <- analyze_trib(bvc_def)
+results[[mrs_upper_def$drainage]] <- analyze_trib(mrs_upper_def)
 
 # manual overrides for cases where the generic 1/3-2/3-contact heuristic
 # isn't the right call (see the headwaters section) -- keyed by drainage name
@@ -340,12 +365,35 @@ manual_overrides <- list(
   ),
   "Mayfield Creek" = bind_rows(
     manual_site(4.6, 44.54007, -114.8015, "just below the East/West Fork confluence, on the short main-stem trunk"),
-    manual_site(NA, 44.55274, -114.7319, "on East Fork Mayfield Creek, just above its volcanic/granite contact")
+    manual_site(NA, 44.50567, -114.74811, "on West Fork Mayfield Creek, at its volcanic/granite contact -- unlike the East Fork candidate (~5 km from any road) this sits ~80 m from a road, so it replaces the East Fork site for accessibility")
   ),
   "Monumental Creek" = bind_rows(
     pick_candidates(results[["Monumental Creek"]]),
-    manual_site(24.5, 44.98076, -115.16526, "near the Monumental/Marble trailhead, upper drainage")
-  )
+    manual_site(24.5, 44.98076, -115.16526, "near the Monumental/Marble trailhead, upper drainage"),
+    manual_site(7.9, 45.09937, -115.15733, "Hamann & Kennedy (2012) 'Monumental Cr. (site F)' -- lower-drainage, reachable from the Big Creek side; complements the upper trailhead site above, since the analysis-picked mid-drainage contact (14.9 km) is the least accessible of the three")
+  ),
+  # Hamann & Kennedy (2012) sites snap almost exactly (0 m) onto our resolved
+  # trunk line -- sites D and C aren't added here since they're already
+  # closely matched by the existing 20.5/45 km auto candidates (see prose
+  # below); E, A, and B fill in gaps the auto analysis didn't pick
+  "Big Creek" = bind_rows(
+    pick_candidates(results[["Big Creek"]]),
+    manual_site(8.7, 45.10261, -114.84607, "Hamann & Kennedy (2012) 'Lower Big Cr.' (site E)"),
+    manual_site(60.9, 45.10630, -115.32839, "Hamann & Kennedy (2012) 'Upper Big Cr.' (site A)"),
+    manual_site(58.2, 45.12779, -115.31390, "Hamann & Kennedy (2012) 'Big Cr. downstream of Logan Cr.' (site B)")
+  ),
+  "Rush Creek" = bind_rows(
+    pick_candidates(results[["Rush Creek"]]),
+    manual_site(0.0, 45.08826, -114.88196, "Hamann & Kennedy (2012) 'Rush Cr.' reference site -- near the Big Creek confluence and reachable via the ranch/trail network; priority stop since everything upstream is remote with no road")
+  ),
+  "Beaver Creek (Big Ck drainage)" = bind_rows(
+    pick_candidates(results[["Beaver Creek (Big Ck drainage)"]]),
+    manual_site(0.0, 45.17340, -115.24476, "Hamann & Kennedy (2012) 'Beaver Cr.' reference site -- near the Big Creek confluence; priority stop, same access logic as Rush Creek")
+  ),
+  # retrospective review, not new-site picks -- show every detected contact
+  # (all_crossings()) rather than the 2-3-site spacing heuristic
+  "Bear Valley Creek" = all_crossings(results[["Bear Valley Creek"]]),
+  "Marsh Creek (upper, above MRS-010)" = all_crossings(results[["Marsh Creek (upper, above MRS-010)"]])
 )
 
 get_candidates <- function(def) {
@@ -353,19 +401,25 @@ get_candidates <- function(def) {
   pick_candidates(results[[def$drainage]])
 }
 
-report_drainage <- function(def) {
+# composition/candidate table condensed to one line + one compact table (no
+# lat/lon columns -- those are only needed for the map marker, not for
+# scanning the text) so each tributary section reads as map -> table -> prose
+# rather than map -> table -> table -> prose
+report_drainage <- function(def, candidate_label = "Candidate new site positions") {
   r <- results[[def$drainage]]
   if (is.null(r)) {
     cat("No flowline match found for", def$drainage, "-- check GNIS_ID.\n\n")
     return(invisible())
   }
   cand <- get_candidates(def)
-  cat(sprintf("**%s (`%s`)** -- %.1f km of mapped channel.\n\n", def$drainage, def$code, r$total_len_km))
-  print(kable(r$composition |> rename(Lithology = lith_group, `km` = len, `% of length` = pct)))
-  cat("\n")
+  comp_str <- r$composition |>
+    mutate(part = sprintf("%.0f%% %s", pct, lith_group)) |>
+    pull(part) |>
+    paste(collapse = ", ")
+  cat(sprintf("**%s (`%s`)** -- %.1f km of mapped channel. Bedrock: %s.\n\n", def$drainage, def$code, r$total_len_km, comp_str))
   if (nrow(cand) > 0) {
-    cat("Candidate new site positions (distance upstream of the `-010` confluence site):\n\n")
-    print(kable(cand |> select(source, dist_upstream_km, lat, lon, rationale) |>
+    cat(candidate_label, " (distance upstream of the `-010` confluence site):\n\n", sep = "")
+    print(kable(cand |> select(source, dist_upstream_km, rationale) |>
       rename(Source = source, `km upstream` = dist_upstream_km, Rationale = rationale)))
   } else {
     cat("No lithologic contact detected along the mapped channel -- geologically uniform; ",
@@ -424,8 +478,12 @@ map_drainage <- function(def) {
 
   if (nrow(hu8_zoom) > 0) p <- p + geom_sf(data = hu8_zoom, fill = NA, color = "grey30", linewidth = 0.6, linetype = "dashed")
 
-  if (nrow(roads_zoom) > 0) p <- p + geom_sf(data = roads_zoom, color = "firebrick", linewidth = 0.3, alpha = 0.7)
-  if (nrow(trails_zoom) > 0) p <- p + geom_sf(data = trails_zoom, color = "tan4", linewidth = 0.3, linetype = "dotted")
+  if (nrow(roads_zoom) > 0) p <- p +
+    geom_sf(data = roads_zoom, color = "white", linewidth = 0.7) +
+    geom_sf(data = roads_zoom, color = "firebrick", linewidth = 0.35)
+  if (nrow(trails_zoom) > 0) p <- p +
+    geom_sf(data = trails_zoom, color = "white", linewidth = 0.6) +
+    geom_sf(data = trails_zoom, color = "black", linewidth = 0.3, linetype = "22")
   if (nrow(hamann_zoom) > 0) p <- p + geom_sf(data = hamann_zoom, color = "blue", size = 2, shape = 2, stroke = 1)
 
   # parent stream (e.g. Loon Creek behind Warm Spring/Mayfield), cropped to
@@ -449,7 +507,10 @@ map_drainage <- function(def) {
     map_furniture() +
     coord_sf(xlim = bbox[c("xmin", "xmax")], ylim = bbox[c("ymin", "ymax")], expand = FALSE) +
     theme_minimal(base_size = 10) +
-    theme(legend.position = "right", legend.text = element_text(size = 7), legend.title = element_text(size = 8)) +
+    theme(
+      legend.position = "right", legend.text = element_text(size = 7), legend.title = element_text(size = 8),
+      plot.caption = element_text(hjust = 0, size = 7)
+    ) +
     labs(title = paste0(def$drainage, " (`", def$code, "`)", title_suffix), x = NULL, y = NULL)
 
   if (nrow(existing) > 0) {
@@ -465,12 +526,12 @@ map_drainage <- function(def) {
     p <- p + geom_sf(data = cand_sf, color = "red", size = 3, shape = 4, stroke = 1.5)
   }
   p +
-    labs(caption = paste0(
+    labs(caption = str_wrap(paste0(
       "Black triangle = existing site (labeled). Red x = candidate new site. Grey dashed outline = HUC8 basin edge. ",
-      "Red line = road. Brown dotted line = trail. Blue triangle = Hamann & Kennedy (2012) reference site.",
+      "Red line (white-cased) = road. Black dashed line (white-cased) = trail. Blue triangle = Hamann & Kennedy (2012) reference site.",
       if (nrow(r$seg_forks) > 0) " Grey line = named side-fork (context only)." else "",
       if (title_suffix != "") " Black dotted stream line = parent stream." else ""
-    ))
+    ), width = 100))
 }
 ```
 
@@ -506,11 +567,14 @@ ggplot() +
   scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
   map_furniture() +
   theme_minimal(base_size = 11) +
-  theme(legend.position = "right", legend.text = element_text(size = 7)) +
+  theme(
+    legend.position = "right", legend.text = element_text(size = 7),
+    plot.caption = element_text(hjust = 0, size = 7)
+  ) +
   guides(fill = guide_legend(nrow = 5)) +
   labs(
     title = "MFSR basin: bedrock lithology and sample sites",
-    caption = "Black dots = existing sample sites (master_site_lookup.csv). Red x's = Hamann & Kennedy (2012) Big Creek water samples."
+    caption = str_wrap("Black dots = existing sample sites (master_site_lookup.csv). Red x's = Hamann & Kennedy (2012) Big Creek water samples.", width = 100)
   )
 ```
 
@@ -522,7 +586,37 @@ Colden Baxter (University of Idaho) and students will collect Big Creek while ou
 
 ## Headwaters
 
-The Middle Fork Salmon River officially begins at "Big Hole," where Marsh Creek and Bear Valley Creek meet (confirmed in the flowline data: both streams' mouths sit exactly at the same point, 0 m apart, which is also the most-upstream end of the "Middle Fork Salmon River" `GNIS_NAME` reaches). Bryan already has samples from upper Bear Valley Creek (`BVC-010/020/030`) and upper Marsh Creek (`MRS-010/020/030`), but two stretches remain unsampled: the lower ~8 km of Marsh Creek between `MRS-010` and Big Hole itself, and the entire ~18 km of brand-new MFSR channel from Big Hole down to the existing `MFSR-070` site at the Boundary Creek put-in.
+The Middle Fork Salmon River officially begins at "Big Hole," where Marsh Creek and Bear Valley Creek meet (confirmed in the flowline data: both streams' mouths sit exactly at the same point, 0 m apart, which is also the most-upstream end of the "Middle Fork Salmon River" `GNIS_NAME` reaches). Bryan already has samples from upper Bear Valley Creek (`BVC-010/020/030`) and upper Marsh Creek (`MRS-010/020/030`) -- the first two subsections below retroactively run the same contact-detection analysis used everywhere else in this doc against those *already-established* 2024 sites, as a check on whether they landed somewhere geologically useful. Beyond that, two stretches remain genuinely unsampled: the lower ~8 km of Marsh Creek between `MRS-010` and Big Hole itself, and the entire ~18 km of brand-new MFSR channel from Big Hole down to the existing `MFSR-070` site at the Boundary Creek put-in.
+
+### Bear Valley Creek (existing sites review)
+
+```{r}
+#| label: fig-map-bvc
+map_drainage(bvc_def)
+```
+
+```{r}
+#| label: fig-bvc
+#| results: asis
+report_drainage(bvc_def, candidate_label = "Detected lithologic contacts (for comparison against existing sites)")
+```
+
+Bear Valley Creek is mostly Quaternary valley-fill (the broad glaciated meadow the creek is named for) with a real Plutonic component, and the analysis finds four contacts along its length. Comparing the four red x's to the three black triangles: `BVC-010` and `BVC-030` both sit within a couple km of a real contact -- good placement, not just even spacing. `BVC-020`, in the middle, sits well inside a uniform Quaternary stretch with no contact nearby, so it's likely doing more for spatial/access coverage than for capturing a lithologic transition -- not a bad site, just not one landing on a contrast. More notable: the westernmost (most-upstream) contact sits beyond `BVC-030` entirely, past the current sampling extent -- if Bear Valley Creek gets revisited, that's the one gap in the existing 2024 placement worth a look.
+
+### Marsh Creek, above MRS-010 (existing sites review)
+
+```{r}
+#| label: fig-map-mrsupper
+map_drainage(mrs_upper_def)
+```
+
+```{r}
+#| label: fig-mrsupper
+#| results: asis
+report_drainage(mrs_upper_def, candidate_label = "Detected lithologic contacts (for comparison against existing sites)")
+```
+
+This reach comes back 100% Quaternary sediments -- no internal contact at all above `MRS-010`. That's a genuinely useful negative result: there's no lithologic argument that `MRS-010/020/030` missed anything, because there's nothing to miss until the Metasedimentary/Plutonic contact identified in Lower Marsh Creek below (which sits *downstream* of `MRS-010`, not in this reach). The tight 0.708 cluster these sites fall into (see `eda_water_sr.qmd`) is consistent with sampling a uniform valley-fill unit rather than a sign of undersampling.
 
 ### Lower Marsh Creek
 
@@ -663,7 +757,7 @@ report_drainage(drainage_defs[[6]])
 
 Warm Spring Creek's named trunk crosses a small granite inlier surrounded by Challis volcanics. The original two auto-picked candidates (13.8 and 15.4 km upstream) both bracketed that same small inlier only ~1.6 km apart -- redundant for a feature that small, so per Bryan's call they're consolidated into one site at the midpoint (14.5 km upstream) plus a second site just upstream of the confluence with Loon Creek, to also anchor the downstream end of the drainage.
 
-Mayfield Creek's actual named trunk is short (~5 km, from where its forks join down to Loon Creek) and 100% Idaho Batholith granite -- no internal contact, so the automatic analysis doesn't recommend a trunk site. But the volcanic/granite complexity visible on the map is real and is happening on **East Fork Mayfield Creek and West Fork Mayfield Creek** (the grey context lines), which cross repeatedly between the two units -- and both forks support spawning, so that variation is worth capturing rather than skipping. Two manual sites cover it: one just below the fork confluence (on the short main-stem trunk), and one on East Fork Mayfield Creek just above its volcanic/granite contact.
+Mayfield Creek's actual named trunk is short (~5 km, from where its forks join down to Loon Creek) and 100% Idaho Batholith granite -- no internal contact, so the automatic analysis doesn't recommend a trunk site. But the volcanic/granite complexity visible on the map is real and is happening on **East Fork Mayfield Creek and West Fork Mayfield Creek** (the grey context lines), each of which crosses once between the two units -- and both forks support spawning, so that variation is worth capturing rather than skipping. Two manual sites cover it: one just below the fork confluence (on the short main-stem trunk), and one on **West Fork Mayfield Creek**, right at its volcanic/granite contact. An equivalent contact exists on East Fork Mayfield Creek too, but it sits ~5 km from any road, versus ~80 m for the West Fork contact -- so the West Fork site was chosen for accessibility while still capturing the same volcanic/granite transition.
 
 ## Camas Creek and sub-tributaries: WF Camas & Yellowjacket creeks
 
@@ -744,7 +838,7 @@ report_drainage(drainage_defs[[12]])
 
 Big Creek itself is the most geologically diverse single tributary in this whole plan (five different rock categories along its length, including a meaningful metamorphic/sedimentary component) — this is exactly the kind of drainage where Baxter's crew collecting good spatial coverage along the mainstem will be valuable.
 
-The blue triangles on the map are Hamann & Kennedy's (2012) own Big Creek water samples, added for reference against our candidates: their **Lower Big Cr. (site E)** sits at 45.10261, -114.84607; our own 20.5 km candidate (45.13023, -114.9512) lines up reasonably well with their **Big Cr. upstream of Rush Cr. (site D)** (45.10520, -114.86843); our 45 km candidate (45.1664, -115.2100) is a similarly good match to their **Big Creek upstream of Big Ramey (site C)** (45.17432, -115.18269); and their **Upper Big Cr. (site A)** (45.10630, -115.32839) and **site B** (45.12779, -115.31390) are also shown further upstream. Good agreement between independently-derived candidate spots and a decade-old published dataset is a useful cross-check on the whole approach.
+The blue triangles on the map are Hamann & Kennedy's (2012) own Big Creek water samples, added for reference against our candidates: our own 20.5 km candidate (45.13023, -114.9512) lines up reasonably well with their **Big Cr. upstream of Rush Cr. (site D)** (45.10520, -114.86843), and our 45 km candidate (45.1664, -115.2100) is a similarly good match to their **Big Creek upstream of Big Ramey (site C)** (45.17432, -115.18269) — good agreement between independently-derived candidate spots and a decade-old published dataset, and a useful cross-check on the whole approach. Since D and C are effectively already covered, they aren't added as separate sites; instead, three of Hamann & Kennedy's other sites that land in gaps our own contact analysis didn't fill are added directly to the candidate list: **Lower Big Cr. (site E)** (45.10261, -114.84607, 8.7 km upstream), **Upper Big Cr. (site A)** (45.10630, -115.32839, 60.9 km upstream), and **site B**, downstream of Logan Cr. (45.12779, -115.31390, 58.2 km upstream). That brings Big Creek to 5 candidate sites total (2 auto-picked contacts + 3 from Hamann & Kennedy), alongside the existing `BIG-010` confluence site — good spatial coverage for Baxter's crew across the full length of the mainstem.
 
 ### Rush Creek
 
@@ -759,7 +853,7 @@ map_drainage(drainage_defs[[13]])
 report_drainage(drainage_defs[[13]])
 ```
 
-Rush Creek itself is remote and hard to reach. Hamann & Kennedy's "Rush Cr." reference site (45.08826, -114.88196, shown on the map) sits closer to the ranch and trail network than our own candidates, and is a reasonable practical alternative if the analysis-picked sites prove inaccessible.
+Rush Creek itself is remote and hard to reach beyond its lower end. Hamann & Kennedy's "Rush Cr." reference site (45.08826, -114.88196) sits right at the Big Creek confluence and is reachable via the ranch/trail network, so it's added to the candidate list as the **priority stop** on this drainage. The two contact-based candidates further upstream (6.2, 14.2 km) are geologically meaningful (Metasedimentary/Plutonic and Volcanic/Metasedimentary contacts) but secondary — worth pushing for if access allows, but not expected to be reachable most seasons.
 
 ### Beaver Creek (Big Ck drainage)
 
@@ -774,7 +868,7 @@ map_drainage(drainage_defs[[14]])
 report_drainage(drainage_defs[[14]])
 ```
 
-Same situation as Rush Creek: Hamann & Kennedy's "Beaver Cr." reference site (45.17340, -115.24476, shown on the map) is closer to Big Creek itself and worth treating as a fallback if this Beaver Creek (`BVB` — not to be confused with Marsh Creek's `BVR`, see `data/site_id_convention.md`) proves difficult to access.
+Same situation as Rush Creek: Hamann & Kennedy's "Beaver Cr." reference site (45.17340, -115.24476) sits right at the Big Creek confluence, so it's added as the priority candidate on this Beaver Creek (`BVB` — not to be confused with Marsh Creek's `BVR`, see `data/site_id_convention.md`). The two contact-based candidates further upstream (7.9, 13.7 km) are secondary, same access logic as Rush Creek.
 
 ### Monumental Creek
 
@@ -789,7 +883,7 @@ map_drainage(drainage_defs[[15]])
 report_drainage(drainage_defs[[15]])
 ```
 
-The manual site near the Monumental/Marble trailhead (44.98076, -115.16526) adds upper-drainage coverage alongside the analysis-picked contact further down. Hamann & Kennedy's "Monumental Cr. (site F)" reference site (45.09937, -115.15733, shown on the map) sits lower in the drainage.
+Three tiers of priority here. **Lower** (7.9 km upstream): Hamann & Kennedy's "Monumental Cr. (site F)" reference site (45.09937, -115.15733) is now added to the candidate list — it's reachable from the Big Creek side, so this is doable even without going deep into the Monumental Creek drainage itself. **Upper** (24.5 km upstream): the manual site near the Monumental/Marble trailhead (44.98076, -115.16526) is reachable via the trailhead. **Middle** (14.9 km upstream, the analysis-picked Volcanic/Metasedimentary contact): geologically the most interesting of the three, but sitting well inside the drainage between the other two, it's likely the hardest to reach this season — worth attempting only if time and access allow after the lower and upper sites are covered.
 
 ### Marble Creek
 
@@ -858,10 +952,13 @@ ggplot() +
   scale_fill_manual(values = litho_colors, name = "Bedrock unit") +
   map_furniture() +
   theme_minimal(base_size = 11) +
-  theme(legend.position = "right", legend.text = element_text(size = 7)) +
+  theme(
+    legend.position = "right", legend.text = element_text(size = 7),
+    plot.caption = element_text(hjust = 0, size = 7)
+  ) +
   guides(fill = guide_legend(nrow = 5)) +
   labs(
     title = "MFSR basin: all candidate new sites, 2026 season",
-    caption = "Black dots = existing sites. Red x's = candidate new sites (this doc). Blue lines = target tributaries + named forks."
+    caption = str_wrap("Black dots = existing sites. Red x's = candidate new sites (this doc). Blue lines = target tributaries + named forks.", width = 100)
   )
 ```

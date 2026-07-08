@@ -24,16 +24,23 @@ Research Station — bryan.maitland@usda.gov, 917-838-0174.
 
 | Who | Stream | Notes |
 |---|---|---|
-| Colden Baxter (U Idaho) & students | Big Creek | Existing confluence site `BIG-010` (45.09418, -114.73425, @ MFSR confluence) is already established. Please also collect 1-2 samples upstream if your trip allows — see candidate spots below. |
+| Colden Baxter (U Idaho) & students | Big Creek | Existing confluence site `BIG-010` (45.09418, -114.73425, @ MFSR confluence) is already established. Please also collect as many of the upstream candidate spots below as your trip allows — Big Creek is the single most geologically diverse tributary in the whole project, so spatial coverage along the mainstem matters a lot here. |
 | Payette NF biologists | Upper Monumental Creek | See note below — the upper reach you'll likely access sits on uniform bedrock, so one representative sample is enough there. |
 | Payette NF biologists (if you go in) | Marble Creek | Existing confluence site `MRB-010` (44.74471, -115.01748) already established; one additional upstream sample would help (see below). |
 
-**Big Creek candidate upstream spots** (based on mapped bedrock — see
-`docs/site_selection_2026.qmd` for the full analysis): roughly 20.5 km
-upstream of the confluence (~45.130°N, -114.951°W, where volcanic rock meets
-valley-fill deposits) and/or ~48 km upstream (~45.166°N, -115.210°W, a
-metamorphic/sedimentary contact). Treat these as "aim near," not exact GPS
-targets — collect wherever is safe and reachable closest to those points.
+**Big Creek candidate spots** (based on mapped bedrock and, for three of these, a published 2012 reference dataset — see `docs/site_selection_2026.qmd` for the full analysis). Roughly in order from the `BIG-010` confluence heading upstream:
+
+- ~8.7 km upstream (~45.103°N, -114.846°W)
+- ~20.5 km upstream (~45.130°N, -114.951°W, where volcanic rock meets valley-fill deposits)
+- ~45 km upstream (~45.174°N, -115.180°W, a metamorphic/granite contact)
+- ~58 km upstream (~45.128°N, -115.314°W)
+- ~61 km upstream (~45.106°N, -115.328°W)
+
+Treat these as "aim near," not exact GPS targets — collect wherever is safe and reachable closest to each point, and prioritize the lower ones (8.7, 20.5 km) if the trip doesn't reach all the way upstream.
+
+**If your Big Creek trip extends to Rush Creek or (Big Creek's) Beaver Creek**: both have an easily reachable sample spot right near their mouths (Rush Creek: ~45.088°N, -114.882°W; Beaver Creek: ~45.173°N, -115.245°W) — everything further upstream on either is remote and not worth detouring for. Neither of these sub-tributaries is otherwise covered by anyone this season, so a sample from either is a bonus if your route already passes there.
+
+**If your Big Creek trip reaches the Monumental Creek confluence**: there's a worthwhile sample spot about 7.9 km up Monumental Creek from its mouth (~45.099°N, -115.157°W) — reachable from the Big Creek side rather than from the upper-Monumental trailhead route Payette's crew is using, so it's a good target if you're passing the confluence anyway (see the Monumental Creek note below for Payette's separate upper-drainage coverage).
 
 **Upper Monumental Creek note**: our bedrock mapping shows the uppermost
 ~30+ km of Monumental Creek sits entirely within one volcanic rock unit — no
@@ -80,7 +87,20 @@ collect (see datasheet fields below) so we can place it correctly.
     filter into the 125 mL sample bottle until you have \~125 mL (refill the
     syringe from the Nalgene as needed).
 6.  Cap the bottle immediately and label it (see below).
-7.  Store on ice as soon as possible and keep cold until hand-off/shipping.
+7.  Keep the bottle cool (not frozen) from here until it reaches a vehicle — see the next section for how to do that on a multi-day backcountry trip with no cooler immediately at hand.
+
+## Keeping samples cool in the backcountry
+
+Most of these sites are a multi-day backpacking or camping trip from the nearest vehicle, so "on ice" from step 7 above usually isn't available right away. The goal is to keep bottles cool (not frozen) from collection until they reach a vehicle, then a cooler, then the lab fridge.
+
+**Open question, don't over-engineer this yet**: we're still confirming with the ICP-MS lab and a collaborator how strict the "cool, not frozen" requirement actually is for these samples. Early read from both is that it's probably not a big deal — Sr isotope ratios are largely insensitive to short-term warm storage unless evaporation becomes an issue — but we're confirming before finalizing the protocol. Use your judgment and don't stress over a hot afternoon in the pack; just avoid the bottle sitting in direct sun or near a heat source for extended periods.
+
+Recommended approach in the meantime:
+
+1.  **Overnight — cache in a stream or spring.** Submerge bottles in a mesh or dive bag, weighted and secured to a rock or branch, in a shaded side stream or spring near camp. Idaho backcountry streams run ~4–10°C even in summer — more effective and more stable overnight than a melting ice pack would be by day 2-3.
+2.  **While hiking — minimize heat gain rather than actively refrigerate.** Pack bottles in the coolest, shadiest part of your pack (not the sun-exposed lid, not against your back). A layer of spare clothing or Reflectix (foil bubble wrap) adds insulation; a wetted bandana or wet stuff sack around the bottles gives free evaporative cooling in Idaho's dry mountain air.
+3.  **In-transit protection: a YETI Daytrip 5L Lunch Box + YETI Ice Sheet** (Bryan's kit uses this combo, and can supply it — see Materials above). It's semi-rigid (protects bottles from crushing) and pairs with a flat, refreezable ice sheet instead of bulky block ice. We picked this over a YETI Hopper Flip 12 soft cooler or a large Rambler-style thermos, both of which add too much pack weight (the Hopper Flip 12 alone runs ~3-3.4 lbs empty) relative to the small volume of sample being cooled and aren't efficient for several small, oddly-shaped bottles. The Daytrip 5L is ~1.4 lbs empty but runs shallower than expected — test-pack it with your actual sample bottles and the ice sheet before a trip to make sure everything fits.
+4.  **Fallback**: frozen drinking-water bottles work as the ice source instead of dedicated ice packs, so the cooling element does double duty as trail water once it melts.
 
 ## Labeling and datasheet
 
@@ -106,11 +126,7 @@ required.
 
 ## Getting samples back to us
 
-Keep samples cold (on ice or refrigerated) until you can either hand them off
-in person or ship them. If shipping, pack on ice in a cooler or insulated box
-and contact Bryan first to arrange timing and a shipping address — samples
-sitting in transit too long or warming up can be affected, so we'll coordinate
-the fastest path back.
+Once you're back at a vehicle, keep samples cool (see above) until you can either hand them off in person or ship them. If shipping, pack with an ice source in a cooler or insulated box and contact Bryan first to arrange timing and a shipping address — samples sitting in transit too long can be affected, so we'll coordinate the fastest path back.
 
 Thanks again for helping expand this dataset — every tributary sample
 directly improves what we can say about where these fish come from.

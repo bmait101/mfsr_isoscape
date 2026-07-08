@@ -80,10 +80,23 @@ dat |>
 #| label: fig-sr-by-waterbody
 #| fig-width: 8
 #| fig-height: 7
+
 dat |>
   filter(!is.na(sr_87)) |>
-  ggplot(aes(x = reorder(waterbody_name, sr_87), y = sr_87)) +
-  geom_point(size = 3) +
+  ggplot(
+    aes(x = reorder(site_id, drainage_group), y = sr_87, fill = drainage_group)) +
+  geom_point(size = 3, shape = 21, color = "black") +
+  coord_flip() +
+  theme_bw(base_size = 14) +
+  labs(y = expression(''^87*'Sr/'^86*'Sr'), x = "")
+
+dat |>
+  filter(!is.na(sr_87)) |>
+  filter(!drainage_group %in% c(
+      "Salmon River", "Big Creek", "Wilson Creek", "Camas Creek")) |>
+  ggplot(
+    aes(x = reorder(site_id, drainage_group), y = sr_87, fill = drainage_group)) +
+  geom_point(size = 3, shape = 21, color = "black") +
   coord_flip() +
   theme_bw(base_size = 14) +
   labs(y = expression(''^87*'Sr/'^86*'Sr'), x = "")
@@ -103,17 +116,44 @@ flowline <- st_read(here("data/spatial/flowline_pn17_nsi_mfsr.gpkg"), quiet = TR
 
 site_means <- dat |>
   filter(!is.na(sr_87)) |>
-  filter(waterbody_name != "Wilson Creek") |>
-  summarise(sr_87 = mean(sr_87), lat_dd = first(lat_dd), long_dd = first(long_dd), .by = site_id) |>
+  summarise(
+    sr_87 = mean(sr_87), 
+    lat_dd = first(lat_dd),
+    long_dd = first(long_dd), 
+    .by = c(drainage_group, site_id)
+    ) |>
   st_as_sf(coords = c("long_dd", "lat_dd"), crs = 4326) |>
-  st_transform(st_crs(flowline))
+  st_transform(st_crs(flowline)) 
 
 ggplot() +
   geom_sf(data = flowline, color = "steelblue", linewidth = 0.3) +
-  geom_sf(data = site_means, aes(color = sr_87), size = 2.5) +
-  scale_color_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
+  geom_sf(data = site_means, aes(fill = sr_87), 
+          size = 2.5, shape = 21, color = "black") +
+  scale_fill_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
   theme_minimal(base_size = 12) +
   labs(title = "Mean site Sr isotope ratio")
+
+ggplot() +
+  geom_sf(data = flowline, color = "steelblue", linewidth = 0.3) +
+  geom_sf(
+    data = site_means |> filter(!drainage_group %in% c(
+      "Salmon River", "Big Creek", "Wilson Creek", "Camas Creek"
+      )), 
+    aes(fill = sr_87), size = 2.5, shape = 21, color = "black") +
+  scale_fill_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
+  theme_minimal(base_size = 12) +
+  labs(title = "Excluding SR, BIG, WIL, CAM")
+
+ggplot() +
+  geom_sf(data = flowline, color = "steelblue", linewidth = 0.3) +
+  geom_sf(
+    data = site_means |> filter(drainage_group %in% c(
+      "Bear Valley Creek", "Marsh Creek"
+      )), 
+    aes(fill = sr_87), size = 2.5, shape = 21, color = "black") +
+  scale_fill_viridis_c(name = expression(''^87*'Sr/'^86*'Sr')) +
+  theme_minimal(base_size = 12) +
+  labs(title = "Marsh and Bear Valley Complex")
 ```
 
 For interactive panning/zooming during fieldwork planning, `mapview::mapview(site_means, zcol = "sr_87")` is a quick alternative to the static map above.

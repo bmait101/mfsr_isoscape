@@ -2,7 +2,6 @@
 title: "MFSR Water Sr EDA"
 subtitle: "Exploratory summary of compiled water ⁸⁷Sr/⁸⁶Sr results"
 format: html
-editor: visual
 ---
 
 ```{r}

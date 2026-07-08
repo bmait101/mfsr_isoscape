@@ -62,7 +62,7 @@ The Middle Fork Salmon River cuts through a genuine geologic patchwork, not a un
 | Qg — Quaternary surficial | \~5% | Glacial/alluvial deposits (not bedrock, but they mediate local water chemistry) |
 | CZs/PzYs/DSOs/other sedimentary | \<1% | Scattered Cambrian-Paleozoic sedimentary sequences |
 
-So more than half the basin (Tcv + Tei, \~56%) is the Eocene Challis magmatic complex, roughly a quarter (Kg + Ktg) is the older Cretaceous Idaho Batholith, and Precambrian Belt Supergroup metamorphics make up a real but secondary \~10% — with true sedimentary bedrock nearly absent. This matches what the ⁸⁷Sr/⁸⁶Sr theory above predicts: two igneous provinces of very different age sitting next to a much older metamorphic terrain should produce sharp, mappable Sr contrasts at their contacts, and that's exactly the structure the site-selection work in `docs/site_selection_2026.qmd` uses to place new sampling sites — not evenly along each tributary, but where a stream crosses from one unit into another.
+So more than half the basin (Tcv + Tei, \~56%) is the Eocene Challis magmatic complex, roughly a quarter (Kg + Ktg) is the older Cretaceous Idaho Batholith, and Precambrian Belt Supergroup metamorphics make up a real but secondary \~10% — with true sedimentary bedrock nearly absent. This matches what the ⁸⁷Sr/⁸⁶Sr theory above predicts: two igneous provinces of very different age sitting next to a much older metamorphic terrain should produce sharp, mappable Sr contrasts at their contacts.
 
 **Analogy worth keeping**: batholith granite is a low, simple "youthful" tone; old metamorphic terrain is a layered, complex "storyteller" tone; the Challis volcanics sit in between. The Middle Fork isn't geologically uniform — it's a mosaic, and each tributary's dominant lithology imprints a distinct chemical signature that gets carried downstream and archived in fish otoliths.
 
@@ -100,7 +100,7 @@ Unlike bone, otoliths are metabolically inert once deposited — material laid d
 
 ## Measuring trace elements and stable isotope ratios
 
-### Inductively coupled plasma mass spectrometry (ICP-MS) 
+### Inductively coupled plasma mass spectrometry (ICP-MS)
 
 Mass spectrometry is an analytical technique that is used to measure the mass-to-charge ratio of ions. The results are presented as a mass spectrum, a plot of intensity as a function of the mass-to-charge ratio. These spectra are used to determine the elemental or isotopic signature of a sample, the masses of particles and of molecules, and to elucidate the chemical identity or structure of molecules and other chemical compounds.
 

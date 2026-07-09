@@ -124,30 +124,106 @@ Several stream names in this basin are shared by more than one physical channel,
 # list, parent_gnis_id/parent_name draws that parent stream on the zoomed map
 # too, per Bryan's request to see e.g. Mayfield/Warm Spring alongside Loon.
 drainage_defs <- list(
-  list(drainage = "Sulphur Creek", gnis_ids = c("391601", "387799"), code = "SUL"),
-  list(drainage = "Pistol Creek", gnis_ids = c("388566", "384918"), code = "PIS"),
-  list(drainage = "Rapid River", gnis_ids = c("389107"), code = "RAP"),
-  list(drainage = "Loon Creek", gnis_ids = c("399100"), code = "LOO", fill_gap = TRUE),
-  list(drainage = "Warm Spring Creek", gnis_ids = c("400163", "394337"), code = "WSC", parent_gnis_id = "399100", parent_name = "Loon Creek"),
-  list(drainage = "Mayfield Creek", gnis_ids = c("386556", "381130", "393142"), code = "MAY", parent_gnis_id = "399100", parent_name = "Loon Creek"),
-  list(drainage = "Indian Creek", gnis_ids = c("383652"), code = "IND"),
-  list(drainage = "Camas Creek", gnis_ids = c("378735"), code = "CAM"),
-  # South Fork Camas Creek dropped entirely (no salmon spawning there per Bryan)
-  list(drainage = "West Fork Camas Creek", gnis_ids = c("393066"), code = "WFC", parent_gnis_id = "378735", parent_name = "Camas Creek"),
-  list(drainage = "Yellowjacket Creek", gnis_ids = c("393757", "393228"), code = "YJC", parent_gnis_id = "378735", parent_name = "Camas Creek"),
-  list(drainage = "Wilson Creek", gnis_ids = c("393547"), code = "WIL"),
-  list(drainage = "Big Creek", gnis_ids = c("377483"), code = "BIG", partner = "Colden Baxter (U Idaho) and students"),
-  list(drainage = "Rush Creek", gnis_ids = c("389731"), code = "RSH", parent_gnis_id = "377483", parent_name = "Big Creek"),
-  list(drainage = "Beaver Creek (Big Ck drainage)", gnis_ids = c("377253"), code = "BVB", partner = "Payette NF (possible)", parent_gnis_id = "377483", parent_name = "Big Creek"),
-  list(drainage = "Monumental Creek", gnis_ids = c("387122", "387739", "393151"), code = "MON", partner = "Payette NF (upper reach)", parent_gnis_id = "377483", parent_name = "Big Creek"),
-  list(drainage = "Marble Creek", gnis_ids = c("386455"), code = "MRB", partner = "Payette NF (unconfirmed -- Bryan likely collects if they don't go in)", parent_gnis_id = "377483", parent_name = "Big Creek"),
+  list(
+    drainage = "Sulphur Creek", 
+    gnis_ids = c("391601", "387799"), 
+    code = "SUL"),
+  list(
+    drainage = "Pistol Creek", 
+    gnis_ids = c("388566", "384918"), 
+    code = "PIS"),
+  list(
+    drainage = "Rapid River", 
+    gnis_ids = c("389107"), 
+    code = "RAP"),
+  list(
+    drainage = "Loon Creek", 
+    gnis_ids = c("399100"),
+    code = "LOO", 
+    fill_gap = TRUE),
+  list(
+    drainage = "Warm Spring Creek", 
+    gnis_ids = c("400163", "394337"),
+    code = "WSC", 
+    parent_gnis_id = "399100", 
+    parent_name = "Loon Creek"),
+  list(
+    drainage = "Mayfield Creek", 
+    gnis_ids = c("386556", "381130", "393142"), 
+    code = "MAY", 
+    parent_gnis_id = "399100", 
+    parent_name = "Loon Creek"),
+  list(
+    drainage = "Indian Creek",
+    gnis_ids = c("383652"), 
+    code = "IND"),
+  list(
+    drainage = "Camas Creek",
+    gnis_ids = c("378735"), 
+    code = "CAM"),
+  list(
+    drainage = "West Fork Camas Creek",
+    gnis_ids = c("393066"), 
+    code = "WFC",
+    parent_gnis_id = "378735",
+    parent_name = "Camas Creek"),
+  list(
+    drainage = "Yellowjacket Creek",
+    gnis_ids = c("393757", "393228"), 
+    code = "YJC", 
+    parent_gnis_id = "378735",
+    parent_name = "Camas Creek"),
+  list(
+    drainage = "Wilson Creek",
+    gnis_ids = c("393547"), 
+    code = "WIL"),
+  list(
+    drainage = "Big Creek", 
+    gnis_ids = c("377483"), 
+    code = "BIG",
+    partner = "Colden Baxter (U Idaho) and students"),
+  list(
+    drainage = "Rush Creek",
+    gnis_ids = c("389731"), 
+    code = "RSH", 
+    parent_gnis_id = "377483",
+    parent_name = "Big Creek"),
+  list(
+    drainage = "Beaver Creek (Big Ck drainage)", 
+    gnis_ids = c("377253"), 
+    code = "BVB", 
+    partner = "Payette NF (possible)",
+    parent_gnis_id = "377483", 
+    parent_name = "Big Creek"),
+  list(
+    drainage = "Monumental Creek",
+    gnis_ids = c("387122", "387739", "393151"), 
+    code = "MON", 
+    partner = "Payette NF (upper reach)", 
+    parent_gnis_id = "377483", 
+    parent_name = "Big Creek"),
+  list(
+    drainage = "Marble Creek", 
+    gnis_ids = c("386455"), 
+    code = "MRB", 
+    partner = "Payette NF (unconfirmed -- Bryan likely collects if they don't go in)", 
+    parent_gnis_id = "377483",
+    parent_name = "Big Creek"),
   # headwaters reach: Big Hole (Marsh Ck + Bear Valley Ck confluence, the
   # official start of the MFSR) down to the Boundary Creek put-in -- Bryan
   # already has upper Marsh/Bear Valley samples but nothing in these two
   # currently-unsampled stretches. Restricted to a TotDASqKM window on an
   # already-resolved single-GNIS_ID stream, so no gap-fill needed.
-  list(drainage = "Lower Marsh Creek (MRS-010 to Big Hole)", gnis_ids = c("386480"), code = "MRS", totda_range = c(360, 386)),
-  list(drainage = "MFSR headwaters (Big Hole to Boundary Creek)", gnis_ids = c("386841"), code = "MFSR", totda_range = c(884, 1022))
+  list(
+    drainage = "Lower Marsh Creek (MRS-010 to Big Hole)", 
+    gnis_ids = c("386480"), 
+    code = "MRS", 
+    totda_range = c(360, 386)),
+  list(
+    drainage = "MFSR headwaters (Big Hole to Boundary Creek)", 
+    gnis_ids = c("386841"), 
+    code = "MFSR", 
+    totda_range = c(884, 1022))
 )
 
 # directed downstream walk to absorb unnamed "gap" reaches (e.g. Loon Creek's
@@ -328,35 +404,35 @@ results[[mrs_upper_def$drainage]] <- analyze_trib(mrs_upper_def)
 manual_overrides <- list(
   "Lower Marsh Creek (MRS-010 to Big Hole)" = manual_site(
     4.5, 44.427, -115.194,
-    "Metasedimentary <-> Plutonic (Bryan's proposed 'halfway' point lands almost exactly on this contact)"
-  ),
+    "Metasedimentary <-> Plutonic ('halfway' point lands almost exactly on this contact)"
+    ),
   "MFSR headwaters (Big Hole to Boundary Creek)" = manual_site(
     16.2, 44.454, -115.230,
-    "just below Big Hole -- captures the immediate post-confluence mixed signature"
-  ),
+    "just below Big Hole -- post-confluence mixed signature"
+    ),
   "Sulphur Creek" = bind_rows(
     pick_candidates(results[["Sulphur Creek"]]),
-    manual_site(14.6, 44.54938, -115.4029, "~5 km downstream of the North Fork Sulphur Creek confluence, still upstream of the granite/Quaternary contact")
+    manual_site(
+      14.6, 44.54938, -115.4029, 
+      "~5 km downstream of the North Fork Sulphur Creek confluence")
   ),
   "Pistol Creek" = bind_rows(
     pick_candidates(results[["Pistol Creek"]]),
-    manual_site(4, 44.72139, -115.1921, "just below the Little Pistol Creek confluence -- Little Pistol Creek supports spawning; both sides here are Plutonic so this is for spatial/biological coverage, not lithologic contrast"),
-    manual_site(NA, 44.76363, -115.31684, "on Little Pistol Creek itself, ~11 km upstream of the Pistol Creek confluence (measured along Little Pistol's own line, not the trunk), at Little Pistol's own Quaternary sediments/Plutonic contact -- per Russ, worth a stop while he's up there")
-  ),
-  "Rapid River" = manual_site(20.3, 44.57045, -115.07117, "trailhead with road access near the drainage headwaters -- low priority (geologically uniform) but easy to reach"),
+    manual_site(
+      4, 44.72139, -115.1921,
+      "just below the Little Pistol Creek confluence"),
+    manual_site(NA, 44.72969, -115.22054, "on Little Pistol Creek itself")),
+  "Rapid River" = manual_site(20.3, 44.57045, -115.07117,"trailhead with road access"),
   "Indian Creek" = bind_rows(
     pick_candidates(results[["Indian Creek"]]),
-    manual_site(6.0, 44.79394, -115.1325, "narrow metasedimentary inlier between the two granite/volcanic contacts already picked")
-  ),
+    manual_site(6.0, 44.79394, -115.1325, "narrow metasedimentary inlier")),
   "Marble Creek" = bind_rows(
     pick_candidates(results[["Marble Creek"]]),
-    manual_site(34.2, 44.95702, -115.09996, "top of drainage, just downhill from the Marble Creek trailhead -- reachable if Payette NF is up there for Monumental Creek"),
-    manual_site(7.4, 44.77893, -114.9775, "second volcanic/granite contact downstream of the existing 10.9 km candidate")
-  ),
+    manual_site(34.2, 44.95702, -115.09996, "top of drainage by trailhead"),
+    manual_site(7.4, 44.77893, -114.9775, "second contact downstream of 10.9 km candidate")),
   "Loon Creek" = bind_rows(
     pick_candidates(results[["Loon Creek"]]),
-    manual_site(39.8, 44.54617, -114.85635, "other edge of the same small sedimentary patch as the existing 36.1 km candidate -- moved slightly upstream per Russ")
-  ),
+    manual_site(39.8, 44.54617, -114.85635, "other edge sedimentary patch")),
   # replaces (not adds to) the two auto-picked candidates, which bracketed the
   # same small granite inlier only ~1.6 km apart -- consolidated to one
   # in-between site plus one near the Loon Creek confluence, per Bryan
@@ -737,7 +813,7 @@ report_drainage(drainage_defs[[7]])
 
 Indian Creek is the most geologically interesting of this group: it's roughly half Challis volcanics, half Idaho Batholith granite, with the contact sitting well inside the drainage rather than at either end — a real candidate for the single sharpest Sr contrast among all the tributaries sampled this way (see also the Warm Spring/Mayfield discussion below, which shows the same volcanic/granite juxtaposition even more repeatedly). The manual site adds a third stop at a narrow metasedimentary sliver between the two existing contacts -- a small feature, but it's a different rock family entirely (not just another volcanic/granite flip), so worth the extra stop if you're already walking this stretch.
 
-## Loon Creek and sub-tributaries:Warm Spring and Mayfield creeks
+## Loon Creek and sub-tributaries
 
 ### Loon Creek
 
@@ -850,7 +926,22 @@ report_drainage(drainage_defs[[11]])
 
 Wilson Creek is short but geologically mixed (granite, metamorphic, and valley-fill all present) — a compact drainage where 2 well-placed sites should still capture most of the real variation. Lowest priority of Bryan's own list given how few spawners use it, but worth a stop if time allows given how much lithologic variation is packed into such a short reach.
 
-## Big Creek drainage (partner-covered) and sub-tributaries
+## Marble Creek
+
+```{r}
+#| label: fig-map-marble
+map_drainage(drainage_defs[[16]])
+```
+
+```{r}
+#| label: fig-marble
+#| results: asis
+report_drainage(drainage_defs[[16]])
+```
+
+The trailhead site (top of drainage, 44.95702, -115.09996) is worth having regardless of who ends up collecting it -- reachable by Payette NF if they're already up there for Monumental Creek, or by Bryan otherwise. On the second question: yes, worth adding the site 7.4 km upstream of `MRB-010`. It isn't just an arbitrary "~5 km" spacing choice -- there's a real second volcanic/granite contact there, downstream of the existing 10.9 km candidate and past the small intervening volcanic patch you noticed. That gives three characterized contacts along Marble Creek instead of one.
+
+## Big Creek and sub-tributaries
 
 Note: "Rush Creek" and "Beaver Creek" are both common stream names in this basin -- the Big Creek versions used below are `GNIS_ID` 389731 and 377253 respectively (see the tributary identification reference near the top for the other streams sharing these names).
 
@@ -915,21 +1006,6 @@ report_drainage(drainage_defs[[15]])
 ```
 
 Three tiers of priority here. **Lower** (7.9 km upstream): Hamann & Kennedy's "Monumental Cr. (site F)" reference site (45.09937, -115.15733) is now added to the candidate list — it's reachable from the Big Creek side, so this is doable even without going deep into the Monumental Creek drainage itself. **Upper** (24.5 km upstream): the manual site near the Monumental/Marble trailhead (44.98076, -115.16526) is reachable via the trailhead. **Middle** (14.9 km upstream, the analysis-picked Volcanic/Metasedimentary contact): geologically the most interesting of the three, but sitting well inside the drainage between the other two, it's likely the hardest to reach this season — worth attempting only if time and access allow after the lower and upper sites are covered.
-
-### Marble Creek
-
-```{r}
-#| label: fig-map-marble
-map_drainage(drainage_defs[[16]])
-```
-
-```{r}
-#| label: fig-marble
-#| results: asis
-report_drainage(drainage_defs[[16]])
-```
-
-The trailhead site (top of drainage, 44.95702, -115.09996) is worth having regardless of who ends up collecting it -- reachable by Payette NF if they're already up there for Monumental Creek, or by Bryan otherwise. On the second question: yes, worth adding the site 7.4 km upstream of `MRB-010`. It isn't just an arbitrary "~5 km" spacing choice -- there's a real second volcanic/granite contact there, downstream of the existing 10.9 km candidate and past the small intervening volcanic patch you noticed. That gives three characterized contacts along Marble Creek instead of one.
 
 ## Punch list
 

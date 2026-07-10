@@ -27,7 +27,7 @@ For orientation: every site in the project this season, yours and everyone else'
 ## Which sites you're covering
 
 | Who | Stream | Notes |
-|----------------------|-------------------------|------------------------|
+|-----------------------|-------------------------|------------------------|
 | Colden Baxter & students | Big Creek (n=6) | Most geologically diverse tributary. |
 | Colden Baxter & students | Lower Rush Creek (n=1) | Near the Big Creek confluence. Remote and difficult beyond that, so just one sample. |
 | Colden Baxter & students | Lower Beaver Creek (n=1) | Near the Big Creek confluence. Same logic as Rush Creek. |
@@ -36,7 +36,6 @@ For orientation: every site in the project this season, yours and everyone else'
 | PNF biologists (if able) | Middle Monumental Creek (n=1) | Only if your trip reaches this far downstream — see note below. |
 | PNF biologists | Upper Marble Creek (n=1) | Near trailhead. |
 | PNF biologists (if able) | Lower Marble Creek (n=3) | \~8-11 km upstream of the MFSR confluence, closely spaced. |
-| PNF biologists (if able) | Upper Beaver Creek | Otherwise Bryan covers this himself. |
 | Russ Thurow | Loon Creek (n=5), Warm Spring Creek (n=2), Mayfield Creek (n=3) | Collecting within the next two weeks (by \~7/23). |
 | Russ Thurow (if able) | Camas Creek (n=4) | Possible September trip, hiking down the drainage to the river. |
 

@@ -407,47 +407,66 @@ manual_overrides <- list(
     "Metasedimentary <-> Plutonic ('halfway' point lands almost exactly on this contact)"
     ),
   "MFSR headwaters (Big Hole to Boundary Creek)" = manual_site(
-    16.2, 44.454, -115.230,
-    "just below Big Hole -- post-confluence mixed signature"
+    16.2, 44.45431, -115.2304,
+    "just below Big Hole -- post-confluence mixed signature; nudged onto a trail per OnX field review"
     ),
+  # field-verified via OnX (2026-07-10): all of these were auto-picked or
+  # coarsely-placed and landed upslope off the actual channel, or somewhere
+  # with no reasonable access -- coordinates below are Bryan's corrected,
+  # trail-adjacent picks, still in the same lithologic unit/contact zone
   "Sulphur Creek" = bind_rows(
-    pick_candidates(results[["Sulphur Creek"]]),
-    manual_site(
-      14.6, 44.54938, -115.4029, 
-      "~5 km downstream of the North Fork Sulphur Creek confluence")
+    manual_site(4.4, 44.54112, -115.34786, "Quaternary sediments <-> Plutonic contact -- moved onto the channel/trail"),
+    manual_site(12.5, 44.54337, -115.39404, "~5 km downstream of the North Fork Sulphur Creek confluence -- moved onto the channel/trail")
   ),
   "Pistol Creek" = bind_rows(
-    pick_candidates(results[["Pistol Creek"]]),
-    manual_site(
-      4, 44.72139, -115.1921,
-      "just below the Little Pistol Creek confluence"),
-    manual_site(NA, 44.72969, -115.22054, "on Little Pistol Creek itself")),
-  "Rapid River" = manual_site(20.3, 44.57045, -115.07117,"trailhead with road access"),
+    manual_site(4.1, 44.72169, -115.19505, "just below the Little Pistol Creek confluence"),
+    manual_site(13.5, 44.70957, -115.29234, "Quaternary sediments <-> Plutonic contact"),
+    manual_site(19.9, 44.68706, -115.35482, "Plutonic <-> Quaternary sediments contact"),
+    manual_site(NA, 44.72483, -115.20771, "near the mouth of Little Pistol Creek itself -- simplified from the original ~11 km-up contact pick to an easier, more accessible spot right at the confluence")
+  ),
+  "Rapid River" = manual_site(20.3, 44.57013, -115.07105, "trailhead with road access"),
+  # expanded from 3 to 5 sites per Bryan's review of the spawning-location
+  # dataset -- lower two now bracket the narrow metasedimentary inlier's
+  # contacts directly, upper site pushed further upstream for better coverage
   "Indian Creek" = bind_rows(
-    pick_candidates(results[["Indian Creek"]]),
-    manual_site(6.0, 44.79394, -115.1325, "narrow metasedimentary inlier")),
+    manual_site(0.3, 44.77525, -115.1219, "near-mouth spatial coverage"),
+    manual_site(4.6, 44.79249, -115.1326, "lower Volcanic <-> Plutonic contact"),
+    manual_site(6.3, 44.79784, -115.13715, "narrow metasedimentary inlier, downstream edge"),
+    manual_site(6.3, 44.80273, -115.15513, "narrow metasedimentary inlier, upstream edge"),
+    manual_site(15.5, 44.83038, -115.22374, "upper-drainage Plutonic <-> Volcanic contact -- better upper coverage")
+  ),
+  # expanded from 3 to 4 sites -- the two lower contacts become three
+  # (one new, per Bryan), trailhead site unchanged
   "Marble Creek" = bind_rows(
-    pick_candidates(results[["Marble Creek"]]),
-    manual_site(34.2, 44.95702, -115.09996, "top of drainage by trailhead"),
-    manual_site(7.4, 44.77893, -114.9775, "second contact downstream of 10.9 km candidate")),
+    manual_site(7.8, 44.78388, -114.97391, "second contact downstream of the upper Volcanic <-> Plutonic candidate"),
+    manual_site(9.9, 44.80634, -114.97713, "added for spatial coverage between the two bracketing contacts"),
+    manual_site(11.0, 44.81619, -114.98009, "Volcanic <-> Plutonic contact"),
+    manual_site(34.2, 44.95702, -115.09996, "top of drainage by trailhead")
+  ),
+  # expanded from 3 to 5 sites -- lower contact and both sedimentary-patch
+  # edges moved onto trail-accessible spots, plus two new mid-drainage sites
   "Loon Creek" = bind_rows(
-    pick_candidates(results[["Loon Creek"]]),
-    manual_site(39.8, 44.54617, -114.85635, "other edge sedimentary patch")),
+    manual_site(15.8, 44.69593, -114.76016, "Volcanic <-> Plutonic contact"),
+    manual_site(25.0, 44.6354, -114.74627, "mid-drainage spatial coverage"),
+    manual_site(32.1, 44.60136, -114.80704, "additional coverage approaching the sedimentary patch"),
+    manual_site(34.9, 44.57025, -114.84637, "sedimentary patch, downstream edge"),
+    manual_site(40.4, 44.54133, -114.85956, "sedimentary patch, upstream edge")
+  ),
   # replaces (not adds to) the two auto-picked candidates, which bracketed the
   # same small granite inlier only ~1.6 km apart -- consolidated to one
   # in-between site plus one near the Loon Creek confluence, per Bryan
   "Warm Spring Creek" = bind_rows(
-    manual_site(14.5, 44.61547, -114.5958, "midpoint of the granite inlier (averages the two closely-spaced auto picks)"),
+    manual_site(14.2, 44.62334, -114.59868, "midpoint of the granite inlier (averages the two closely-spaced auto picks) -- moved onto trail"),
     manual_site(1.5, 44.65062, -114.7171, "just upstream of the confluence with Loon Creek")
   ),
   "Mayfield Creek" = bind_rows(
-    manual_site(4.6, 44.54007, -114.8015, "just below the East/West Fork confluence, on the short main-stem trunk"),
-    manual_site(NA, 44.50463, -114.7439, "on West Fork Mayfield Creek, just upstream of its volcanic/granite contact -- moved a bit further upstream (from the contact itself) per Russ, to sit solidly in the volcanic unit rather than right on the boundary; the trunk and East Fork sites already cover the plutonic side"),
-    manual_site(NA, 44.55133, -114.74546, "on East Fork Mayfield Creek -- Russ wants to hike up the East Fork a bit, so worth a stop while he's up there")
+    manual_site(4.2, 44.53957, -114.80626, "just below the East/West Fork confluence, on the short main-stem trunk"),
+    manual_site(NA, 44.50394, -114.74393, "on West Fork Mayfield Creek, just upstream of its volcanic/granite contact -- moved a bit further upstream (from the contact itself) per Russ, to sit solidly in the volcanic unit rather than right on the boundary; the trunk and East Fork sites already cover the plutonic side"),
+    manual_site(NA, 44.54327, -114.77872, "on East Fork Mayfield Creek, moved further along the fork for trail access -- Russ wants to hike up the East Fork a bit, so worth a stop while he's up there")
   ),
   "Monumental Creek" = bind_rows(
-    pick_candidates(results[["Monumental Creek"]]) |> filter(!is.na(lat)),
     manual_site(24.5, 44.98076, -115.16526, "near the Monumental/Marble trailhead, upper drainage"),
+    manual_site(13.5, 45.08099, -115.12124, "Volcanic <-> Metasedimentary contact -- moved onto trail per OnX review"),
     manual_site(1.9, 45.13964, -115.15895, "confirmed Metasedimentary, ~1.9 miles (3.1 km) upstream of the confluence -- a real hike in from the confluence site below, but squarely in the unit rather than straddling the contact"),
     manual_site(0.0, 45.16149, -115.1303, "at Hamann & Kennedy's (2012) 'Big Cr. upstream of Monumental Cr.' sample point, ~1.5 km up Big Creek from the actual Monumental Creek mouth -- Plutonic, and the closest real reference site to the confluence; replaces both the previous confluence-mouth estimate and the old 'site F' pick (~8 km upstream, Metasedimentary, not Plutonic)")
   ),
@@ -456,27 +475,35 @@ manual_overrides <- list(
   # closely matched by the existing 20.5/45 km auto candidates (see prose
   # below); E, A, and B fill in gaps the auto analysis didn't pick
   "Big Creek" = bind_rows(
-    pick_candidates(results[["Big Creek"]]),
+    manual_site(19.4, 45.12953, -114.95042, "Volcanic <-> Quaternary sediments contact -- moved onto trail per OnX review"),
+    manual_site(45.9, 45.17451, -115.18171, "Metasedimentary <-> Plutonic contact -- moved onto trail per OnX review"),
     manual_site(8.7, 45.10261, -114.84607, "Hamann & Kennedy (2012) 'Lower Big Cr.' (site E)"),
     manual_site(60.9, 45.10630, -115.32839, "Hamann & Kennedy (2012) 'Upper Big Cr.' (site A)"),
     manual_site(58.2, 45.12779, -115.31390, "Hamann & Kennedy (2012) 'Big Cr. downstream of Logan Cr.' (site B)"),
-    manual_site(30.9, 45.14177, -115.05557, "mid-drainage spatial coverage within the volcanic stretch between the 20.5 km and 45 km contact-based candidates")
+    manual_site(30.9, 45.14177, -115.05557, "mid-drainage spatial coverage within the volcanic stretch between the 19.4 km and 45.9 km contact-based candidates")
   ),
-  # Camas Creek's two auto-picked candidates (15, 38 km) sit well upstream of
-  # the Yellowjacket confluence (~6.4 km) -- the whole stretch below that is
-  # uniform Plutonic, so this manual site is for spatial coverage ahead of
-  # the confluence, not a lithologic contact
+  # expanded from 3 to 4 sites -- lower spatial-coverage site and the lower
+  # contact moved onto trail-accessible spots, plus one new mid-drainage site
   "Camas Creek" = bind_rows(
-    pick_candidates(results[["Camas Creek"]]),
-    manual_site(3.5, 44.89030, -114.6783, "between CAM-010 and the Yellowjacket Creek confluence (~6.4 km) -- lithologically uniform here (Plutonic), so this is for spatial coverage; per Russ, worth grabbing given how much variation Camas and Yellowjacket show overall")
+    manual_site(6.3, 44.89367, -114.65237, "between CAM-010 and the Yellowjacket Creek confluence (~6.4 km) -- lithologically uniform here (Plutonic), so this is for spatial coverage; per Russ, worth grabbing given how much variation Camas and Yellowjacket show overall"),
+    manual_site(14.1, 44.87871, -114.57145, "Volcanic <-> Plutonic contact"),
+    manual_site(23.1, 44.82205, -114.49718, "added for mid-drainage spatial coverage"),
+    manual_site(37.0, 44.73435, -114.49296, "Plutonic <-> Volcanic contact")
   ),
   "Rush Creek" = bind_rows(
     pick_candidates(results[["Rush Creek"]]),
     manual_site(0.0, 45.08826, -114.88196, "Hamann & Kennedy (2012) 'Rush Cr.' reference site -- near the Big Creek confluence and reachable via the ranch/trail network; priority stop since everything upstream is remote with no road")
   ),
-  "Beaver Creek (Big Ck drainage)" = bind_rows(
-    pick_candidates(results[["Beaver Creek (Big Ck drainage)"]]),
-    manual_site(0.0, 45.17340, -115.24476, "Hamann & Kennedy (2012) 'Beaver Cr.' reference site -- near the Big Creek confluence; priority stop, same access logic as Rush Creek")
+  # upstream contact-based candidates dropped -- no spawning up there, so no
+  # reason to ask Baxter's crew to detour off the near-confluence stop
+  "Beaver Creek (Big Ck drainage)" = manual_site(0.0, 45.17340, -115.24476, "Hamann & Kennedy (2012) 'Beaver Cr.' reference site -- near the Big Creek confluence; priority stop, same access logic as Rush Creek"),
+  "Yellowjacket Creek" = bind_rows(
+    manual_site(7.8, 44.94551, -114.59496, "Metasedimentary <-> Plutonic contact -- moved onto trail per OnX review and spawning-location data"),
+    manual_site(15.8, 44.97865, -114.50894, "Plutonic <-> Metasedimentary contact -- moved onto trail per OnX review and spawning-location data")
+  ),
+  "Wilson Creek" = bind_rows(
+    manual_site(7.8, 45.0384, -114.62491, "Quaternary sediments <-> Metasedimentary contact -- moved onto trail per OnX review and spawning-location data"),
+    manual_site(9.9, 45.05967, -114.59659, "Plutonic <-> Quaternary sediments contact -- moved onto trail per OnX review and spawning-location data")
   ),
   # retrospective review, not new-site picks -- show every detected contact
   # (all_crossings()) rather than the 2-3-site spacing heuristic
@@ -779,7 +806,7 @@ map_drainage(drainage_defs[[1]])
 report_drainage(drainage_defs[[1]])
 ```
 
-The manual site (~5 km below the North Fork Sulphur Creek confluence) sits between that confluence and the analysis-picked granite/Quaternary contact — a spatial anchor in the upper granite section that doesn't duplicate the contact site.
+Two sites: a Quaternary/Plutonic contact and a spatial anchor ~5 km below the North Fork Sulphur Creek confluence, in the upper granite section. Both moved slightly per Bryan's OnX field review — same lithologic logic, just onto an actual trail instead of an off-channel estimate.
 
 ## Pistol Creek
 
@@ -794,11 +821,11 @@ map_drainage(drainage_defs[[2]])
 report_drainage(drainage_defs[[2]])
 ```
 
-Pistol Creek alternates repeatedly between granite and Quaternary valley-fill rather than crossing one clean contact — expected for a batholith-floored valley, not a crossing between different-age bedrock. The two candidates above are reasonable anchors, but expect a softer contrast than at a true bedrock-province crossing like Indian Creek (below).
+Pistol Creek alternates repeatedly between granite and Quaternary valley-fill rather than crossing one clean contact — expected for a batholith-floored valley, not a crossing between different-age bedrock. The two contact-based candidates above are reasonable anchors, but expect a softer contrast than at a true bedrock-province crossing like Indian Creek (below).
 
-The manual site below the Little Pistol Creek confluence has no lithologic basis (both sides Plutonic), but Little Pistol Creek supports spawning and there's no better contact to prioritize instead — a reasonable trade of geologic contrast for spawning-relevant coverage.
+The site below the Little Pistol Creek confluence has no lithologic basis (both sides Plutonic), but Little Pistol Creek supports spawning and there's no better contact to prioritize instead — a reasonable trade of geologic contrast for spawning-relevant coverage.
 
-A second site sits on Little Pistol Creek itself (~11 km up its own line), right at a real Quaternary/Plutonic contact and near a trail — unlike the confluence site, this one does have a lithologic reason, and per Russ it's worth the stop.
+A second site sits right at Little Pistol Creek's own mouth — simplified from the original pick ~11 km up its own line, per Bryan's OnX review: that upstream contact wasn't reasonably reachable, and a confluence-adjacent sample still captures Little Pistol Creek's contribution for a lot less effort.
 
 ## Rapid River
 
@@ -828,7 +855,7 @@ map_drainage(drainage_defs[[7]])
 report_drainage(drainage_defs[[7]])
 ```
 
-The most geologically interesting drainage in this group: roughly half Challis volcanics, half Idaho Batholith granite, with the contact well inside the drainage — a strong candidate for the sharpest Sr contrast sampled this way (see Warm Spring/Mayfield below for the same juxtaposition, repeated). The manual site adds a third stop at a narrow metasedimentary sliver between the two contacts — a different rock family entirely, worth the extra stop since you're already walking this stretch.
+The most geologically interesting drainage in this group: roughly half Challis volcanics, half Idaho Batholith granite. Expanded from 3 to 5 sites after Bryan revisited the spawning-location dataset and OnX field access — the lower two now bracket a narrow metasedimentary inlier directly (its downstream and upstream edges) instead of a single site sitting on it, a lower Volcanic/Plutonic contact fills in below that, and the upper site pushes further upstream for better coverage of that end of the drainage.
 
 ## Loon Creek and sub-tributaries
 
@@ -847,7 +874,7 @@ p
 report_drainage(drainage_defs[[4]])
 ```
 
-Mostly granite (~74% Plutonic) with a real volcanic contact near its lower third and a small sedimentary patch further upstream. The manual site (39.8 km, nudged slightly upstream from 39.2 km per Russ) sits at the far edge of that sedimentary patch from the existing 36.1 km candidate — together they bracket the whole patch instead of clipping one edge.
+Mostly granite (~74% Plutonic) with a real volcanic contact near its lower third and a small sedimentary patch further upstream. Expanded from 3 to 5 sites: the lower volcanic/granite contact and both edges of the sedimentary patch moved onto trail-accessible spots per Bryan's OnX review, and two new mid-drainage sites fill in the long gaps between them for better overall spatial coverage.
 
 Note: there are two entirely separate streams named "Warm Spring Creek" in this part of the basin — one flows directly into the MFSR mainstem, the other into Loon Creek. Only the Loon Creek one (`GNIS_ID` 400163) is analyzed here.
 
@@ -885,7 +912,7 @@ Warm Spring Creek's trunk crosses a small granite inlier surrounded by Challis v
 
 Mayfield Creek's named trunk is short (~5 km) and 100% granite — no internal contact, so the automatic analysis skips it. But the volcanic/granite complexity on the map is real, on **East Fork** and **West Fork Mayfield Creek** (grey context lines), each crossing once between the two units — and both forks support spawning, so that variation is worth capturing.
 
-Three manual sites: one just below the fork confluence (main-stem trunk), one on West Fork, one on East Fork. The West Fork site sits a bit upstream of the volcanic/granite contact — nudged there per Russ to sit solidly in the volcanic unit, since trunk and East Fork already cover the plutonic side; still close to a road. The East Fork site is new since Russ plans to hike up that fork anyway.
+Three manual sites: one just below the fork confluence (main-stem trunk), one on West Fork, one on East Fork. The West Fork site sits a bit upstream of the volcanic/granite contact — nudged there per Russ to sit solidly in the volcanic unit, since trunk and East Fork already cover the plutonic side; still close to a road. The East Fork site is new since Russ plans to hike up that fork anyway — moved further along the fork per Bryan's OnX review for easier access.
 
 ## Camas Creek and sub-tributaries: WF Camas & Yellowjacket creeks
 
@@ -904,7 +931,7 @@ p
 report_drainage(drainage_defs[[8]])
 ```
 
-The two auto-picked contacts (15, 38 km) sit well above the Yellowjacket confluence (~6.4 km); everything below is uniform Plutonic, so the manual site there is for spatial coverage, not a contact. Russ may hike the whole drainage to the river in September — worth grabbing this lower-reach sample while passing through rather than leaving that stretch unsampled.
+Expanded from 3 to 4 sites: the spatial-coverage site below the Yellowjacket confluence and the lower contact both moved onto trail-accessible spots per Bryan's OnX review, and a new mid-drainage site fills the gap before the upper contact. Everything below the Yellowjacket confluence (~6.4 km) is uniform Plutonic. Russ may hike the whole drainage to the river in September — worth grabbing the lower-reach sample while passing through rather than leaving that stretch unsampled.
 
 ### West Fork Camas Creek
 
@@ -966,7 +993,7 @@ p
 report_drainage(drainage_defs[[16]])
 ```
 
-The trailhead site (44.95702, -115.09996) is worth having regardless of collector — reachable by Payette NF if they're up there for Monumental, or by Bryan otherwise. The site 7.4 km upstream of `MRB-010` is a real second volcanic/granite contact (not just ~5 km spacing), downstream of the existing 10.9 km candidate — three characterized contacts along Marble Creek instead of one.
+The trailhead site (44.95702, -115.09996) is worth having regardless of collector — reachable by Payette NF if they're up there for Monumental, or by Bryan otherwise. Expanded from 3 to 4 sites: the two lower volcanic/granite contacts are now three, closely spaced sites near `MRB-010` — the two original contacts plus one added in between for spatial coverage — giving denser characterization of that lower stretch alongside the upper trailhead site.
 
 ## Big Creek and sub-tributaries
 
@@ -989,7 +1016,7 @@ report_drainage(drainage_defs[[12]])
 
 Big Creek is the most geologically diverse tributary in the plan (five rock categories, including a real metamorphic/sedimentary component) — good spatial coverage along the mainstem matters here, which is what Baxter's crew is doing.
 
-Our two contact-based candidates (20.5, 45 km) independently land within ~2 km of Hamann & Kennedy's (2012) own Big Creek samples at **site D** and **site C** — a solid cross-check on the whole approach, so D/C aren't added as separate sites. Their **sites A, B, and E** (blue triangles on the map) fill gaps our analysis missed and are added directly; a sixth site at ~30.9 km covers the largest remaining gap, in the volcanic stretch between the two contacts. That's 6 candidate sites plus the existing `BIG-010` confluence site.
+Our two contact-based candidates (~19.4, ~45.9 km, moved slightly onto trail per Bryan's OnX review) independently land close to Hamann & Kennedy's (2012) own Big Creek samples at **site D** and **site C** — a solid cross-check on the whole approach, so D/C aren't added as separate sites. Their **sites A, B, and E** (blue triangles on the map) fill gaps our analysis missed and are added directly; a sixth site at ~30.9 km covers the largest remaining gap, in the volcanic stretch between the two contacts. That's 6 candidate sites plus the existing `BIG-010` confluence site.
 
 ### Rush Creek
 
@@ -1023,7 +1050,7 @@ p
 report_drainage(drainage_defs[[14]])
 ```
 
-Same situation as Rush Creek: Hamann & Kennedy's "Beaver Cr." site (45.17340, -115.24476) sits at the Big Creek confluence — priority candidate on this Beaver Creek (`BVB`, not Marsh Creek's `BVR` — see `data/site_id_convention.md`). The two contact-based candidates further upstream (7.9, 13.7 km) are secondary, same logic as Rush Creek.
+Same situation as Rush Creek: Hamann & Kennedy's "Beaver Cr." site (45.17340, -115.24476) sits at the Big Creek confluence — the only candidate on this Beaver Creek (`BVB`, not Marsh Creek's `BVR` — see `data/site_id_convention.md`). The two contact-based candidates further upstream (7.9, 13.7 km) are dropped — no spawning up there, so no reason to send Baxter's crew past the near-confluence stop.
 
 ### Monumental Creek
 
@@ -1040,7 +1067,7 @@ p
 report_drainage(drainage_defs[[15]])
 ```
 
-Four sites, three tiers of priority. **Lower** (two sites, both doable by Baxter's crew in one stop): right at the confluence (0 km, 45.16149, -115.1303) — Hamann & Kennedy's (2012) own "Big Cr. upstream of Monumental Cr." sample point, ~1.5 km up Big Creek from Monumental's actual mouth, Plutonic; and a second site ~1.9 miles (3.1 km) upstream on Monumental Creek itself (45.13964, -115.15895), confirmed Metasedimentary rather than sitting on the contact. Together these replace the previously-listed Hamann & Kennedy "site F" (~8 km upstream), which turns out to sit in Metasedimentary, not Plutonic. **Upper** (24.5 km, near the Monumental/Marble trailhead, 44.98076, -115.16526): Payette NF. **Middle** (14.9 km, the analysis-picked Volcanic/Metasedimentary contact): geologically the most interesting site on this creek, but the hardest to reach — Payette NF if their trip extends that far, otherwise skipped this season.
+Four sites, three tiers of priority. **Lower** (two sites, both doable by Baxter's crew in one stop): right at the confluence (0 km, 45.16149, -115.1303) — Hamann & Kennedy's (2012) own "Big Cr. upstream of Monumental Cr." sample point, ~1.5 km up Big Creek from Monumental's actual mouth, Plutonic; and a second site ~1.9 miles (3.1 km) upstream on Monumental Creek itself (45.13964, -115.15895), confirmed Metasedimentary rather than sitting on the contact. Together these replace the previously-listed Hamann & Kennedy "site F" (~8 km upstream), which turns out to sit in Metasedimentary, not Plutonic. **Upper** (24.5 km, near the Monumental/Marble trailhead, 44.98076, -115.16526): Payette NF. **Middle** (13.5 km, the Volcanic/Metasedimentary contact, moved onto trail per Bryan's OnX review): geologically the most interesting site on this creek, but the hardest to reach — Payette NF if their trip extends that far, otherwise skipped this season.
 
 ## Punch list
 

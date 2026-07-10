@@ -35,10 +35,10 @@ For orientation: every site in the project this season, yours and everyone else'
 | PNF biologists | Upper Monumental Creek (n=1) | Near the trailhead. |
 | PNF biologists (if able) | Middle Monumental Creek (n=1) | Only if your trip reaches this far downstream — see note below. |
 | PNF biologists | Upper Marble Creek (n=1) | Near trailhead. |
-| PNF biologists (if able) | Lower Marble Creek (n=2) | \~11 km upstream of the MFSR confluence. |
+| PNF biologists (if able) | Lower Marble Creek (n=3) | \~8-11 km upstream of the MFSR confluence, closely spaced. |
 | PNF biologists (if able) | Upper Beaver Creek | Otherwise Bryan covers this himself. |
-| Russ Thurow | Loon Creek (n=3), Warm Spring Creek (n=2), Mayfield Creek (n=3) | Collecting within the next two weeks (by \~7/23). |
-| Russ Thurow (if able) | Camas Creek (n=3) | Possible September trip, hiking down the drainage to the river. |
+| Russ Thurow | Loon Creek (n=5), Warm Spring Creek (n=2), Mayfield Creek (n=3) | Collecting within the next two weeks (by \~7/23). |
+| Russ Thurow (if able) | Camas Creek (n=4) | Possible September trip, hiking down the drainage to the river. |
 
 If plans change and you end up covering different reaches than listed here, that's fine — just record the actual GPS coordinates for whatever you collect (see datasheet below) so we can place it correctly.
 
@@ -49,9 +49,9 @@ If plans change and you end up covering different reaches than listed here, that
 **Big Creek candidate spots**, roughly from the `BIG-010` confluence heading upstream:
 
 - \~8.7 km upstream (\~45.103°N, -114.846°W)
-- \~20.5 km upstream (\~45.130°N, -114.951°W, volcanic rock meets valley-fill deposits)
+- \~19.4 km upstream (\~45.130°N, -114.950°W, volcanic rock meets valley-fill deposits)
 - \~31 km upstream (\~45.14177°N, -115.0556°W, mid-drainage spatial coverage)
-- \~45 km upstream (\~45.174°N, -115.180°W, a metamorphic/granite contact)
+- \~45.9 km upstream (\~45.175°N, -115.182°W, a metamorphic/granite contact)
 - \~58 km upstream (\~45.128°N, -115.314°W)
 - \~61 km upstream (\~45.106°N, -115.328°W)
 
@@ -86,9 +86,9 @@ See the Monumental Creek note below for Payette's separate upper-drainage covera
 **Upper Monumental Creek**:
 
 - (see map above) the uppermost \~30+ km of Monumental Creek sits entirely within one volcanic rock unit — no internal contact up there to specifically target, so wherever you're able to access near the trailhead is fine for a single representative sample.
-- If your trip reaches down to about 15 km upstream of the Big Creek confluence (\~45.066°N, -115.116°W), that's the one spot where the bedrock shifts to a metasedimentary unit and a second sample there would be valuable — but only if it's on your route already, not worth a special trip.
+- If your trip reaches down to about 13.5 km upstream of the Big Creek confluence (\~45.081°N, -115.121°W), that's the one spot where the bedrock shifts to a metasedimentary unit and a second sample there would be valuable — but only if it's on your route already, not worth a special trip.
 
-**Marble Creek**: if you're already working Monumental Creek, there's a site near the Marble Creek trailhead worth a short trip in to collect. The lower sites \~11 km upstream of the MFSR confluence will be done by Bryan if you don't get to lower Marble.
+**Marble Creek**: if you're already working Monumental Creek, there's a site near the Marble Creek trailhead worth a short trip in to collect. The lower sites \~8-11 km upstream of the MFSR confluence (three, closely spaced) will be done by Bryan if you don't get to lower Marble.
 
 ![](../img/site_maps/MRB.png)
 
@@ -96,11 +96,13 @@ See the Monumental Creek note below for Payette's separate upper-drainage covera
 
 ## Russ: Loon Creek, Warm Spring Creek, Mayfield Creek, Camas Creek
 
-**Loon Creek** (from the `LOO-010` confluence heading upstream):
+**Loon Creek** (from the `LOO-010` confluence heading upstream, five sites):
 
-- \~20 km upstream (\~44.697°N, -114.761°W, a volcanic/granite contact)
-- \~36 km upstream (\~44.570°N, -114.843°W, edge of a small sedimentary patch)
-- \~40 km upstream (\~44.546°N, -114.856°W, the far edge of sedimentary patch)
+- \~15.8 km upstream (\~44.696°N, -114.760°W, a volcanic/granite contact)
+- \~25 km upstream (\~44.635°N, -114.746°W, mid-drainage spatial coverage)
+- \~32.1 km upstream (\~44.601°N, -114.807°W, approaching the sedimentary patch)
+- \~34.9 km upstream (\~44.570°N, -114.846°W, sedimentary patch, downstream edge)
+- \~40.4 km upstream (\~44.541°N, -114.860°W, sedimentary patch, upstream edge)
 
 ![](../img/site_maps/LOO.png)
 
@@ -109,7 +111,7 @@ See the Monumental Creek note below for Payette's separate upper-drainage covera
 **Warm Spring Creek** (Loon Creek tributary):
 
 - \~1.5 km upstream above Loon Creek confluence (\~44.651°N, -114.717°W)
-- \~14.5 km upstream, at the midpoint of a small granite inlier (\~44.615°N, -114.596°W)
+- \~14.2 km upstream, at the midpoint of a small granite inlier (\~44.623°N, -114.599°W)
 
 ![](../img/site_maps/WSC.png)
 
@@ -117,19 +119,20 @@ See the Monumental Creek note below for Payette's separate upper-drainage covera
 
 **Mayfield Creek** (Loon Creek tributary):
 
-- \~4.6 km upstream on main trunk, below where East and West Forks join (\~44.540°N, -114.802°W)
-- **West Fork Mayfield Creek**, upstream of contact (\~44.505°N, -114.744°W)
-- On **East Fork Mayfield Creek**, near contact if possible (\~44.551°N, -114.745°W)
+- \~4.2 km upstream on main trunk, below where East and West Forks join (\~44.540°N, -114.806°W)
+- **West Fork Mayfield Creek**, upstream of contact (\~44.504°N, -114.744°W)
+- On **East Fork Mayfield Creek** (\~44.543°N, -114.779°W)
 
 ![](../img/site_maps/MAY.png)
 
 {{< pagebreak >}}
 
-**Camas Creek** (if you get to it):
+**Camas Creek** (if you get to it, four sites):
 
-- \~3.5 km upstream of `CAM-010`, down from Yellowjacket Creek confluence (\~44.890°N, -114.678°W)
-- \~15 km upstream, a volcanic/granite contact (\~44.874°N, -114.566°W)
-- \~38 km upstream, the same contact crossed again further up (\~44.729°N, -114.495°W)
+- \~6.3 km upstream of `CAM-010`, down from Yellowjacket Creek confluence (\~44.894°N, -114.652°W)
+- \~14.1 km upstream, a volcanic/granite contact (\~44.879°N, -114.571°W)
+- \~23.1 km upstream, mid-drainage spatial coverage (\~44.822°N, -114.497°W)
+- \~37 km upstream, the same volcanic/granite contact crossed again further up (\~44.734°N, -114.493°W)
 
 ![](../img/site_maps/CAM.png)
 

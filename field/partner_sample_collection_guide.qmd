@@ -10,100 +10,130 @@ We're building a strontium isotope (⁸⁷Sr/⁸⁶Sr) map of the Middle Fork Sa
 
 Questions at any point: **Bryan Maitland**, USDA Forest Service Rocky Mountain Research Station — bryan.maitland\@usda.gov, work cell 970-837-1933.
 
-NOTE: Treat these as "aim near," not exact GPS targets — collect wherever is safe and reachable near each point.
+**Note**: Treat these as "aim near," not exact GPS targets — collect wherever is safe and reachable near each point.
+
+**Sample upstream or downstream of a contact?** Downstream, as a default. Water carries a rock unit's dissolved Sr signature only after it's had a chance to weather that rock, so a sample taken just *upstream* of a contact still reflects the *previous* (upstream) unit -- it hasn't touched the new one yet. Sampling just *downstream* lets the water pick up the new unit's contribution first. In practice "just downstream" should mean a bit past the contact rather than immediately at it, since water needs a short distance to mix across the channel width; a few hundred meters to a kilometer downstream is a reasonable rule of thumb where access allows.
+
+{{< pagebreak >}}
 
 ## All candidate sites, 2026 season
 
 For orientation: every site in the project this season, yours and everyone else's. Zoomed maps for your specific tributaries are in each section below, alongside the GPS points.
 
-![](../img/site_maps/ALL_CANDIDATES.png)
+![](../img/site_maps/ALL_CANDIDATES.png){width="1107"}
+
+{{< pagebreak >}}
 
 ## Which sites you're covering
 
 | Who | Stream | Notes |
-|---|---|---|
-| Colden Baxter & students | Big Creek (n=6) | Most geologically diverse tributary in the project — spatial coverage along the mainstem matters a lot here. |
+|----------------------|-------------------------|------------------------|
+| Colden Baxter & students | Big Creek (n=6) | Most geologically diverse tributary. |
 | Colden Baxter & students | Lower Rush Creek (n=1) | Near the Big Creek confluence. Remote and difficult beyond that, so just one sample. |
 | Colden Baxter & students | Lower Beaver Creek (n=1) | Near the Big Creek confluence. Same logic as Rush Creek. |
-| Colden Baxter & students | Lower Monumental Creek (n=2) | Both near the Big Creek confluence — one right at the confluence, one ~1 mile upstream. Doable as a single stop. |
-| Payette NF biologists | Upper Monumental Creek (n=1) | Near the trailhead. |
-| Payette NF biologists (if able) | Middle Monumental Creek (n=1) | Only if your trip reaches this far downstream — see note below. |
-| Payette NF biologists | Upper Marble Creek (n=1) | Near trailhead. |
-| Payette NF biologists (if able) | Lower Marble Creek (n=2) | ~11 km upstream of the MFSR confluence. Bryan covers this if PNF doesn't get to it. |
-| Payette NF biologists (if able) | Upper Beaver Creek | Otherwise Bryan covers this himself. |
-| Russ Thurow | Loon Creek (n=3), Warm Spring Creek (n=2), Mayfield Creek (n=3) | Collecting within the next two weeks (by ~7/23). |
+| Colden Baxter & students | Lower Monumental Creek (n=2) | Both near the Big Creek confluence — one right at the confluence, one \~1 mile upstream. |
+| PNF biologists | Upper Monumental Creek (n=1) | Near the trailhead. |
+| PNF biologists (if able) | Middle Monumental Creek (n=1) | Only if your trip reaches this far downstream — see note below. |
+| PNF biologists | Upper Marble Creek (n=1) | Near trailhead. |
+| PNF biologists (if able) | Lower Marble Creek (n=2) | \~11 km upstream of the MFSR confluence. |
+| PNF biologists (if able) | Upper Beaver Creek | Otherwise Bryan covers this himself. |
+| Russ Thurow | Loon Creek (n=3), Warm Spring Creek (n=2), Mayfield Creek (n=3) | Collecting within the next two weeks (by \~7/23). |
 | Russ Thurow (if able) | Camas Creek (n=3) | Possible September trip, hiking down the drainage to the river. |
 
 If plans change and you end up covering different reaches than listed here, that's fine — just record the actual GPS coordinates for whatever you collect (see datasheet below) so we can place it correctly.
 
-## Colden Baxter & students: Big Creek, Rush Creek, Beaver Creek, Monumental Creek
+{{< pagebreak >}}
 
-**Big Creek candidate spots**, roughly in order from the `BIG-010` confluence heading upstream:
+## Colden Baxter & students: Big Creek and Lower Rush Creek, Beaver Creek, Monumental Creek
 
-- ~8.7 km upstream (~45.103°N, -114.846°W)
-- ~20.5 km upstream (~45.130°N, -114.951°W, where volcanic rock meets valley-fill deposits)
-- ~31 km upstream (~45.14177°N, -115.0556°W, mid-drainage spatial coverage)
-- ~45 km upstream (~45.174°N, -115.180°W, a metamorphic/granite contact)
-- ~58 km upstream (~45.128°N, -115.314°W)
-- ~61 km upstream (~45.106°N, -115.328°W)
+**Big Creek candidate spots**, roughly from the `BIG-010` confluence heading upstream:
+
+- \~8.7 km upstream (\~45.103°N, -114.846°W)
+- \~20.5 km upstream (\~45.130°N, -114.951°W, volcanic rock meets valley-fill deposits)
+- \~31 km upstream (\~45.14177°N, -115.0556°W, mid-drainage spatial coverage)
+- \~45 km upstream (\~45.174°N, -115.180°W, a metamorphic/granite contact)
+- \~58 km upstream (\~45.128°N, -115.314°W)
+- \~61 km upstream (\~45.106°N, -115.328°W)
 
 ![](../img/site_maps/BIG.png)
 
-**Rush Creek and (Big Creek's) Beaver Creek**: both have an easily reachable sample spot near their mouths (Rush Creek: ~45.088°N, -114.882°W; Beaver Creek: ~45.173°N, -115.245°W) — everything further upstream on either is remote and not worth detouring for, so just one sample from each.
+{{< pagebreak >}}
 
-![](../img/site_maps/RSH.png)
+**Rush Creek and (Big Creek's) Beaver Creek**:
 
-![](../img/site_maps/BVB.png)
+- both have an easily reachable sample spot near their mouths (Rush Creek: \~45.088°N, -114.882°W; Beaver Creek: \~45.173°N, -115.245°W)
+- everything further upstream on either is remote and not worth detouring for, so just one sample from each.
 
-**Monumental Creek (two sites)**:
+![](../img/site_maps/RSH.png){width="370"}
 
-- Right at the confluence (~45.16149°N, -115.1303°W) — this is also Hamann & Kennedy's (2012) "Big Cr. upstream of Monumental Cr." sample point, Plutonic bedrock. Easy grab-and-go from the Big Creek side.
-- ~1.9 miles (3.1 km) up Monumental Creek itself (~45.13964°N, -115.15895°W) — a real hike in, but squarely in Metasedimentary rock rather than sitting on the contact.
+![](../img/site_maps/BVB.png){width="370"}
+
+{{< pagebreak >}}
+
+**Lower Monumental Creek (two sites)**:
+
+- Right at the confluence (\~45.16149°N, -115.1303°W) — this is also Hamann & Kennedy's (2012) "Big Cr. upstream of Monumental Cr." sample point, Plutonic bedrock. Easy grab-and-go from the Big Creek side.
+- \~1.9 miles (3.1 km) up Monumental Creek itself (\~45.13964°N, -115.15895°W) — a real hike in, but squarely in Metasedimentary rock rather than sitting on the contact.
 
 See the Monumental Creek note below for Payette's separate upper-drainage coverage.
 
 ![](../img/site_maps/MON.png)
 
+{{< pagebreak >}}
+
 ## Payette NF biologists: Monumental Creek and Marble Creek
 
-**Monumental Creek note**: the uppermost ~30+ km of Monumental Creek sits entirely within one volcanic rock unit — no internal contact up there to specifically target, so wherever you're able to access near the trailhead is fine for a single representative sample. If your trip reaches down to about 15 km upstream of the Big Creek confluence (~45.066°N, -115.116°W), that's the one spot where the bedrock shifts to a metasedimentary unit and a second sample there would be valuable — but only if it's on your route already, not worth a special trip.
+**Upper Monumental Creek**:
 
-**Marble Creek**: if you're already working Monumental Creek, there's a site near the Marble Creek trailhead worth a short trip in to collect. The lower sites ~11 km upstream of the MFSR confluence will be done by Bryan if you don't get to lower Marble.
+- (see map above) the uppermost \~30+ km of Monumental Creek sits entirely within one volcanic rock unit — no internal contact up there to specifically target, so wherever you're able to access near the trailhead is fine for a single representative sample.
+- If your trip reaches down to about 15 km upstream of the Big Creek confluence (\~45.066°N, -115.116°W), that's the one spot where the bedrock shifts to a metasedimentary unit and a second sample there would be valuable — but only if it's on your route already, not worth a special trip.
+
+**Marble Creek**: if you're already working Monumental Creek, there's a site near the Marble Creek trailhead worth a short trip in to collect. The lower sites \~11 km upstream of the MFSR confluence will be done by Bryan if you don't get to lower Marble.
 
 ![](../img/site_maps/MRB.png)
+
+{{< pagebreak >}}
 
 ## Russ: Loon Creek, Warm Spring Creek, Mayfield Creek, Camas Creek
 
 **Loon Creek** (from the `LOO-010` confluence heading upstream):
 
-- ~20 km upstream (~44.697°N, -114.761°W, a volcanic/granite contact)
-- ~36 km upstream (~44.570°N, -114.843°W, edge of a small sedimentary patch)
-- ~40 km upstream (~44.546°N, -114.856°W, the far edge of that same sedimentary patch — brackets it along with the site above)
+- \~20 km upstream (\~44.697°N, -114.761°W, a volcanic/granite contact)
+- \~36 km upstream (\~44.570°N, -114.843°W, edge of a small sedimentary patch)
+- \~40 km upstream (\~44.546°N, -114.856°W, the far edge of sedimentary patch)
 
 ![](../img/site_maps/LOO.png)
 
+{{< pagebreak >}}
+
 **Warm Spring Creek** (Loon Creek tributary):
 
-- ~1.5 km upstream of its own mouth, just above the confluence with Loon Creek (~44.651°N, -114.717°W)
-- ~14.5 km upstream, at the midpoint of a small granite inlier (~44.615°N, -114.596°W)
+- \~1.5 km upstream above Loon Creek confluence (\~44.651°N, -114.717°W)
+- \~14.5 km upstream, at the midpoint of a small granite inlier (\~44.615°N, -114.596°W)
 
 ![](../img/site_maps/WSC.png)
 
-**Mayfield Creek** (Loon Creek tributary — three sites, since the interesting geology here is on the forks, not the short main trunk):
+{{< pagebreak >}}
 
-- ~4.6 km upstream on the main trunk, just below where East and West Forks join (~44.540°N, -114.802°W)
-- On **West Fork Mayfield Creek**, a bit upstream of its volcanic/granite contact (~44.505°N, -114.744°W)
-- On **East Fork Mayfield Creek** — worth a stop while hiking up that fork (~44.551°N, -114.745°W)
+**Mayfield Creek** (Loon Creek tributary):
+
+- \~4.6 km upstream on main trunk, below where East and West Forks join (\~44.540°N, -114.802°W)
+- **West Fork Mayfield Creek**, upstream of contact (\~44.505°N, -114.744°W)
+- On **East Fork Mayfield Creek**, near contact if possible (\~44.551°N, -114.745°W)
 
 ![](../img/site_maps/MAY.png)
 
-**Camas Creek** (if you get to it, likely September — three sites):
+{{< pagebreak >}}
 
-- ~3.5 km upstream of `CAM-010`, before the Yellowjacket Creek confluence (~44.890°N, -114.678°W) — spatial coverage, not a contact
-- ~15 km upstream, a volcanic/granite contact (~44.874°N, -114.566°W)
-- ~38 km upstream, the same contact crossed again further up (~44.729°N, -114.495°W)
+**Camas Creek** (if you get to it):
+
+- \~3.5 km upstream of `CAM-010`, down from Yellowjacket Creek confluence (\~44.890°N, -114.678°W)
+- \~15 km upstream, a volcanic/granite contact (\~44.874°N, -114.566°W)
+- \~38 km upstream, the same contact crossed again further up (\~44.729°N, -114.495°W)
 
 ![](../img/site_maps/CAM.png)
+
+{{< pagebreak >}}
 
 ## Collection protocol
 
@@ -114,18 +144,20 @@ See the Monumental Creek note below for Payette's separate upper-drainage covera
 - 60 mL syringe, luer tip
 - 0.45 µm syringe filter
 - Nitrile gloves
-- Oil-based paint marker for labeling (see Labeling section — plain Sharpie on a paper label is the thing that smears)
+- Sharpie for labeling sample bottles
 - Cool storage
 
 **Steps**:
 
-1.  Put on nitrile gloves. Triple rinse the collection bottle. Collect ~1 L of stream water in the Nalgene bottle, from mid-current if possible (avoid stagnant edges/backwater).
+1.  Put on nitrile gloves. Triple rinse the collection bottle. Collect \~1 L of stream water in the Nalgene bottle, from mid-current if possible (avoid stagnant edges/backwater).
 2.  Attach the syringe (no filter yet). Draw and expel water from the Nalgene through the syringe 3 times to rinse it.
-3.  Rinse the 125 mL sample bottle: expel ~2-5 mL from the syringe onto the ground first (this clears the filter's storage residue once attached — see step 4), then add ~10 mL of sample water to the bottle, cap, shake vigorously, and dump. Repeat 3 times.
+3.  Rinse the 125 mL sample bottle: expel \~2-5 mL from the syringe onto the ground first (this clears the filter's storage residue once attached — see step 4), then add \~10 mL of sample water to the bottle, cap, shake vigorously, and dump. Repeat 3 times.
 4.  Refill the syringe with water. Attach the 0.45 µm syringe filter to the syringe. **Do not let the filter touch anything except the plastic packaging it came in** — no hands, no ground, no bottle threads.
-5.  Push water through the filter into the 125 mL sample bottle until you have ~100 mL (as needed, remove filter carefully, refill the syringe from the Nalgene, re-attach the filter, and continue pushing water).
+5.  Push water through the filter into the 125 mL sample bottle until you have \~100 mL (as needed, remove filter carefully, refill the syringe from the Nalgene, re-attach the filter, and continue pushing water).
 6.  Cap the bottle immediately and label it (see below).
 7.  Keep the bottle cool (not frozen) from here until it reaches a vehicle — see the next section for how to do that on a multi-day backcountry trip with no cooler immediately at hand.
+
+{{< pagebreak >}}
 
 ## Keeping samples cool in the backcountry
 
@@ -137,23 +169,24 @@ Most of these sites are a multi-day backpacking or camping trip from the nearest
 
 Recommended approach:
 
-1.  **Overnight — cache in a stream or spring.** Submerge bottles in a mesh or dive bag, weighted and secured to a rock or branch, in a shaded side stream or spring near camp. Idaho backcountry streams run ~4–10°C even in summer — more effective and more stable overnight than a melting ice pack would be by day 2-3, and on its own is enough to avoid the main concern (algae growth) if that's as far as your trip allows.
+1.  **Overnight — cache in a stream or spring.** Submerge bottles in a mesh or dive bag, weighted and secured to a rock or branch, in a shaded side stream or spring near camp. Idaho backcountry streams run \~4–10°C even in summer — more effective and more stable overnight than a melting ice pack would be by day 2-3, and on its own is enough to avoid the main concern (algae growth) if that's as far as your trip allows.
 2.  **While hiking — minimize heat gain rather than actively refrigerate.** Pack bottles in the coolest, shadiest part of your pack (not the sun-exposed lid, not against your back). A layer of spare clothing adds insulation; a wetted bandana or wet stuff sack around the bottles gives free evaporative cooling in Idaho's dry mountain air.
 3.  **In-transit protection: an insulated lunch box + ice sheet.** It's semi-rigid (protects bottles from crushing) and pairs with a flat, refreezable ice sheet instead of bulky block ice.
 4.  **Fallback**: frozen drinking-water bottles work as the ice source instead of dedicated ice packs, so the cooling element does double duty as trail water once it melts.
 
+{{< pagebreak >}}
+
 ## Labeling and datasheet
 
-**On the bottle**: just the site code and date — e.g. `BIG-020  7/15`. Everything else (GPS, collector, time, notes) goes on the datasheet, not the bottle; the less writing exposed to water, the less that can smear.
+**On the bottle**: just the site code and date — e.g. `BIG-NEW1  7/15`. Everything else (GPS, collector, time, notes) goes on the datasheet, not the bottle; the less writing exposed to water, the less that can smear.
 
-Bottles sitting in a cooler with condensation, or jammed in wet gear for days, will smear a plain Sharpie label eventually — it's not the ink, it's water getting under it. Two fixes, either works:
+Bottles sitting in a cooler with condensation, or jammed in wet gear for days, will smear a plain Sharpie label eventually — it's not the ink, it's water getting under it. Main fix:
 
-- Write directly on the bottle or cap with an oil-based paint marker rather than on a paper label — there's no label to lift or abrade.
-- If you do label with tape, let the Sharpie dry a few minutes, then burnish a strip of clear packing tape over the whole label. That seal is what stops the smearing, not writing it twice.
+- Let the Sharpie dry a few minutes, then burnish a strip of clear packing tape over the whole label. That seal is what stops the smearing, not writing it twice.
 
-Use a site code in the format `[STREAM]-[POSITION]` (e.g. `BIG-020`, `MON-NEW1`) — use the existing code from the table above if you're at an established site, or make up a placeholder like `MON-NEW1` if you're at a new spot and let Bryan assign the real code afterward. Do not reuse an existing code for a different physical location.
+Use a site code in the format `[STREAM]-[POSITION]` — use the existing code from the if you're at an established site (e.g. `BIG-010`), or make up a placeholder like `BIG-NEW1` if you're at a new spot and let Bryan assign the real code afterward. The placeholder codes are also found in the partner data spreadsheet.
 
-**Datasheet**: print the accompanying `partner_sample_datasheet.xlsx` — one row per site you're expected to hit, site code and stream already filled in. Bring a copy in a ziplock and fill in date, GPS, collector, time, and notes as you go. If you end up somewhere not on the sheet, add a row with a placeholder code.
+**Datasheet**: one row per site you're expected to hit, site code and stream already filled in. Bring a copy in a ziplock and fill in date, GPS, collector, time, and notes as you go. If you end up somewhere not on the sheet, add a row with a placeholder code.
 
 A photo of the site (looking upstream and downstream) is a nice bonus but not required.
 
